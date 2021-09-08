@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+html{font-size:14px;}
+html{width:100%;height:100%;}
+body{width:100%;}
+
+body,header,section,div,p,span,a,ul,li,img,h3{margin:0; padding:0;}
+body{font-size:1rem; color:#333; font-family:'NotoSansCJKkr-Regular';}
+header,section{display:block;}
+ul,li{list-style:none;}
+img{border:0 none; vertical-align:middle;}
+a:visited,
+a:link{text-decoration:none; color:#333;}
+a:active,
+a:focus,
+a:hover{text-decoration:none; color:#333;}
+
+
+/* common */
+
+/* text-align */
+.tal{text-align:left;}
+.tac{text-align:center;}
+.tar{text-align:right;}
+
+/* float */
+.fl{float:left;}
+.fn{float:none;}
+.fr{float:right;}
+
+/* clearfix */
+.clearfix:after{content:''; display:block; clear:both;}
