@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- <title>ezEKP Java</title> -->
+        <link rel='stylesheet' href='css/portal.css'/>
+    </head>
+
+    <body>
+        <header id='top'>
+            <ul class='contentlayout topmenulayout'>
+                <li class='contentlayout_left'>
+                    <div class='logo'><img src='images/top/logo.jpg' id='logoUrl'></div>
+                </li>
+                <li class='contentlayout_right'>
+                    <ul class='util'>
+                        <li><span class='icon_topmenu util_admin' id='util_admin' title='관리자'></span></li>
+                        <li><span class='icon_topmenu util_employee_search' id='util_employee_search' title='직원조회'></span></li>
+                        <li><span class='icon_topmenu util_set' id='util_set' title='환경설정'></span></li>
+                        <li><span class='icon_topmenu util_help' id='util_help' title='도움말'></span></li>
+                        <li><span class='icon_topmenu util_logout' id='util_logout' title='로그아웃'></span></li>
+                    </ul>
+                </li>
+                <li class='contentlayout_none'>
+                    <ul class='contentlayout topmenu'>
+                        <li class='contentlayout_none'>
+                            <nav id='topNav' class='topNavCls'>
+                                <div id='topMenuFull' class='full_nav off'><span class='icon_topmenu full_menu'></span></div>
+                                <div class='countBox' style='display:block;'>
+                                    <span class='hidden_nav_count' id='nav_count'>+3</span><span class='icon_topmenu icon_count_arrow'></span>
+                                </div>
+                                <ul class='navUL' id='mainMenuList'>
+                                    <li id='menu_1'>메일</li>
+                                    <li id='menu_3'>전자결재</li>
+                                    <li id='menu_4'>게시판</li>
+                                    <li id='menu_2'>일정관리</li>
+                                    <li id='menu_6'>자원관리</li>
+                                    <li id='menu_5'>커뮤니티</li>
+                                    <li id='menu_44'>전자설문</li>
+                                    <li id='menu_10'>웹폴더</li>
+                                    <li id='menu_18'>메모</li>
+                                    <li id='menu_8'>업무일지</li>
+                                    <li id='menu_13'>주소록</li>
+                                    <li id='menu_17'>To-Do</li>
+                                    <li id='menu_9'>근태관리</li>
+                                    <li id='menu_15'>투표</li>
+                                </ul>
+                                <div id='menu_toggle'>
+                                    <div class='full_menu_toggle'>
+                                        <ul class='full_menu_toggleUL' id='toggleMenu'>
+                                            <li id='1' data-companyorder='2'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_mail'></span></dt>
+                                                    <dd>메일</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='3' data-companyorder='4'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_approval'></span></dt>
+                                                    <dd>전자결재</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='4' data-companyorder='5'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_board'></span></dt>
+                                                    <dd>게시판</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='2' data-companyorder='6'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_calendar'></span></dt>
+                                                    <dd>일정관리</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='6' data-companyorder='7'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_resource'></span></dt>
+                                                    <dd>자원관리</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='5' data-companyorder='8'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_community'></span></dt>
+                                                    <dd>커뮤니티</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='44' data-companyorder='9'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_workdiary'></span></dt>
+                                                    <dd>전자설문</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='10' data-companyorder='11'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_webfolder'></span></dt>
+                                                    <dd>웹폴더</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='18' data-companyorder='12'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_memo'></span></dt>
+                                                    <dd>메모</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='8' data-companyorder='13'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_workdiary'></span></dt>
+                                                    <dd>업무일지</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='13' data-companyorder='14'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_addressbook'></span></dt>
+                                                    <dd>주소록</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='17' data-companyorder='15'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_work'></span></dt>
+                                                    <dd>To-Do</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='9' data-companyorder='17'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_absenteeism'></span></dt>
+                                                    <dd>근태관리</dd>
+                                                </dl>
+                                            </li>
+                                            <li id='15' data-companyorder='18'>
+                                                <dl class='full_menu_toggleDL'>
+                                                    <dt><span class='icon_topmenu icon_nav_voting'></span></dt>
+                                                    <dd>투표</dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class='menu_toggle_context' id='expandMenuFooter'>
+                                        <div id='editBtn'><img src='images/top/icon_setup.png'></div>
+                                        <div id='editMenuBtn'>
+                                            <span class='topMenuBtn' id='editMenuCancel'>취소</span>
+                                            <span class='topMenuBtn' id='editMenuSave'>저장</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </header>
+    </body>
+</html>
