@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/dotNet.css" type="text/css">
+        <link rel="stylesheet" href="css/base.css" type="text/css">
+        <!-- <link rel="stylesheet" href="css/bootstrap-iso.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap-submenu.min.css" type="text/css"> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+
+    <body id='portal_body' class='IndexWrap_Portal' style='overflow:hidden; overflow-x:auto;'>
+        <div id="IndexScreen" class="wrapper">
+            <div id="top">
+                <header>
+                    <ul class="contentlayout">
+                        <li class="contentlayout_left"></li>
+
+                        <li class="contentlayout_right">
+                            <div class="bootstrap-iso">
+                                <div class="btn_arrow dropdown" id="MultiView_Menu" style="visibility: visible;">
+                                    <a href="#" id="MultiView_Button" data-toggle="dropdown" data-submenu>
+                                        <dl class="btn_arrowDL">
+                                            <dt><span class="icon_menu top_arrow_left"></span></dt>
+                                            <dd><span class="icon_menu top_arrow_right"></span></dd>
+                                        </dl>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+    
+                                    </ul>
+                                </div>
+                                <div class="my_link dropdown" id="my_link">
+                                    <dl class="my_linkDL" aria-expanded="false" data-toggle="dropdown" data-submenu>
+                                        <dd>업무시스템<span class="icon_menu top_collapse_down"></span></dd>
+                                    </dl>
+                                    <div class="my_link_list dropdown-menu pull-right none-a-tag"
+                                        style="padding-top: 0px; padding-bottom: 0px; display:none;">
+                                        <dl class="my_link_listDL">
+                                            <dt style="width: 33%;" onclick="QuickMove(event, 'UP')"><span
+                                                    class="icon_menu top_collapse_up"></span></dt>
+                                            <dt style="width: 33%;" onclick="QuickMove(event, 'DOWN')"><span
+                                                    class="icon_menu top_collapse_down"></span></dt>
+                                            <dt style="width: 33%; text-align: center; padding-top: 5px;"
+                                                onclick="GoToApplication('92', '', false)"><span
+                                                    class="main_img main_icon_config"></span></dt>
+                                            <!-- <dd id="quicklink_beforeitem"
+                                                style="text-align: center; border-bottom: 1px solid #dedede; font-size: 30px; height: 20px;">
+                                                <div style="margin-top: -15px">&middot;&middot;&middot;</div>
+                                            </dd> -->
+                                            <dd>
+                                                <ul class="my_link_listUL" style="overflow-y:auto;">
+                                                    <li onclick="OpenWindow(&#39;&#39;, &#39;https://calendar.google.com&#39;, &#39;구글&#39;, &#39;FULL&#39;)"
+                                                        class="cursorPointer"><span>구글</span></li>
+                                                    <li onclick="OpenWindow(&#39;&#39;, &#39;http://www.naver.com&#39;, &#39;네이버&#39;, &#39;FULL&#39;)"
+                                                        class="cursorPointer"><span>네이버</span></li>
+                                                    <li onclick="OpenWindow(&#39;&#39;, &#39;http://www.google.com&#39;, &#39;구글&#39;, &#39;FULL&#39;)"
+                                                        class="cursorPointer"><span>구글</span></li>
+                                                    <li onclick="OpenWindow(&#39;&#39;, &#39;http://www.daum.net&#39;, &#39;다음&#39;, &#39;FULL&#39;)"
+                                                        class="cursorPointer"><span>다음</span></li>
+                                                    <li onclick="OpenWindow(&#39;&#39;, &#39;http://www.nate.com&#39;, &#39;네이트&#39;, &#39;FULL&#39;)"
+                                                        class="cursorPointer"><span>네이트</span></li>
+                                                </ul>
+                                            </dd>
+                                            <!-- <dd id="quicklink_afteritem"
+                                                style="text-align: center; border-bottom: 1px solid #dedede; font-size: 30px; height: 20px;">
+                                                <div style="margin-top: -15px">&middot;&middot;&middot;</div>
+                                            </dd> -->
+                                        </dl>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function(){
+                                        $('.my_link .my_linkDL dd').on('click',function(){
+                                            $('.my_link_list').toggle();
+                                            $('.my_information ul').hide();
+                                        })
+
+                                        $('.my_informationDL').on('click',function(){
+                                            $('.my_information ul').toggle();
+                                            $('.my_link_list').hide();
+                                        })
+                                    })
+                                </script>
+
+                                <div class="my_information dropdown" id="my_information_Menu">
+                                    <a href="#" id="my_information_Button" data-toggle="dropdown" data-submenu>
+                                        <dl class="my_informationDL">
+                                            <dt>
+                                                <img src="images/downloadAttach_01.jpg" alt=""></dt>
+                                            <dd><span class="icon_menu top_collapse_down"></span></dd>
+                                        </dl>
+                                    </a>
+    
+                                    <ul class="dropdown-menu pull-right none-a-tag" id="my_informationUL"
+                                        style="display: none">
+                                        <li
+                                            onclick="OpenWindow(&#39;&#39;, &#39;/myoffice/ezPersonal/index_environment.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                            환경설정</li>
+                                        <li
+                                            onclick="OpenWindow(&#39;&#39;, &#39;/myoffice/ezOrgan/Search_Organ.aspx&#39;, &#39;layer&#39;, &#39;width=800px, height=700px&#39;)">
+                                            직원조회</li>
+                                        <li onclick="Logout(&#39;/logout.aspx&#39;)">로그아웃</li>
+                                    </ul>
+                                </div>
+    
+                                <div class="my_Notification dropdown">
+                                    <ul class="my_NotificationUL" data-toggle="dropdown" data-submenu
+                                        style="margin-bottom: 0px">
+                                        <li>
+                                            <span class="icon_menu top_Notification" title="알림"></span>
+                                            <span id="notiCountBadge" class="top_count"><span>44</span></span>
+                                        </li>
+                                    </ul>
+                                    <div class="dropdown-menu pull-right none-a-tag" id="my_NotificationUL"
+                                        style="padding: 0px; margin: 0px; width: 352px; height: 685px; right: -130px; display: none">
+                                        <p class="notification_point"><span class="icon16 notification_arrow_point"></span>
+                                        </p>
+                                        <iframe id="iframeNoti"
+                                            src="/myoffice/ezPersonal/Notification_Realtime/Notification_Main.aspx"
+                                            style="width: 100%; height: 100%" frameborder="0" scrolling="NO"></iframe>
+                                    </div>
+                                </div>
+    
+                                <div class="my_search">
+                                    <ul class="contentlayout my_searchUL">
+                                        <li class="contentlayout_right" onclick="Search_Employee('POPUP')" title="직원정보 조회">
+                                            <span class="icon_menu top_usersearchBtn"></span></li>
+                                        <li class="contentlayout_right" onclick="Search_Integrate()" title="검색"><span
+                                                class="icon_menu top_searchBtn"></span></li>
+                                        <li class="contentlayout_none">
+                                            <input type="text" id="txt_Search" class="width100percent" placeholder="통합검색"
+                                                onkeydown="entercheck()" /></li>
+                                    </ul>
+                                </div>
+    
+                            </div>
+                        </li>
+                        <li class="contentlayout_none" style="position: absolute;  width:calc(100vw - 507px); clear:none; left:0px;">
+                            <nav style='min-width:800px'>
+                                <ul id="horizonMenu" class="navUL" style="">
+    
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_resource"></span><span
+                                            class="top_text">포탈</span></li>
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezEmail/index_myoffice.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_mail"></span><span
+                                            class="top_text">메일</span></li>
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezApproval/index_approval.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_approval"></span><span
+                                            class="top_text">결재</span></li>
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezBoardSTD/index_Board.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_board"></span><span
+                                            class="top_text">게시판</span></li>
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezSchedule/index_Schedule.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_pims"></span><span
+                                            class="top_text">일정관리</span></li>
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezResource/index_resource.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_knowledge"></span><span
+                                            class="top_text">자원관리</span></li>
+                                    <li name="topmenu_li" class="cursorPointer"
+                                        onclick="OpenWindow(event, &#39;/myoffice/ezCommunity/main_page.aspx&#39;, &#39;main&#39;, &#39;&#39;)"
+                                        _usemulti="1"><span class="icon_menu top_sns"></span><span
+                                            class="top_text">커뮤니티</span></li>
+                                </ul>
+                                <ul id="verticalMenu" class="ToggleMenu bootstrap-iso" style="display: none">
+                                    <li class="dropdown"><span class="top_toggleBtn" data-toggle="dropdown"
+                                            data-submenu=""><span class="icon_menu top_toggle"></span></span>
+                                        <ul class="dropdown-menu pull-left ToggleMenuUL" id="verticalMenu_UL"
+                                            style="display:none;">
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_resource" title="포탈"></span><span
+                                                    class="top_text">포탈</span></li>
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezEmail/index_myoffice.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_mail" title="메일"></span><span
+                                                    class="top_text">메일</span></li>
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezApproval/index_approval.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_approval" title="결재"></span><span
+                                                    class="top_text">결재</span></li>
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezBoardSTD/index_Board.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_board" title="게시판"></span><span
+                                                    class="top_text">게시판</span></li>
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezSchedule/index_Schedule.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_pims" title="일정관리"></span><span
+                                                    class="top_text">일정관리</span></li>
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezResource/index_resource.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_knowledge" title="자원관리"></span><span
+                                                    class="top_text">자원관리</span></li>
+                                            <li name="topmenu_li" class="cursorPointer"
+                                                onclick="OpenWindow(event, &#39;/myoffice/ezCommunity/main_page.aspx&#39;, &#39;main&#39;, &#39;&#39;)">
+                                                <span class="icon_menu top_sns" title="커뮤니티"></span><span
+                                                    class="top_text">커뮤니티</span></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+        </div>
+
+
+        <main style='overflow:auto; height:calc(100vh - 49px)'>
+            <div id="_MainBody" class="mainbg" >
+                <div id="Center">
+                    <div class="layout_h">
+                        <section class="section_lh" style="height: 1096px;">
+                            <div class="personal">
+                                <div class="info">
+                                    <p class="img_userphoto">
+                                        <img alt="" src="images/downloadAttach_01.jpg">
+                                    </p>
+                                    <dl class="info_txt">
+                                        <dt>곽나경
+                                            <span title="포탈화면설정" class="main_img main_icon_layoutconfig"
+                                                onclick="GoToApplication(&#39;91&#39;, &#39;&#39;, false)"></span>
+                                            <span title="개인정보관리" class="main_img main_icon_userconfig"
+                                                onclick="GoToApplication(&#39;90&#39;, &#39;&#39;, false)"></span>
+                                        </dt>
+                                        <dd>컨설팅팀 이사</dd>
+                                    </dl>
+                                </div>
+                                <ul class="personal_content">
+                                    <li id="MAIL" onclick="btnSumming_click(this)">
+                                        <p class="title" style="text-overflow:ellipsis;" title="메일">메일</p>
+                                        <span id="mailnum" class="count_num" name="mail_unreadCount">0</span>
+                                    </li>
+                                    <li id="APPR1" onclick="btnSumming_click(this)">
+                                        <p class="title" style="text-overflow:ellipsis;" title="미결함">미결함</p>
+                                        <span id="aprnum" class="count_num" name="approval_doingCount">0</span>
+                                    </li>
+                                    <li id="APPR4" onclick="btnSumming_click(this)">
+                                        <p class="title" style="text-overflow:ellipsis;" title="수신함">수신함</p>
+                                        <span id="aprnum_susin" class="count_num" name="approval_susinCount">1</span>
+                                    </li>
+            
+            
+                                    <li id="COMMUNI" onclick="btnSumming_click(this)">
+                                        <p class="title" style="text-overflow:ellipsis;" title="협업">협업</p>
+                                        <span class="count_num">3</span>
+                                    </li>
+            
+                                    <li id="QUES" onclick="btnSumming_click(this)" style="display:none;">
+                                        <p class="title" style="text-overflow:ellipsis;" title="설문">설문</p>
+                                        <span id="pollnum" class="count_num">1</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 바로작성 -->
+                            <div class="quick_write">
+                                <ul class="quick_writeUL">
+                                    <li id="MAILWRITE" onclick="btnWrite_onclick(this)">
+                                        <dl class="quick_writeDL">
+                                            <dt><span class="main_img main_icon_mail"></span></dt>
+                                            <dd>메일쓰기</dd>
+                                        </dl>
+                                    </li>
+                                    <li id="SCHEDULEWRITE" onclick="btnWrite_onclick(this)">
+                                        <dl class="quick_writeDL">
+                                            <dt><span class="main_img main_icon_schedule"></span></dt>
+                                            <dd>일정등록</dd>
+                                        </dl>
+                                    </li>
+                                    <li id="APPROVALWRITE" onclick="btnWrite_onclick(this)">
+                                        <dl class="quick_writeDL">
+                                            <dt><span class="main_img main_icon_approval"></span></dt>
+                                            <dd>기안하기</dd>
+                                        </dl>
+                                    </li>
+            
+            
+                                    <li id="COLLABRATIONWRITE" onclick="btnWrite_onclick(this)">
+                                        <dl class="quick_writeDL">
+                                            <dt><span class="main_img main_icon_collaboration"></span></dt>
+                                            <dd>협업쓰기</dd>
+                                        </dl>
+                                    </li>
+            
+                                    <li id="RESOURCEWRITE" onclick="btnWrite_onclick(this)">
+                                        <dl class="quick_writeDL">
+                                            <dt><span class="main_img main_icon_resource"></span></dt>
+                                            <dd>자원예약</dd>
+                                        </dl>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- //바로작성 -->
+                            <div class="schedule" style="height:auto;">
+                                <div id="CalendarMini" class="calender">
+                                    <table class="calendar_mini_title" id="MiniCalendar" cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td class="btn_prev"><span class="main_img main_icon_arrow_left"
+                                                    onclick="preMonth()"></span></td>
+                                            <td class="calendar_mini_day" style="cursor: pointer;"><span name="iYear"
+                                                    id="iYear">2021</span><span>.</span><span name="iMon" id="iMon">07</span></td>
+                                            <td class="btn_next"><span class="main_img main_icon_arrow_right"
+                                                    onclick="nextMonth()"></span></td>
+                                        </tr>
+                                    </table>
+                                    <table id="" cellpadding="0" cellspacing="0" border="0" width="100%" class="calendar_mini">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="col" class="sun">SUN</th>
+                                                <th scope="col">MON</th>
+                                                <th scope="col">TUE</th>
+                                                <th scope="col">WED</th>
+                                                <th scope="col">THU</th>
+                                                <th scope="col">FRI</th>
+                                                <th scope="col" class="sat">SAT</th>
+                                            </tr>
+                                            <tr id="TR_6_0">
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-27_Day"
+                                                        dispdate="2021-06-27">27</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-28_Day"
+                                                        dispdate="2021-06-28" style="text-decoration: underline;">28</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-29_Day"
+                                                        dispdate="2021-06-29" style="text-decoration: underline;">29</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-30_Day"
+                                                        dispdate="2021-06-30">30</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-01_Day"
+                                                        dispdate="2021-07-01" style="text-decoration: underline;">1</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-02_Day"
+                                                        dispdate="2021-07-02" style="text-decoration: underline;">2</div>
+                                                </td>
+                                                <td class=" sat">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-03_Day"
+                                                        dispdate="2021-07-03">3</div>
+                                                </td>
+                                            </tr>
+                                            <tr id="TR_6_1">
+                                                <td class=" sun">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-04_Day"
+                                                        dispdate="2021-07-04">4</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-05_Day"
+                                                        dispdate="2021-07-05">5</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-06_Day"
+                                                        dispdate="2021-07-06" style="text-decoration: underline;">6</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-07_Day"
+                                                        dispdate="2021-07-07">7</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-08_Day"
+                                                        dispdate="2021-07-08" style="text-decoration: underline;">8</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-09_Day"
+                                                        dispdate="2021-07-09" style="text-decoration: underline;">9</div>
+                                                </td>
+                                                <td class=" sat">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-10_Day"
+                                                        dispdate="2021-07-10">10</div>
+                                                </td>
+                                            </tr>
+                                            <tr id="TR_6_2">
+                                                <td class=" sun">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-11_Day"
+                                                        dispdate="2021-07-11">11</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-12_Day"
+                                                        dispdate="2021-07-12" style="text-decoration: underline;">12</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-13_Day"
+                                                        dispdate="2021-07-13" style="text-decoration: underline;">13</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-14_Day"
+                                                        dispdate="2021-07-14">14</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-15_Day"
+                                                        dispdate="2021-07-15" style="text-decoration: underline;">15</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-16_Day"
+                                                        dispdate="2021-07-16" style="text-decoration: underline;">16</div>
+                                                </td>
+                                                <td class=" sat">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-17_Day"
+                                                        dispdate="2021-07-17">17</div>
+                                                </td>
+                                            </tr>
+                                            <tr id="TR_6_3">
+                                                <td class=" sun">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-18_Day"
+                                                        dispdate="2021-07-18">18</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-19_Day"
+                                                        dispdate="2021-07-19">19</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-20_Day"
+                                                        dispdate="2021-07-20" style="text-decoration: underline;">20</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-21_Day"
+                                                        dispdate="2021-07-21">21</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-22_Day"
+                                                        dispdate="2021-07-22" style="text-decoration: underline;">22</div>
+                                                </td>
+                                                <td class="today">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-23_Day"
+                                                        dispdate="2021-07-23" style="text-decoration: underline;">23</div>
+                                                </td>
+                                                <td class=" sat">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-24_Day"
+                                                        dispdate="2021-07-24">24</div>
+                                                </td>
+                                            </tr>
+                                            <tr id="TR_6_4">
+                                                <td class=" sun">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-25_Day"
+                                                        dispdate="2021-07-25">25</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-26_Day"
+                                                        dispdate="2021-07-26" style="text-decoration: underline;">26</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-27_Day"
+                                                        dispdate="2021-07-27" style="text-decoration: underline;">27</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-28_Day"
+                                                        dispdate="2021-07-28">28</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-29_Day"
+                                                        dispdate="2021-07-29" style="text-decoration: underline;">29</div>
+                                                </td>
+                                                <td class="">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-30_Day"
+                                                        dispdate="2021-07-30" style="text-decoration: underline;">30</div>
+                                                </td>
+                                                <td class=" sat">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-31_Day"
+                                                        dispdate="2021-07-31">31</div>
+                                                </td>
+                                            </tr>
+                                            <tr id="TR_6_5">
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-01_Day"
+                                                        dispdate="2021-08-01">1</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-02_Day"
+                                                        dispdate="2021-08-02">2</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-03_Day"
+                                                        dispdate="2021-08-03" style="text-decoration: underline;">3</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-04_Day"
+                                                        dispdate="2021-08-04">4</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-05_Day"
+                                                        dispdate="2021-08-05" style="text-decoration: underline;">5</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-06_Day"
+                                                        dispdate="2021-08-06" style="text-decoration: underline;">6</div>
+                                                </td>
+                                                <td class=" gray">
+                                                    <div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-07_Day"
+                                                        dispdate="2021-08-07">7</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="list">
+                                    <div class="schedule_tab_select">
+                                        <select id="scheduleChangeSelect" onchange="scheduleChangeTab(this)">
+                                            <option value="ALL" selected="">모든일정</option>
+                                            <option value="P">개인일정</option>
+                                            <option value="G">그룹일정</option>
+                                            <option value="D">부서일정</option>
+            
+                                            <option value="B">사업장일정</option>
+            
+                                            <option value="C">회사일정</option>
+                                            <option value="E">임원일정</option>
+            
+            
+                                            <option value="COLLABORATION" data-title="협업">협업일정</option>
+            
+                                        </select>
+                                    </div>
+                                    <dl class="schedule_time_count">
+                                        <dt id="dt_toDay">2021-07-23</dt>
+                                        <dd id="dd_toDay_count"><span class="main_img main_icon_schedule_time"></span>1</dd>
+                                    </dl>
+                                    <div id="ScheduleList">
+                                        <ul class="schedule_list">
+                                            <li><span class="main_img main_icon_listdot01"></span>[18:00 ~ 18:30] [회사] 사내 방역</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 동영상 design 20181018 -->
+                            <div style="clear:both; margin:0px 20px; overflow:hidden;">
+            
+                                <p style="padding:0px; margin:0px;">파이팅 동영상 <img id="btnVideo" onclick="btnVideo_Click();"
+                                        title="크게보기" style="vertical-align: bottom; width: 16px; height: 16px; cursor: pointer;"
+                                        src="images/fighting_plus.png"></p>
+                                <div id="divVideo" style="margin: 15px 0px 0px; padding: 0px;">
+                                    <video id="video"
+                                        src="video/{3e83d9fd-a57e-4d4c-a0a0-e874d40a08bc}_(1분45초-수어)코로나19 국민행동수칙 꼭 기억해주세요!.mp4"
+                                        style=" height:156px;" controls="">이 브라우저는 재생할 수 없습니다.</video>
+                                </div>
+                            </div>
+                        </section>
+            
+                        <div class="sectionPosition">
+                            <ul class="sectionUl">
+                                <li>
+                                    <div style="width:100%; float:left;" class="portlet_100percent">
+                                        <style>
+                                            .image_portletBox .image_portletBox_config {
+                                                position: relative;
+                                                float: right;
+                                                margin: 12px 0px 0px 4px;
+                                                padding: 0px;
+                                                cursor: pointer;
+                                            }
+            
+                                            .admin_sectionPosition .sectionUl>li .div1 .content_portletBox .image_portletBox .main_icon_config {
+                                                position: absolute;
+                                                right: 75px;
+                                                top: -2px;
+                                                width: 24px;
+                                                height: 24px;
+                                                background: url(/images/kr/adminP_configBtn.png) no-repeat left top;
+                                            }
+                                        </style>
+                                        <div class="col content_portletBox" style="border: 0px none;">
+                                            <div class="image_portletBox">
+                                                <div name="PhotoPortlet_config" class="image_portletBox_config"
+                                                    style="display:none; margin-right:19px;"
+                                                    onclick="Image_Portlet_Configuration(&#39;45d50f7f-41ee-437d-9223-5769080861ab&#39;)">
+                                                    <span class="main_img main_icon_config"></span></div>
+                                                <div id="imgportlet_45d50f7f-41ee-437d-9223-5769080861ab"
+                                                    style="height: 190px; background: url(images/portlet1.gif) #17131e no-repeat center top">
+            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div style="width:50%; float:left;" class="portlet_50percent">
+                                        <div class="content_portletBox">
+                                            <div class="floatNone">
+                                                <div class="apprgraph">
+                                                    <p class="graph_title">시간/미결재 문서</p>
+                                                    <div class="apprgraph_area">
+                                                        <dl>
+                                                            <dt>하루</dt>
+                                                            <dd>
+                                                                <div class="nomal_count">
+                                                                    <span name="ONEDGAP">0</span>
+                                                                </div>
+                                                            </dd>
+                                                        </dl>
+                                                        <dl>
+                                                            <dt>일주일</dt>
+                                                            <dd>
+                                                                <div class="nomal_count">
+                                                                    <span name="SEVENDGAP">0</span>
+                                                                </div>
+                                                            </dd>
+                                                        </dl>
+                                                        <dl>
+                                                            <dt>한달</dt>
+                                                            <dd>
+                                                                <div class="nomal_count">
+                                                                    <span name="ONEMGAP">0</span>
+                                                                </div>
+                                                            </dd>
+                                                        </dl>
+                                                        <dl>
+                                                            <dt>이후</dt>
+                                                            <dd>
+                                                                <div class="point_count">
+                                                                    <span name="OTHER">0</span>
+                                                                </div>
+                                                            </dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                                <div class="list_mail_appr">
+                                                    <dl class="tabpart_portletDL">
+                                                        <dd title="더보기" onclick="Approval_Portlet_more_Click()"><span
+                                                                class="main_img main_icon_more"></span></dd>
+                                                        <dt>
+                                                            <ul id="Approval_Portlet_tab_menu_list" class="tabpart_portletTitle">
+                                                                <li class="on">
+                                                                    <span id="Apprval_Portlet_doingApprovalTab"
+                                                                        onclick="Apprval_Portlet_ChangeTab(this)">미결함 <span
+                                                                            name="approval_doingCount"
+                                                                            class="point2">0</span></span>
+                                                                </li>
+                                                                <li>
+                                                                    <span id="Apprval_Portlet_draftApprovalTab"
+                                                                        onclick="Apprval_Portlet_ChangeTab(this)">진행함 <span
+                                                                            name="approval_draftCount"
+                                                                            class="point2">1</span></span>
+                                                                </li>
+                                                                <li>
+                                                                    <span id="Apprval_Portlet_rejectApprovalTab"
+                                                                        onclick="Apprval_Portlet_ChangeTab(this)">반려함 <span
+                                                                            name="approval_rejectCount"
+                                                                            class="point2">0</span></span>
+                                                                </li>
+                                                            </ul>
+                                                        </dt>
+                                                    </dl>
+                                                    <ul id="Approval_Portlet_APPRLIST" class="tabpart_portlet_list">
+                                                        <div class="nodataBox">
+                                                            <p class="icon_nodata"></p>
+                                                            <p class="text_nodata">No data.</p>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div style="width:50%; float:left;" class="portlet_50percent">
+                                        <div class="content_portletBox">
+                                            <div class="floatNone">
+                                                <div class="apprgraph mailgraph">
+                                                    <p class="graph_title">메일함 용량</p>
+                                                    <p id="Mail_Portlet_UsingMail" class="graph_txt"><span
+                                                            class="point2">12MB</span> / 2.00G</p>
+                                                    <div class="graphimg">
+                                                        <div id="Mail_Portlet_mailquatersize"
+                                                            style="width: 150px; height: 130px; display: inline-block;"><svg
+                                                                height="100%" version="1.1" width="100%"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                style="overflow: hidden; position: relative;">
+                                                                <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created
+                                                                    with Raphaël 2.1.4</desc>
+                                                                <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                                                    <filter id="inner-shadow-Mail_Portlet_mailquatersize">
+                                                                        <feoffset dx="0" dy="3"></feoffset>
+                                                                        <fegaussianblur result="offset-blur" stdDeviation="5">
+                                                                        </fegaussianblur>
+                                                                        <fecomposite operator="out" in="SourceGraphic"
+                                                                            in2="offset-blur" result="inverse"></fecomposite>
+                                                                        <feflood flood-color="black" flood-opacity="0.2"
+                                                                            result="color"></feflood>
+                                                                        <fecomposite operator="in" in="color" in2="inverse"
+                                                                            result="shadow"></fecomposite>
+                                                                        <fecomposite operator="over" in="shadow"
+                                                                            in2="SourceGraphic"></fecomposite>
+                                                                    </filter>
+                                                                </defs>
+                                                                <path fill="#ffffff" stroke="none"
+                                                                    d="M44.17142857142857,66.66666666666667L28.57142857142857,66.66666666666667A46.42857142857143,46.42857142857143,0,0,1,121.42857142857143,66.66666666666667A46.42857142857143,46.42857142857143,0,0,1,28.57142857142857,66.66666666666667L44.17142857142857,66.66666666666667A30.82857142857143,30.82857142857143,0,0,0,105.82857142857142,66.66666666666667A30.82857142857143,30.82857142857143,0,0,0,44.17142857142857,66.66666666666667Z"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                                                                    filter="url(#inner-shadow-Mail_Portlet_mailquatersize)"></path>
+                                                                <path fill="#aad60a" stroke="none"
+                                                                    d="M44.17142857142857,66.66666666666667L28.57142857142857,66.66666666666667A46.42857142857143,46.42857142857143,0,0,1,28.663044751544533,63.751392545662824L44.23226171502557,64.73092465032012A30.82857142857143,30.82857142857143,0,0,0,44.17142857142857,66.66666666666667Z"
+                                                                    transform="matrix(0,1,-1,0,141.6667,-8.3333)"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                                                                    filter="url(#inner-shadow-Mail_Portlet_mailquatersize)"></path>
+                                                                <text x="75" y="11.818181818181818" text-anchor="middle"
+                                                                    font-family="sans-serif" font-size="13px" stroke="none"
+                                                                    fill="#999999"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 13px; font-weight: bold; fill-opacity: 1;"
+                                                                    font-weight="bold" fill-opacity="1">
+                                                                    <tspan dy="0"
+                                                                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                                                    </tspan>
+                                                                </text><text x="75" y="70.27027027027027" text-anchor="middle"
+                                                                    font-family="Arial" font-size="24px" stroke="none"
+                                                                    fill="#010101"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 24px; font-weight: bold; fill-opacity: 1;"
+                                                                    font-weight="bold" fill-opacity="1">
+                                                                    <tspan dy="0"
+                                                                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1
+                                                                    </tspan>
+                                                                </text><text x="75" y="80.27027027027027" text-anchor="middle"
+                                                                    font-family="Arial" font-size="10px" stroke="none"
+                                                                    fill="#808080"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 10px; font-weight: normal; fill-opacity: 1;"
+                                                                    font-weight="normal" fill-opacity="1">
+                                                                    <tspan dy="0"
+                                                                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                                                        Percent(%)</tspan>
+                                                                </text><text x="30.8" y="80.27027027027027" text-anchor="middle"
+                                                                    font-family="Arial" font-size="10px" stroke="none"
+                                                                    fill="#808080"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 10px; font-weight: normal; fill-opacity: 0;"
+                                                                    font-weight="normal" fill-opacity="0">
+                                                                    <tspan dy="0"
+                                                                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0
+                                                                    </tspan>
+                                                                </text><text x="119.2" y="80.27027027027027" text-anchor="middle"
+                                                                    font-family="Arial" font-size="10px" stroke="none"
+                                                                    fill="#808080"
+                                                                    style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 10px; font-weight: normal; fill-opacity: 0;"
+                                                                    font-weight="normal" fill-opacity="0">
+                                                                    <tspan dy="0"
+                                                                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">100
+                                                                    </tspan>
+                                                                </text>
+                                                            </svg></div>
+                                                    </div>
+                                                </div>
+                                                <div class="list_mail_appr">
+                                                    <dl class="tabpart_portletDL">
+                                                        <dd title="더보기" onclick="Mail_Portlet_more_Click()"><span
+                                                                class="main_img main_icon_more"></span></dd>
+                                                        <dt>
+                                                            <ul id="Mail_Portlet_tab_menu_list" class="tabpart_portletTitle">
+                                                                <li class="on">
+                                                                    <span id="Mail_Portlet_totalMailTab"
+                                                                        onclick="Mail_Portlet_ChangeTab(this)">받은 메일 <span
+                                                                            name="mail_totalCount" class="point2"
+                                                                            style="display:none;">4</span></span>
+                                                                </li>
+                                                                <li>
+                                                                    <span id="Mail_Portlet_unreadMailTab"
+                                                                        onclick="Mail_Portlet_ChangeTab(this)">읽지않은메일 <span
+                                                                            name="mail_unreadCount" class="point2">0</span></span>
+                                                                </li>
+                                                            </ul>
+                                                        </dt>
+                                                    </dl>
+                                                    <ul id="Mail_Portlet_MAILLIST" class="tabpart_portlet_list">
+                                                        <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                                class="floatRight writedate">2021-06-11</span><span
+                                                                class="floatRight writername">사원일</span><span
+                                                                class="floatNone">안녕하세요 최종 공개일정입니다</span></li>
+                                                        <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                                class="floatRight writedate">2021-06-04</span><span
+                                                                class="floatRight writername">최지후</span><span class="floatNone">휴먼계정
+                                                                알림 메일</span></li>
+                                                        <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                                class="floatRight writedate">2021-06-04</span><span
+                                                                class="floatRight writername">최지후</span><span class="floatNone">회신:
+                                                                xxx</span></li>
+                                                        <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                                class="floatRight writedate">2021-06-03</span><span
+                                                                class="floatRight writername">최지후</span><span
+                                                                class="floatNone">xxx</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div style="width:50%; float:left;" class="portlet_50percent">
+                                        <div class="col content_portletBox">
+                                            <dl class="tabpart_portletDL noUnderline">
+                                                <dd title="더보기" onclick="BoardPhoto_Portlet_more_Click()"><span
+                                                        class="main_img main_icon_more"></span></dd>
+                                                <dd name="portlet_setting_button"
+                                                    onclick="Board_Portlet_Configuration(&#39;PHOTO&#39;, &#39;&#39;, &#39;BoardPhoto_Portlet&#39;)"
+                                                    title="설정"><span class="main_img main_icon_config"></span></dd>
+                                                <dt>
+                                                    <p>포토게시판</p>
+                                                </dt>
+                                            </dl>
+                                            <div class="photo_boardBox">
+                                                <div class="photo_boardList">
+                                                    <ul id="BoardPhoto_Portlet_List" class="photo_boardListUL">
+                                                        <li><span class="photo_board_liBox"><img
+                                                                    onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{e01832f2-efa2-5bf2-3eb0-73c2ec9ff298}&#39;, &#39;N&#39;)"
+                                                                    title="‘성우공동모금’, 백혈병 환우 돕기 후원금 전달 "
+                                                                    src="images/photo_04.png"><span
+                                                                    class="photo_imgText">‘성우공동모금’, 백혈병 환우 돕기 후원금 전달 </span></span>
+                                                        </li>
+                                                        <li><span class="photo_board_liBox"><img
+                                                                    onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{416035be-a1f4-ca42-2a17-15aa5b9655c6}&#39;, &#39;N&#39;)"
+                                                                    title="㈜성우하이텍, “2020년 겨울愛(애) 희망饌(찬) 김장나누기” 행사 "
+                                                                    src="images/photo_03.png"><span
+                                                                    class="photo_imgText">㈜성우하이텍, “2020년 겨울愛(애) 희망饌(찬) 김장나누기” 행사
+                                                                </span></span></li>
+                                                        <li><span class="photo_board_liBox"><img
+                                                                    onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{9d34d9f6-6fa7-b6dc-c0c6-0a2ac5c2940d}&#39;, &#39;N&#39;)"
+                                                                    title="성우하이텍과 함께하는 2020 국제신문 Virtual Race 개최 "
+                                                                    src="images/photo_02.png"><span
+                                                                    class="photo_imgText">성우하이텍과 함께하는 2020 국제신문 Virtual Race 개최
+                                                                </span></span></li>
+                                                        <li><span class="photo_board_liBox"><img
+                                                                    onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{ae4e4031-f522-6e4a-7521-bd48a04f3734}&#39;, &#39;N&#39;)"
+                                                                    title="성우하이텍과 함께하는 2020 부산바다마라톤 대회 개최 "
+                                                                    src="images/photo_01.jpg"><span
+                                                                    class="photo_imgText">성우하이텍과 함께하는 2020 부산바다마라톤 대회 개최
+                                                                </span></span></li>
+                                                        <li><span class="photo_board_liBox"><img
+                                                                    onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{5f8a1a29-dbc0-af2d-51f0-5e33b88894fc}&#39;, &#39;N&#39;)"
+                                                                    title="신한금융그룹, 디지털 전략적 투자를 위한 3,000억 원 규모 펀드 조성"
+                                                                    src="./s_{b2197e4d-f7f2-441d-b4b9-11eaac01049a}.jpg"><span
+                                                                    class="photo_imgText">신한금융그룹, 디지털 전략적 투자를 위한 3,000억 원 규모 펀드
+                                                                    조성</span></span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div style="width:50%; float:left;" class="portlet_50percent">
+                                        <div class="col content_portletBox" name="tabPortlet">
+                                            <dl class="tabpart_portletDL">
+                                                <dd title="더보기"
+                                                    onclick="Board_Portlet_more_Click(&#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;)">
+                                                    <span class="main_img main_icon_more"></span></dd>
+                                                <dd name="portlet_setting_button"
+                                                    onclick="Board_Portlet_Configuration(&#39;GENERAL&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;, &#39;false&#39;)"
+                                                    title="설정" style=""><span class="main_img main_icon_config"></span></dd>
+                                                <dd name="tabPortlet_MOVEICON" style="">
+                                                    <span class="main_img main_icon_tabprev"
+                                                        onclick="tabLeft(&#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;)"
+                                                        title="왼쪽"></span><span class="main_img main_icon_tabnext"
+                                                        onclick="tabRight(&#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;)"
+                                                        title="오른쪽"></span>
+                                                </dd>
+                                                <dt id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab">
+                                                    <ul id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_UL" name="tabPortlet_UL"
+                                                        class="tabpart_portletTitle" style="width: 357px;" _totaltabmenuwidth="354">
+                                                        <li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_0" class="on"
+                                                            _menuwidth="68"><span name="boardG_span"
+                                                                onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"
+                                                                boardid="{f6f9a991-fe62-c511-4629-f6b1cf11b473};"
+                                                                portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527"
+                                                                title="경조사">경조사<span class="point2"
+                                                                    name="boardG_span_span"></span></span></li>
+                                                        <li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_1" _menuwidth="100">
+                                                            <span name="boardG_span"
+                                                                onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"
+                                                                boardid="{6d9afbd5-9218-9f54-f899-d4d1d60f1e8b};"
+                                                                portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527"
+                                                                title="일반게시판">일반게시판<span class="point2"
+                                                                    name="boardG_span_span"></span></span></li>
+                                                        <li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_2" _menuwidth="84">
+                                                            <span name="boardG_span"
+                                                                onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"
+                                                                boardid="{3ced2ce7-41fa-da26-1f42-d6e68e2d9ca6};"
+                                                                portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527"
+                                                                title="전사공지">전사공지<span class="point2"
+                                                                    name="boardG_span_span"></span></span></li>
+                                                        <li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_3" _menuwidth="102">
+                                                            <span name="boardG_span"
+                                                                onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"
+                                                                boardid="{5d920f17-11f1-2e7c-0e23-91231e1b55f5};"
+                                                                portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527"
+                                                                title="URL 게시판">URL 게시판<span class="point2"
+                                                                    name="boardG_span_span"></span></span></li>
+                                                    </ul><select id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_SELECT"
+                                                        name="tabPortlet_SELECT"
+                                                        onchange="Tab_selectChange(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"
+                                                        style="display:none;">
+                                                        <option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_0"
+                                                            value="{f6f9a991-fe62-c511-4629-f6b1cf11b473};" title="경조사">
+                                                            경조사
+                                                        </option>
+                                                        <option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_1"
+                                                            value="{6d9afbd5-9218-9f54-f899-d4d1d60f1e8b};" title="일반게시판">
+                                                            일반게시판
+                                                        </option>
+                                                        <option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_2"
+                                                            value="{3ced2ce7-41fa-da26-1f42-d6e68e2d9ca6};" title="전사공지">
+                                                            전사공지
+                                                        </option>
+                                                        <option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_3"
+                                                            value="{5d920f17-11f1-2e7c-0e23-91231e1b55f5};" title="URL 게시판">
+                                                            URL 게시판
+                                                        </option>
+                                                    </select>
+                                                </dt>
+                                            </dl>
+                                            <ul id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_List" class="tabpart_portlet_list">
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{1D8C6AC8-BAE9-45D0-B795-67A94242A553}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2019-01-10</span><span
+                                                        class="floatRight writername">임우진</span><span class="floatNone">[축돌]이몽룡 과장
+                                                        돌잔치 안내 </span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{B7D1BBC2-CAAE-4247-8041-F86ED79E725B}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-11-02</span><span
+                                                        class="floatRight writername">김유진</span><span class="floatNone">♡~“장세용부장” 차남
+                                                        결혼식을 알려드립니다~♡ </span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{DF87E938-0410-4563-95D9-0F847591417E}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-11-02</span><span
+                                                        class="floatRight writername">김유진</span><span class="floatNone">※※이종무 수석부장님
+                                                        장남 결혼식 알림※※</span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{95fa1ba4-78f1-4d21-aea5-950674068711}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-10-31</span><span
+                                                        class="floatRight writername">기사원</span><span class="floatNone">[결혼] 경영관리팀
+                                                        강진우 대리 결혼합니다!!</span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{b697e585-d93a-42b4-94d0-c0e8773db01c}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-10-31</span><span
+                                                        class="floatRight writername">이진수</span><span class="floatNone">[결혼] SS개발1팀
+                                                        최찬규 사원 2018.11.17</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div style="width:25%; float:left;" class="portlet_25percent">
+                                        <div class="col content_portletBox">
+                                            <dl style="height:40px;" class="tabpart_portletDL Underline">
+                                                <dd title="더보기" onclick="Resource_Portlet_more_Click()"><span
+                                                        class="main_img main_icon_more"></span></dd>
+                                                <dd name="portlet_setting_button" onclick="Resource_Config_OnClick()" title="설정">
+                                                    <span class="main_img main_icon_config"></span></dd>
+            
+                                                <dd style="margin:9px 0px 0px 4px"><input type="text" placeholder='2021-07-23'
+                                                        class="DatePicker_class hasDatepicker" name="Datepicker_name"
+                                                        id="Sdatepicker" readonly="readonly"
+                                                        style="text-align: center; width: 100px" size="10"><img
+                                                        class="ui-datepicker-trigger" src="images/calendar-month.gif" alt="" title="">
+                                                </dd>
+            
+                                                <dt>
+                                                    <p class="notice_portletTitle">자원예약</p>
+                                                </dt>
+                                            </dl>
+                                            <div class="resource_listBox">
+                                                <ul class="resource_listBoxUL" id="Resource_Portlet_List">
+                                                    <li>
+                                                        <dl class="resource_listBoxDL">
+                                                            <dt><span class="icon_tree tree_resource_ok"></span><span
+                                                                    onclick="resourceWrite_onclick(&#39;5&#39;,&#39;S907001&#39;)"
+                                                                    id="5_S907001" class="resource_list_text">Vision Room</span>
+                                                            </dt>
+                                                            <dd><span id="5_121"
+                                                                    onclick="resourceView_onclick(&#39;5&#39;,&#39;121&#39;,&#39;2021-07-23 09:00&#39;,&#39;2021-07-23 11:00&#39;,&#39;S907001&#39;)"
+                                                                    onmouseover="selectItem(&#39;5_121&#39;,&#39;2021-07-23 09:00~2021-07-23 11:00&#39;,&#39;임원 주간 회의&#39;,&#39;이진수&#39;,&#39;영업팀&#39;,&#39;1&#39;,&#39;1&#39;)"
+                                                                    onmouseout="hideTooltip(&#39;5_121&#39;)"
+                                                                    class="resource_list_item">09:00~11:00</span></dd>
+                                                        </dl>
+                                                    </li>
+                                                    <li>
+                                                        <dl class="resource_listBoxDL">
+                                                            <dt><span class="icon_tree tree_resource_ok"></span><span
+                                                                    onclick="resourceWrite_onclick(&#39;7&#39;,&#39;S907001&#39;)"
+                                                                    id="7_S907001" class="resource_list_text">소형차</span></dt>
+                                                            <dd>
+                                                                <p onclick="resourceWrite_onclick(&#39;7&#39;,&#39;S907001&#39;)"
+                                                                    id="7_S907001" class="resource_list_add"><span
+                                                                        class="icon16 icon_resource_add"></span></p>
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                    <li>
+                                                        <dl class="resource_listBoxDL">
+                                                            <dt><span class="icon_tree tree_resource_ok"></span><span
+                                                                    onclick="resourceWrite_onclick(&#39;10&#39;,&#39;S907001&#39;)"
+                                                                    id="10_S907001" class="resource_list_text">아이폰8</span></dt>
+                                                            <dd>
+                                                                <p onclick="resourceWrite_onclick(&#39;10&#39;,&#39;S907001&#39;)"
+                                                                    id="10_S907001" class="resource_list_add"><span
+                                                                        class="icon16 icon_resource_add"></span></p>
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                    <li>
+                                                        <dl class="resource_listBoxDL">
+                                                            <dt><span class="icon_tree tree_resource_item"></span><span
+                                                                    onclick="resourceWrite_onclick(&#39;11&#39;,&#39;S907001&#39;)"
+                                                                    id="11_S907001" class="resource_list_text">Innovation
+                                                                    Room</span></dt>
+                                                            <dd>
+                                                                <p onclick="resourceWrite_onclick(&#39;11&#39;,&#39;S907001&#39;)"
+                                                                    id="11_S907001" class="resource_list_add"><span
+                                                                        class="icon16 icon_resource_add"></span></p>
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                    <li>
+                                                        <dl class="resource_listBoxDL">
+                                                            <dt><span class="icon_tree tree_resource_ok"></span><span
+                                                                    onclick="resourceWrite_onclick(&#39;24&#39;,&#39;S907001&#39;)"
+                                                                    id="24_S907001" class="resource_list_text">노트북</span></dt>
+                                                            <dd>
+                                                                <p onclick="resourceWrite_onclick(&#39;24&#39;,&#39;S907001&#39;)"
+                                                                    id="24_S907001" class="resource_list_add"><span
+                                                                        class="icon16 icon_resource_add"></span></p>
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div id="tooltip" style="position:absolute; z-index:200;visibility:hidden"></div>
+                                        </div>
+                                    </div>
+                                    <div style="width:25%; float:left;" class="portlet_25percent">
+            
+                                        <div class="col content_portletBox">
+                                            <dl class="tabpart_portletDL noUnderline">
+                                                <dd title="더보기" onclick="Poll_Portlet_more_Click()"><span
+                                                        class="main_img main_icon_more"></span></dd>
+                                                <dd title="설정" style="display:none;"><span class="main_img main_icon_config"></span>
+                                                </dd>
+                                                <dt>
+                                                    <p class="notice_portletTitle">설문</p>
+                                                </dt>
+                                            </dl>
+                                            <div class="tabpart_portlet_list content_poll">
+                                                <div class="poll_table">
+                                                    <ul class="contentlayout">
+                                                        <li class="contentlayout_left">Q.</li>
+                                                        <li class="contentlayout_none">사내식당 만족도 조사</li>
+                                                    </ul>
+                                                </div>
+                                                <dl class="poll_footer">
+                                                    <dt onclick="Poll_Detail_Click()">
+                                                        <span class="main_img main_icon_poll_arrow_left"
+                                                            title="설문참여하기"></span>설문참여하기
+                                                    </dt>
+                                                    <dd onclick="Poll_Portlet_more_Click()">
+                                                        기본설문보기<span class="main_img main_icon_poll_arrow_right"
+                                                            title="기본설문보기"></span>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width:50%; float:left;" class="portlet_50percent">
+                                        <div class="col content_portletBox">
+                                            <dl class="tabpart_portletDL noUnderline">
+                                                <dd title="더보기" onclick="Community_Portlet_more_Click()"><span
+                                                        class="main_img main_icon_more"></span></dd>
+                                                <dd title="설정" style="display:none;"><span class="main_img main_icon_config"></span>
+                                                </dd>
+                                                <dt>
+                                                    <p class="notice_portletTitle">커뮤니티</p>
+                                                </dt>
+                                            </dl>
+                                            <ul class="tabpart_portlet_list">
+                                                <div class="nodataBox">
+                                                    <p class="icon_nodata"></p>
+                                                    <p class="text_nodata">No data.</p>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div style="width:25%; float:left;" class="portlet_25percent">
+                                        <div class="col content_portletBox">
+                                            <dl class="tabpart_portletDL noUnderline">
+                                                <dd title="더보기"
+                                                    onclick="Familyevents_Portlet_more_Click(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;)">
+                                                    <span class="main_img main_icon_more"></span></dd>
+                                                <dd name="Familyevents_Portlet_config"
+                                                    onclick="Familyevents_Portlet_Configuration()" title="설정" style="display:none;">
+                                                    <span class="main_img main_icon_config"></span></dd>
+                                                <dt>
+                                                    <p class="notice_portletTitle">경조사</p>
+                                                </dt>
+                                            </dl>
+                                            <ul class="tabpart_portlet_list" id="Familyevents_List">
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{1D8C6AC8-BAE9-45D0-B795-67A94242A553}&#39;, &#39;BOARD&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2019-01-10</span><span
+                                                        class="floatNone">[축돌]이몽룡 과장 돌잔치 안내 </span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{B7D1BBC2-CAAE-4247-8041-F86ED79E725B}&#39;, &#39;BOARD&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-11-02</span><span
+                                                        class="floatNone">♡~“장세용부장” 차남 결혼식을 알려드립니다~♡ </span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{DF87E938-0410-4563-95D9-0F847591417E}&#39;, &#39;BOARD&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-11-02</span><span class="floatNone">※※이종무
+                                                        수석부장님 장남 결혼식 알림※※</span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{95fa1ba4-78f1-4d21-aea5-950674068711}&#39;, &#39;BOARD&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-10-31</span><span class="floatNone">[결혼]
+                                                        경영관리팀 강진우 대리 결혼합니다!!</span></li>
+                                                <li
+                                                    onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{b697e585-d93a-42b4-94d0-c0e8773db01c}&#39;, &#39;BOARD&#39;)">
+                                                    <span class="main_img main_icon_listdot floatLeft"></span><span
+                                                        class="floatRight writedate">2018-10-31</span><span class="floatNone">[결혼]
+                                                        SS개발1팀 최찬규 사원 2018.11.17</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+            
+                                    <div style="width:25%; float:left;" class="portlet_25percent">
+                                        <div class="col content_portletBox">
+                                            <dl class="tabpart_portletDL noUnderline">
+                                                <dd title="더보기" style="display: none;"><span class="main_img main_icon_more"></span>
+                                                </dd>
+                                                <dd title="설정" style="display: none;"><span
+                                                        class="main_img main_icon_config"></span></dd>
+                                                <dt>
+                                                    <p class="notice_portletTitle">생일자</p>
+                                                </dt>
+                                            </dl>
+                                            <div class="tabpart_portlet_list content_birthday">
+                                                <ul class="contentlayout" id="birthday_portlet_listBox" style="display: block;">
+                                                    <li class="contentlayout_left" id="main_icon_left"><span
+                                                            class="main_img main_icon_brithday_arrow_left"
+                                                            onclick="LeftBirth_Click()"></span></li>
+                                                    <li class="contentlayout_right" id="main_icon_right"><span
+                                                            class="main_img main_icon_brithday_arrow_right"
+                                                            onclick="RightBirth_Click()"></span></li>
+            
+                                                    <li class="contentlayout_none">
+                                                        <div class="layout_table">
+                                                            <ul class="layout_table_tr">
+                                                                <li class="layout_table_td" id="birthday_listBox_1"
+                                                                    style="text-align:right;">
+                                                                    <div class="birthday_listBox">
+                                                                        <p class="userImg"><img src="images/downloadAttach_01.jpg"></p>
+                                                                        <dl class="birthdayDL">
+                                                                            <dt>정채원대리</dt>
+                                                                            <dd>회계관리팀</dd>
+                                                                            <dd>2021-07-10</dd>
+                                                                        </dl>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="layout_table_td" id="birthday_listBox_2"
+                                                                    style="text-align:left;">
+                                                                    <div class="birthday_listBox">
+                                                                        <p class="userImg"><img src="images/downloadAttach_01.jpg"></p>
+                                                                        <dl class="birthdayDL">
+                                                                            <dt>윤서연과장</dt>
+                                                                            <dd>기획팀</dd>
+                                                                            <dd>2021-07-24</dd>
+                                                                        </dl>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="layout_table_td" id="birthday_listBox_3"
+                                                                    style="display: none;">
+                                                                    <div class="birthday_listBox">
+                                                                        <p class="userImg"><img src="./user_noimg.png"></p>
+                                                                        <dl class="birthdayDL">
+                                                                            <dt>정현준차장</dt>
+                                                                            <dd>교무처</dd>
+                                                                            <dd>2021-07-26</dd>
+                                                                        </dl>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tabpart_portlet_list" id="birthday_portlet_list" style="display: none;">
+                                                    <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                            class="floatRight writedatebirthday">2021-07-10</span><span
+                                                            class="floatRight writernamebirthday">회계관리팀</span><span
+                                                            class="floatNone">정채원대리</span></li>
+                                                    <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                            class="floatRight writedatebirthday">2021-07-24</span><span
+                                                            class="floatRight writernamebirthday">기획팀</span><span
+                                                            class="floatNone">윤서연과장</span></li>
+                                                    <li><span class="main_img main_icon_listdot floatLeft"></span><span
+                                                            class="floatRight writedatebirthday">2021-07-26</span><span
+                                                            class="floatRight writernamebirthday">교무처</span><span
+                                                            class="floatNone">정현준차장</span></li>
+                                                </ul>
+                                                <dl class="birthday_footer" id="birthday_footer">
+                                                    <dt onclick="Change_ViewType()" id="Change_ViewType">
+                                                        <span class="main_img main_icon_brithday_allbtn" title="전체보기"></span>전체보기
+                                                    </dt>
+                                                    <dd id="birthday_portlet_Page" style="display: block;">
+                                                        <span class="main_img main_icon_tabprev" onclick="LeftBirth_Click()"
+                                                            title="왼쪽"></span>
+                                                        <span><span class="point2" id="birth_count">1</span>/2</span>
+                                                        <span class="main_img main_icon_tabnext" onclick="RightBirth_Click()"
+                                                            title="오른쪽"></span>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width:50%; float:left;" class="portlet_50percent">
+                                        <article class="weather box_shadow">
+                                            <div class="content_portletBox">
+                                                <div class="layDiv">
+            
+                                                    <div class="weather_content">
+                                                        <div class="weather_title">
+                                                            <dl class="weatherPresent">
+                                                                <dt><img id="currentIcon" src="images/weatherIcon01.png"></dt>
+                                                                <dd><select id="cityList" class="weatherSelect">
+                                                                        <option value="1835848">서울</option>
+                                                                        <option value="1835235">대전</option>
+                                                                        <option value="1835329">대구</option>
+                                                                        <option value="1838524">부산</option>
+                                                                        <option value="1843137">강릉</option>
+                                                                        <option value="1845136">춘천</option>
+                                                                        <option value="1833747">울산</option>
+                                                                        <option value="1845457">전주</option>
+                                                                        <option value="1841811">광주</option>
+                                                                        <option value="1832157">여수</option>
+                                                                        <option value="1846266">제주도</option>
+                                                                    </select><br><span id="mainWeather">맑음</span>&nbsp;<span
+                                                                        id="currentTemp">36.2℃</span></dd>
+                                                            </dl>
+                                                            <ul class="weatherPer">
+                                                                <li class="weatherPerLi" style="display: list-item;"><span
+                                                                        class="icon iconbg01"><img
+                                                                            src="images/weatherIcon_add01.png"></span>
+                                                                    <span class="text"><span class="text" id="humidity"
+                                                                            style="margin-right:5px;font-weight: normal">습도</span><span
+                                                                            id="currentHumidity">32</span><span class="text"
+                                                                            id="humidityPer">%</span></span></li>
+                                                                <li class="weatherPerLi" style="display: list-item;"><span
+                                                                        class="icon iconbg02"><img
+                                                                            src="images/weatherIcon_add02.png"></span>
+                                                                    <span class="text"><span class="text" id="clouds"
+                                                                            style="margin-right:5px;font-weight: normal">구름</span><span
+                                                                            id="currentClouds">12</span><span class="text"
+                                                                            id="cloudsPer">%</span></span></li>
+                                                                <li class="weatherPerLi" style="display: list-item;"><span
+                                                                        class="icon iconbg03"><img
+                                                                            src="images/weatherIcon_add03.png"></span>
+                                                                    <span class="text"><span class="text" id="wind"
+                                                                            style="margin-right:5px;font-weight: normal">바람</span><span
+                                                                            id="currentWind">2.68</span><span class="text"
+                                                                            id="windPer">m/s</span></span></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="weather_mini" style="">
+                                                            <dl>
+                                                                <dt><img id="icon1" src="images/weatherIcon_mini04.png"></dt>
+                                                                <dd><span id="date1">09시</span><span id="temp1">35.2℃</span></dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt><img id="icon2" src="images/weatherIcon_mini04.png"></dt>
+                                                                <dd><span id="date2">12시</span><span id="temp2">32.6℃</span></dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt><img id="icon3" src="images/weatherIcon_mini04.png"></dt>
+                                                                <dd><span id="date3">15시</span><span id="temp3">29.8℃</span></dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt><img id="icon4" src="images/weatherIcon_mini04.png"></dt>
+                                                                <dd><span id="date4">18시</span><span id="temp4">28.5℃</span></dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt><img id="icon5" src="images/weatherIcon_mini04.png"></dt>
+                                                                <dd><span id="date5">21시</span><span id="temp5">27.3℃</span></dd>
+                                                            </dl>
+                                                        </div>
+                                                        <span
+                                                            style="font-size:10px;margin-right:6px;margin-top:3px;margin-bottom:1px;float:right;">Weather
+                                                            from OpenWeatherMap</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+
