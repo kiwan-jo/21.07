@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+@media all and (max-width:1750px){
+    /* detail_search */
+    .detail_date{display:none;}
+    .detail_search #search_date{margin-left:40%}  
+
+    /* diet */
+    .diet_menu ul li{font-size:12px;}
+
+    /* meeting_room */
+    .meeting_room .date_input,
+    .meeting_room .caln_icon{display:none;}
+    .meeting_room .room_setting_btn{margin-left:50%;}
+}
+
+@media all and (max-width:1600px){
+    /* detail_search */
+    .detail_search #search_date{margin-left:30%}
+    .detail_search .search_line2{font-size:10px;}
+    .detail_search .search_line3{font-size:10px;}
+
+    /* diet */
+    .diet_menu > li li{font-size:12px;}
+    .korean > li li{padding-left:10%;}
+    .etc > li li{padding-left:10%;}
+
+    /* meeting_room */
+    .meeting_room .room_setting_btn{margin-left:40%;}
+    .meeting_room .time_set{font-size:12px;}
+
+    /* sms */
+    .sms_title{font-size:10px;}
+    .receiver_list li{font-size:10px;}
+    .receiver_searching .respon2{display:block;}
+    .receiver_searching .non_respon{display:none;}
+    table{font-size:10px;}
+}
+
+@media all and (max-width:1470px){
+    /* detail search */
+    .search_line2 span, .search_line3 span{margin-right:4%;}
+
+    /* diet */
+    .diet_menu > li li{font-size:10px;}
+    .korean > li li{padding-left:5%;}
+    .etc > li li{padding-left:5%;}
+
+    /* sms */
+    .table .respon2{display:block;}
+    .table .non_respon2{display:none;}
+}
+
+@media all and (max-width:1400px){
+    /* detail_search */
+    .detail_search #search_date{margin-left:25%}
+    .detail_search .search_line1 .search_input{font-size:10px;}
+    .detail_search .search_line2 input{margin-left:1%;}
+    .detail_search .search_line3 input{margin-bottom:2px; margin-left:1%;}
+    #search_date{margin-bottom:0;}
+    #search_date + label{font-size:10px;}
+
+    /* meeting_room */
+    .meeting_room .room_setting_btn{margin-left:35%;}
+    .meeting_room .time_set{font-size:10px;}
+}
