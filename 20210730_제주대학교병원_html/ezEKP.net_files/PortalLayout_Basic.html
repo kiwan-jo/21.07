@@ -1,0 +1,2824 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title></title>
+    <link rel="stylesheet" href="./default.css" type="text/css"> 
+    
+    <link rel="stylesheet" href="./skin01.css" type="text/css">
+    
+    <script type="text/javascript" src="./ezPortal_kr.js.다운로드"></script>  
+    <script type="text/javascript" src="./XmlHttpRequest.js.다운로드"></script>
+    <script type="text/javascript" src="./jquery-1.9.1.min.js.다운로드"></script>
+</head>
+<body id="_MainBody" class="mainbg"><div id="Center"><div class="layout_h"><section class="section_lh" style="height: 1096px;">
+        <div class="personal">
+            <div class="info">
+                <p class="img_userphoto">
+                    <img alt="" src="./c001.jpg">
+                </p>
+                <dl class="info_txt">
+                    <dt>최지후
+                        <span title="포탈화면설정" class="main_img main_icon_layoutconfig" onclick="GoToApplication(&#39;91&#39;, &#39;&#39;, false)"></span>
+                        <span title="개인정보관리" class="main_img main_icon_userconfig" onclick="GoToApplication(&#39;90&#39;, &#39;&#39;, false)"></span>
+                    </dt>
+                    <dd>컨설팅팀  이사</dd>
+                </dl>
+            </div>
+            <ul class="personal_content">
+                <li id="MAIL" onclick="btnSumming_click(this)">
+                    <p class="title" style="text-overflow:ellipsis;" title="메일">메일</p>
+                    <span id="mailnum" class="count_num" name="mail_unreadCount">0</span></li>
+                <li id="APPR1" onclick="btnSumming_click(this)">
+                    <p class="title" style="text-overflow:ellipsis;" title="미결함">미결함</p>
+                    <span id="aprnum" class="count_num" name="approval_doingCount">0</span></li>
+                <li id="APPR4" onclick="btnSumming_click(this)">
+                    <p class="title" style="text-overflow:ellipsis;" title="수신함">수신함</p>
+                    <span id="aprnum_susin" class="count_num" name="approval_susinCount">1</span></li>
+                
+                
+                <li id="COMMUNI" onclick="btnSumming_click(this)">
+                    <p class="title" style="text-overflow:ellipsis;" title="협업">협업</p>
+                    <span class="count_num">3</span></li>
+                
+                <li id="QUES" onclick="btnSumming_click(this)" style="display:none;">
+                    <p class="title" style="text-overflow:ellipsis;" title="설문">설문</p>
+                    <span id="pollnum" class="count_num">1</span></li>
+            </ul>
+        </div>
+        <!-- 바로작성 -->
+        <div class="quick_write">
+            <ul class="quick_writeUL">
+                <li id="MAILWRITE" onclick="btnWrite_onclick(this)">
+                    <dl class="quick_writeDL">
+                        <dt><span class="main_img main_icon_mail"></span></dt>
+                        <dd>메일쓰기</dd>
+                    </dl>
+                </li>
+                <li id="SCHEDULEWRITE" onclick="btnWrite_onclick(this)">
+                    <dl class="quick_writeDL">
+                        <dt><span class="main_img main_icon_schedule"></span></dt>
+                        <dd>일정등록</dd>
+                    </dl>
+                </li>
+                <li id="APPROVALWRITE" onclick="btnWrite_onclick(this)">
+                    <dl class="quick_writeDL">
+                        <dt><span class="main_img main_icon_approval"></span></dt>
+                        <dd>기안하기</dd>
+                    </dl>
+                </li>
+                
+                
+                <li id="COLLABRATIONWRITE" onclick="btnWrite_onclick(this)">
+                    <dl class="quick_writeDL">
+                        <dt><span class="main_img main_icon_collaboration"></span></dt>
+                        <dd>협업쓰기</dd>
+                    </dl>
+                </li>
+                
+                <li id="RESOURCEWRITE" onclick="btnWrite_onclick(this)">
+                    <dl class="quick_writeDL">
+                        <dt><span class="main_img main_icon_resource"></span></dt>
+                        <dd>자원예약</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <!-- //바로작성 -->
+        <div class="schedule" style="height:auto;">
+            <div id="CalendarMini" class="calender"><table class="calendar_mini_title" id="MiniCalendar" cellpadding="0" cellspacing="0" border="0"><tr><td class="btn_prev"><span class="main_img main_icon_arrow_left" onclick="preMonth()"></span></td><td class="calendar_mini_day" style="cursor: pointer;"><span name="iYear" id="iYear">2021</span><span>.</span><span name="iMon" id="iMon">07</span></td><td class="btn_next"><span class="main_img main_icon_arrow_right" onclick="nextMonth()"></span></td></tr></table><table id="" cellpadding="0" cellspacing="0" border="0" width="100%" class="calendar_mini"><tbody><tr><th scope="col" class="sun">SUN</th><th scope="col">MON</th><th scope="col">TUE</th><th scope="col">WED</th><th scope="col">THU</th><th scope="col">FRI</th><th scope="col" class="sat">SAT</th></tr><tr id="TR_6_0"><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-27_Day" dispdate="2021-06-27">27</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-28_Day" dispdate="2021-06-28" style="text-decoration: underline;">28</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-29_Day" dispdate="2021-06-29" style="text-decoration: underline;">29</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-06-30_Day" dispdate="2021-06-30">30</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-01_Day" dispdate="2021-07-01" style="text-decoration: underline;">1</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-02_Day" dispdate="2021-07-02" style="text-decoration: underline;">2</div></td><td class=" sat"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-03_Day" dispdate="2021-07-03">3</div></td></tr><tr id="TR_6_1"><td class=" sun"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-04_Day" dispdate="2021-07-04">4</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-05_Day" dispdate="2021-07-05">5</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-06_Day" dispdate="2021-07-06" style="text-decoration: underline;">6</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-07_Day" dispdate="2021-07-07">7</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-08_Day" dispdate="2021-07-08" style="text-decoration: underline;">8</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-09_Day" dispdate="2021-07-09" style="text-decoration: underline;">9</div></td><td class=" sat"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-10_Day" dispdate="2021-07-10">10</div></td></tr><tr id="TR_6_2"><td class=" sun"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-11_Day" dispdate="2021-07-11">11</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-12_Day" dispdate="2021-07-12" style="text-decoration: underline;">12</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-13_Day" dispdate="2021-07-13" style="text-decoration: underline;">13</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-14_Day" dispdate="2021-07-14">14</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-15_Day" dispdate="2021-07-15" style="text-decoration: underline;">15</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-16_Day" dispdate="2021-07-16" style="text-decoration: underline;">16</div></td><td class=" sat"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-17_Day" dispdate="2021-07-17">17</div></td></tr><tr id="TR_6_3"><td class=" sun"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-18_Day" dispdate="2021-07-18">18</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-19_Day" dispdate="2021-07-19">19</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-20_Day" dispdate="2021-07-20" style="text-decoration: underline;">20</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-21_Day" dispdate="2021-07-21">21</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-22_Day" dispdate="2021-07-22" style="text-decoration: underline;">22</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-23_Day" dispdate="2021-07-23" style="text-decoration: underline;">23</div></td><td class=" sat"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-24_Day" dispdate="2021-07-24">24</div></td></tr><tr id="TR_6_4"><td class=" sun"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-25_Day" dispdate="2021-07-25">25</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-26_Day" dispdate="2021-07-26" style="text-decoration: underline;">26</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-27_Day" dispdate="2021-07-27" style="text-decoration: underline;">27</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-28_Day" dispdate="2021-07-28">28</div></td><td class="today"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-29_Day" dispdate="2021-07-29" style="text-decoration: underline;">29</div></td><td class=""><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-30_Day" dispdate="2021-07-30" style="text-decoration: underline;">30</div></td><td class=" sat"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-07-31_Day" dispdate="2021-07-31">31</div></td></tr><tr id="TR_6_5"><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-01_Day" dispdate="2021-08-01">1</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-02_Day" dispdate="2021-08-02">2</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-03_Day" dispdate="2021-08-03" style="text-decoration: underline;">3</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-04_Day" dispdate="2021-08-04">4</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-05_Day" dispdate="2021-08-05" style="text-decoration: underline;">5</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-06_Day" dispdate="2021-08-06" style="text-decoration: underline;">6</div></td><td class=" gray"><div onclick="DayOnMouseClick(this);" id="TDMINI_2021-08-07_Day" dispdate="2021-08-07">7</div></td></tr></tbody></table></div>
+              <div class="list">
+                <div class="schedule_tab_select">
+                    <select id="scheduleChangeSelect" onchange="scheduleChangeTab(this)">
+                        <option value="ALL" selected="">모든일정</option>
+                        <option value="P">개인일정</option>
+                        <option value="G">그룹일정</option>
+                        <option value="D">부서일정</option>
+                        
+                            <option value="B">사업장일정</option>
+                        
+                        <option value="C">회사일정</option>
+                        <option value="E">임원일정</option>
+                        
+                        
+                        <option value="COLLABORATION" data-title="협업">협업일정</option>
+                        
+                    </select>
+                </div>
+                <dl class="schedule_time_count">
+                    <dt id="dt_toDay">2021-07-29</dt>
+                    <dd id="dd_toDay_count"><span class="main_img main_icon_schedule_time"></span>1</dd>
+                </dl>
+                <div id="ScheduleList"><ul class="schedule_list"><li><span class="main_img main_icon_listdot01"></span>[14:00 ~ 15:00] [임원] [이진수] 기타 회계/자금 관련 업무 보고</li></ul></div>
+            </div>
+        </div>     
+        <!-- 동영상 design 20181018 -->
+        <div style="clear:both; margin:0px 20px; overflow:hidden;">
+        
+            <p style="padding:0px; margin:0px;">파이팅 동영상 <img id="btnVideo" onclick="btnVideo_Click();" title="크게보기" style="vertical-align: bottom; width: 16px; height: 16px; cursor: pointer;" src="./fighting_plus.png"></p>
+            <div id="divVideo" style="margin: 15px 0px 0px; padding: 0px;">
+                <video id="video" src="/Upload_BoardSTD/{5fed0416-0f03-710e-0383-f2512e9de655}/UploadFile/{3e83d9fd-a57e-4d4c-a0a0-e874d40a08bc}_(1분45초-수어)코로나19 국민행동수칙 꼭 기억해주세요!.mp4" style=" height:156px;" controls="">이 브라우저는 재생할 수 없습니다.</video>
+            </div>
+        </div>
+     
+<script type="text/javascript" src="./ezschedule.js.다운로드"></script>    
+<script type="text/javascript" src="./CalendarMini_IEEIP.js.다운로드"></script>
+
+
+<script type="text/javascript" src="./moment.js.다운로드"></script>
+<script type="text/javascript" src="./Groupwareapi.js.다운로드"></script>
+
+<script type="text/javascript">
+    var xmlhttp_getScheduleList_total = createXMLHttpRequest();
+    var pMode = "ALL";
+    var selDate = "";
+    var date = "";
+    var collaborationSchView = "Y"; // 협업 일정 추가 여부 (Y:협업 일정 가져옴)
+    
+    
+    var WorkspaceUrl = "";
+    var feedListCount = 10;
+    var g_bRayful = false;
+    var g_bGroupwareUIType = true; // 그룹웨어 UI 타입 => true: UIUX, false: Normal
+    var g_bVisible = true; // 문서탭 선택 시 원문에 포함된 첨부파일 포함 여부 (false: 포함)
+    
+    var UserInfo_ApprovalG = "NO";
+    var g_UserID = "c001";
+    var BoardID = "{5fed0416-0f03-710e-0383-f2512e9de655}";
+
+    getApprovalCont();
+    getApprovalCont_Susin();
+
+    function getApprovalCont() {
+            var xmlpara = createXmlDom();
+            var objNode;
+            createNodeInsert(xmlpara, objNode, "PARAMETER");
+            createNodeAndInsertText(xmlpara, objNode, "FLAG", "1");
+
+            xmlhttp_getApprovalCont = null;
+            xmlhttp_getApprovalCont = createXMLHttpRequest();
+            xmlhttp_getApprovalCont.open("POST", "/myoffice/ezApproval/WebPartFolder/getwebpartcount.aspx", true);
+            xmlhttp_getApprovalCont.onreadystatechange = getApprovalCont_after;
+            xmlhttp_getApprovalCont.send(xmlpara);
+    }
+
+    function getApprovalCont_after() {
+        if (xmlhttp_getApprovalCont == null || xmlhttp_getApprovalCont.readyState != 4) return;
+        try {
+            var xmldom = createXmlDom();
+            xmldom = loadXMLString(xmlhttp_getApprovalCont.responseText);
+
+            document.getElementById("aprnum").innerHTML = getNodeText(xmldom.getElementsByTagName("RESULT").item(0));
+        } catch (e) { }
+    }
+
+    function getApprovalCont_Susin() {
+            var xmlpara = createXmlDom();
+            var objNode;
+            createNodeInsert(xmlpara, objNode, "PARAMETER");
+            createNodeAndInsertText(xmlpara, objNode, "FLAG", "4");
+
+            xmlhttp_getScheduleList_susin = null;
+            xmlhttp_getScheduleList_susin = createXMLHttpRequest();
+            xmlhttp_getScheduleList_susin.open("POST", "/myoffice/ezApproval/WebPartFolder/getWebPartCount.aspx", true);
+            xmlhttp_getScheduleList_susin.onreadystatechange = getApprovalCont_Susin_after;
+            xmlhttp_getScheduleList_susin.send(xmlpara);
+    }
+
+    function getApprovalCont_Susin_after() {
+        if (xmlhttp_getScheduleList_susin == null || xmlhttp_getScheduleList_susin.readyState != 4) return;
+        try {
+            var xmldom = createXmlDom();
+            xmldom = loadXMLString(xmlhttp_getScheduleList_susin.responseText);
+
+            document.getElementById("aprnum_susin").innerHTML = getNodeText(xmldom.getElementsByTagName("RESULT").item(0));
+        } catch (e) { }
+    }
+
+    function calSelect() {
+        try {
+            var curDate = sDate.getFullYear() + "-" + leadingZeros(sDate.getMonth() + 1, 2) + "-" + leadingZeros(sDate.getDate(), 2);
+            var curTitle = "";
+            if (typeof parent.document.getElementsByClassName("icon_menu top_pims")[0] != "undefined")
+                curTitle = parent.document.getElementsByClassName("icon_menu top_pims")[0].getAttribute("title");
+            else // 메인 메뉴 일정관리 사용하지 않음
+                return;
+            parent.SingleNavSelect(curTitle, "/myoffice/ezSchedule/index_schedule.aspx?maincal=" + curDate, "");
+        }
+        catch (e) { }
+    }
+
+    function getScheduleList(date, pGubun) {
+        selDate = date;
+        if (date == "") {
+            var toDate = new Date();
+            document.getElementById("dt_toDay").innerText = toDate.getFullYear() + "-" + leadingZeros(parseInt(toDate.getMonth() + 1), 2) + "-" + leadingZeros(toDate.getDate(), 2);
+        }
+        else {
+            document.getElementById("dt_toDay").innerText = date;
+        }
+
+        // 협업 일정을 제외한 그룹웨어 일정 데이터 호출
+        if (pGubun != "COLLABORATION") {
+            var xmlpara = createXmlDom();
+            var objNode;
+            createNodeInsert(xmlpara, objNode, "PARAMETER");
+            createNodeAndInsertText(xmlpara, objNode, "pSelectDate", date);
+            createNodeAndInsertText(xmlpara, objNode, "MODE", pGubun);
+            xmlhttp_getScheduleList_total = null;
+            xmlhttp_getScheduleList_total = createXMLHttpRequest();
+            xmlhttp_getScheduleList_total.open("POST", "/myoffice/ezSchedule/schedule_newwebpartlist.aspx", true);
+            xmlhttp_getScheduleList_total.onreadystatechange = getScheduleList_after;
+            xmlhttp_getScheduleList_total.send(xmlpara);
+        }
+        else {
+            if (typeof (ScheduleData) === "function" && collaborationSchView == "Y") {
+                document.getElementById("ScheduleList").innerHTML = "";
+                document.getElementById("dd_toDay_count").innerHTML = "";
+                ScheduleData('ScheduleList', date);
+            }
+        }
+    }
+
+    function getScheduleList_after(date) {
+        if (xmlhttp_getScheduleList_total == null || xmlhttp_getScheduleList_total.readyState != 4) return;
+        try {
+            var xmldom = createXmlDom();
+            xmldom = loadXMLString(xmlhttp_getScheduleList_total.responseText);
+
+            document.getElementById("ScheduleList").innerHTML = "";
+            document.getElementById("dd_toDay_count").innerHTML = "";
+            var Schedule_UL = document.createElement("ul");
+            Schedule_UL.className = "schedule_list";
+
+            if (xmldom.getElementsByTagName("ROW").length > 0) {
+                for (var i = 0; i < xmldom.getElementsByTagName("ROW").length; i++) {
+                    var SCHEDULEID = getNodeText(xmldom.getElementsByTagName("SCHEDULEID").item(i));
+                    var SCHEDULETYPE = getNodeText(xmldom.getElementsByTagName("SCHEDULETYPE").item(i));
+                    var DATETYPE = getNodeText(xmldom.getElementsByTagName("DATETYPE").item(i));
+                    var REPEATCOUNT = getNodeText(xmldom.getElementsByTagName("REPEATCOUNT").item(i));
+                    var STARTDATE = getNodeText(xmldom.getElementsByTagName("STARTDATE").item(i));
+                    var ENDDATE = getNodeText(xmldom.getElementsByTagName("ENDDATE").item(i));
+                    var TITLE = getNodeText(xmldom.getElementsByTagName("TITLE").item(i));
+                    var startdate = new Date(STARTDATE.split(' ')[0].split('-')[0], STARTDATE.split(' ')[0].split('-')[1], STARTDATE.split(' ')[0].split('-')[2]);
+                    var enddate = new Date(ENDDATE.split(' ')[0].split('-')[0], ENDDATE.split(' ')[0].split('-')[1], ENDDATE.split(' ')[0].split('-')[2]);
+                    var selDateType = new Date(selDate.substring(0, 4), selDate.substring(5, 7), selDate.substring(8, 10));
+
+                    var Schedule_LI = document.createElement("li");
+                    var Schedule_LI_ICON = document.createElement("span");
+                    Schedule_LI_ICON.className = "main_img main_icon_listdot01";
+                    Schedule_LI.appendChild(Schedule_LI_ICON);
+                    var Schedule_TITLE = document.createTextNode(TITLE);
+                    Schedule_LI.appendChild(Schedule_TITLE);
+                    Schedule_LI.onclick = new Function("open_schedule('" + SCHEDULEID + "', '" + SCHEDULETYPE + "', '" + DATETYPE + "', '" + REPEATCOUNT + "', '" + STARTDATE + "')");
+                    Schedule_UL.appendChild(Schedule_LI);
+                }
+                document.getElementById("ScheduleList").appendChild(Schedule_UL);
+                document.getElementById("dd_toDay_count").innerHTML = "<span class=\"main_img main_icon_schedule_time\"></span>" + xmldom.getElementsByTagName("ROW").length;
+
+                if (pMode == "ALL") { // 모든 일정에 협업 일정 추가
+                    if (typeof (ScheduleData) === "function" && collaborationSchView == "Y") {
+                        ScheduleData('ScheduleList', selDate);
+                    }
+                }
+            }
+            else {
+                // 협업 일정
+                if (pMode == "ALL") {
+                    if (typeof (ScheduleData) === "function" && collaborationSchView == "Y") {
+                        document.getElementById("ScheduleList").innerHTML = "";
+                        document.getElementById("dd_toDay_count").innerHTML = "";
+                        ScheduleData('ScheduleList', selDate);
+                    }
+                    else {
+                        Append_NoData("ScheduleList");
+                    }
+                }
+                else {
+                    Append_NoData("ScheduleList");
+                }
+            }
+        }
+        catch (e) {
+        }
+    }
+
+    function scheduleChangeTab(obj) {
+        pMode = obj.options[obj.selectedIndex].value;
+        getScheduleList(selDate, pMode);
+    }
+
+    function open_schedule(scheduleid, scheduletype, datetype, repeatcount, date) {
+        date = date.substr(0, 10);
+        var url = "/myoffice/ezSchedule/schedule_read.aspx" + "?id=" + encodeURIComponent(scheduleid) + "&type=" + scheduletype + "&datetype=" + datetype + "&repeatcount=" + repeatcount + "&date=" + date + "&pattern=0&open=PORTLET";
+        DivPopUpShow_function(1000, 800, url);
+    }
+
+    function btnSumming_click(obj) {
+        var type = "";
+        switch (obj.id) {
+            case "MAIL":
+                if (g_UserID.toLowerCase().indexOf("cloud01") > -1 || g_UserID.toLowerCase().indexOf("cloud02") > -1)
+                    type = "12"; // owa
+                else
+                    type = "10"; // 받은편지함
+                break;
+            case "APPR1":
+                type = "21"; // 미결함
+                break;
+            case "APPR4":
+                type = "24"; // 부서수신함
+                break;
+            case "COMMUNI":
+                type = "80"; // 협업
+                break;
+            case "QUES":
+                type = "41"; // 전자설문
+                break;
+        }
+        GoToApplication(type, "", false);
+    }
+
+    var mail_write_dialogArguments = new Array();
+    var getFormCont_dialogArguments = new Array();
+    var getformcont_dialogArguments = new Array();
+    var schedule_add_select_dialogArguments = new Array();
+    function btnWrite_onclick(obj) {
+        var URL = "";
+        var WIDTH = 1000;
+        var HEIGHT = 800;
+        switch (obj.id) {
+            case "MAILWRITE":
+                mail_write_dialogArguments[0] = "";
+                mail_write_dialogArguments[1] = portlet_complete;
+                URL = "/myoffice/ezEmail/mail_write.aspx?cmd=NEW&open=PORTLET";
+                break;
+            case "APPROVALWRITE":
+                WIDTH = 713;
+                HEIGHT = 585;
+                var parameter = new Array();
+                parameter[0] = "S230000";
+                
+                if (UserInfo_ApprovalG == "YES") {
+                    parameter[1] = "000";
+                    getformcont_dialogArguments[0] = parameter;
+                    getformcont_dialogArguments[1] = openForm_Complete;
+                    URL = "/myoffice/ezApprovalG/formContainer/getformcont.aspx?open=PORTLET";
+                } else {
+                    parameter[1] = "A01000";
+                    getFormCont_dialogArguments[0] = parameter;
+                    getFormCont_dialogArguments[1] = openForm_Complete;
+                    URL = "/myoffice/ezApproval/formContainer/getFormCont.aspx?open=PORTLET";
+                }
+                break;
+            case "SCHEDULEWRITE":
+                URL = "/myoffice/ezSchedule/schedule_write.aspx?defaultid=0&open=PORTLET";
+                break;
+            case "RESOURCEWRITE":
+                WIDTH = 880;
+                HEIGHT = 510;
+                schedule_add_select_dialogArguments[0] = "";
+                schedule_add_select_dialogArguments[1] = resourceWrite_onclick_complete;
+                URL = "/myoffice/ezResource/ResSch/Schedule_Add_Select.aspx";
+                break;
+            case "COLLABRATIONWRITE":
+                GoToApplication("80");
+                return;
+                break;
+        }
+        DivPopUpShow_function(WIDTH, HEIGHT, URL);
+    }
+
+    function openForm_Complete(Rtnval) {
+        try {
+            if (Rtnval) {
+                formURL = Rtnval[0];
+                formDocType = Rtnval[1];
+                formID = Rtnval[2];
+                reFormFlag = Rtnval[4];
+                
+                if (formURL != "cancel") {
+                    if (UserInfo_ApprovalG == "YES") {
+                        openDraftUI_G("DRAFT", "");
+                        DivPopUpHidden();
+                    }
+                    else {
+                        DivPopUpHidden();
+                        openDraftUI("DRAFT", "", "");
+                    }
+                }
+		else
+		{
+                	DivPopUpHidden();
+		}
+            } else {
+                DivPopUpHidden();
+            }
+        } catch (e) {
+            Alert_Message("openForm_Complete : " + e.description, null, "");
+        }
+    }
+
+    function openDraftUI(pDraftFlag, pCurSelRow, type) {
+        if (typeof (pListTypeValue) == "undefined")
+            var pListTypeValue = "1";
+
+        var pArgument = new Array();
+
+        pArgument[0] = "c001";
+        pArgument[1] = formURL;
+        pArgument[2] = pDraftFlag;
+        pArgument[3] = formDocType;
+        //pArgument[8] = "";
+        //pArgument[9] = "N";
+        pArgument[8] = formID;
+        pArgument[9] = reFormFlag;
+
+        pArgument[4] = "0"
+        pArgument[5] = ""
+        pArgument[6] = ""
+        pArgument[7] = "";
+
+        var openLocation = "";
+        if (formURL.substr(formURL.length - 3, formURL.length).toLowerCase() == "hwp") {
+            Alert_Message(strLang1103, null, "");
+            return;
+        }
+        else if (pArgument[9] == "Y") {
+            openLocation = "/myoffice/ezApproval/DraftUI/draftui_reform.aspx";
+        }
+        else {
+            openLocation = "/myoffice/ezApproval/DraftUI/DraftUI.aspx";
+        }
+
+        pListTypeValue = "";
+        pDocID = "";
+
+        openLocation = openLocation + "?formID=" + escape(pArgument[8]) + "&formURL=" + escape(pArgument[1]) + "&DraftFlag=" + escape(pArgument[2]) + "&formDocType=" + escape(pArgument[3]);
+        openLocation = openLocation + "&susinSN=" + escape(pArgument[4]) + "&DocState=" + escape(pArgument[5]) + "&ListType=" + escape(pListTypeValue) + "&AprState=" + escape(pArgument[6]);
+        openLocation = openLocation + "&isTmpDoc=" + escape(pArgument[7]) + "&BeforeDocID=" + pDocID;
+
+        DivPopUpShow_function(1080, 950, openLocation);
+    }
+    
+    // 20180607 강원대학병원 :: 결재G버전 바로쓰기(기안) 함수 추가
+    //var gPopupObj;
+    function openDraftUI_G(pDraftFlag, pCurSelRow) {
+        var pSystemID = "";
+        if (pDraftFlag.toUpperCase() == "REDRAFT") {
+            if (pCurSelRow) {
+                var ret = CheckAprLineInfo(pCurSelRow);
+                if (ret != "OK") {
+                    var pAlertContent = strLang863 + "<br>" +
+                        strLang864 + ret + strLang865;
+                    Alert_Message(pAlertContent, null, "");
+                    return;
+                }
+
+                //2017-03-08 건국대학교 :: 폼정보 없으면 넣어주기.
+                if (formDocType == "") {
+                    formDocType = GetAttribute(pCurSelRow, "DATA15");
+                }
+            }
+        }
+        if (typeof (pListTypeValue) == "undefined")
+            var pListTypeValue = "1";
+
+        var pArgument = new Array();
+        pArgument[0] = "gisa1";
+        pArgument[1] = formURL;
+        pArgument[2] = pDraftFlag;
+        pArgument[3] = formDocType;
+        pArgument[8] = formID;
+        pArgument[9] = reFormFlag;
+
+        var openLocation = "";
+        if (pCurSelRow) {
+            if (pListTypeValue != "5") {
+                pArgument[4] = GetAttribute(pCurSelRow, "DATA9");
+                pArgument[5] = GetAttribute(pCurSelRow, "DATA12");
+                pArgument[6] = GetAttribute(pCurSelRow, "DATA10");
+                pArgument[7] = GetAttribute(pCurSelRow, "DATA1");
+            }
+            else {
+                pArgument[4] = "0";
+                pArgument[5] = "";
+                pArgument[6] = "";
+                pArgument[7] = newDocID;
+            }
+        }
+        else {
+            pArgument[4] = "0";
+            pArgument[5] = "";
+            pArgument[6] = "";
+            pArgument[7] = "";
+        }
+
+        if (formURL.substr(formURL.length - 3, formURL.length).toLowerCase() == "mht" || formExt == "MHT") {
+            openLocation = "/myoffice/ezApprovalG/DraftUI/draftui.aspx?formURL=";
+            openLocation = openLocation + escape(pArgument[1]) + "&DraftFlag=" + escape(pArgument[2]) + "&formDocType=" + escape(pArgument[3]);
+            openLocation = openLocation + "&susinSN=" + escape(pArgument[4]) + "&DocState=" + escape(pArgument[5]) + "&ListType=" + escape(pListTypeValue) + "&AprState=" + escape(pArgument[6]);
+            openLocation = openLocation + "&isTmpDoc=" + escape(pArgument[7]) + "&SystemID=" + escape(pSystemID);
+        }
+        else {
+            openLocation = "/myoffice/ezApprovalG/ezViewHWP/ezDraftUI_HWP.aspx?formURL=" + escape(pArgument[1]) + "&DraftFlag=" + escape(pArgument[2]) + "&formDocType=" + escape(pArgument[3]);
+            openLocation = openLocation + "&susinSN=" + escape(pArgument[4]) + "&DocState=" + escape(pArgument[5]) + "&ListType=" + escape(pListTypeValue) + "&AprState=" + escape(pArgument[6]);
+            openLocation = openLocation + "&isTmpDoc=" + escape(pArgument[7]);
+        }
+
+        if (reFormFlag == "Y")
+            openLocation = openLocation + "&formID=" + escape(pArgument[8]) + "&reFormFlag=" + escape(pArgument[9]);
+
+        openwindow(openLocation, "", 890, 560);
+        //try {
+        //    var heigth = window.screen.availHeight;
+        //    var width = window.screen.availWidth;
+
+        //    var left = 0;
+        //    var top = 0;
+
+        //    if (window.screen.width > 800) {
+        //        var pleftpos;
+
+        //        pleftpos = parseInt(width) - 1150;
+        //        heigth = parseInt(heigth) - 25;
+        //        width = parseInt(width) - pleftpos;
+
+        //        left = pleftpos / 2;
+        //    }
+        //    else {
+
+        //        heigth = parseInt(heigth) - 25;
+        //        width = parseInt(width) - 10;
+        //    }
+        //    //2017-03-13 건국대학교 :: "var gPopupObj =" 추가
+        //    gPopupObj = window.open(openLocation, "", "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,height=" + heigth + ",width=" + width + ",top=" + top + ",left = " + left);
+        //}
+        //catch (e) {
+        //    Alert_Message("openwindow :: " + e.description, null, "");
+        //}
+    }
+    
+    var gPopupObj;
+    function openwindow(wfileLocation, wName, wWeigth, wHeigth) {
+        try {
+            var heigth = window.screen.availHeight;
+            var width = window.screen.availWidth;
+
+            var left = 0;
+            var top = 0;
+
+            if (window.screen.width > 800) {
+                var pleftpos;
+
+                pleftpos = parseInt(width) - 1150;
+                heigth = parseInt(heigth) - 25;
+                width = parseInt(width) - pleftpos;
+
+                left = pleftpos / 2;
+            }
+            else {
+
+                heigth = parseInt(heigth) - 25;
+                width = parseInt(width) - 10;
+            } 
+
+            //2017-03-13 건국대학교 :: "var gPopupObj =" 추가
+            gPopupObj = window.open(wfileLocation, wName, "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,height=" + heigth + "px,width=" + width + "px,top=" + top + "px,left = " + left+"px");
+ 
+        }
+        catch (e) {
+            Alert_Message("openwindow :: " + e.description, null, "");
+        }
+    }
+
+    var schedule_add_dialogArguments = new Array();
+    function resourceWrite_onclick_complete(retVal) {
+        DivPopUpHidden();
+        var SelectCompanyID = "S907001";
+        if (retVal[2] == "TOP") {
+            SelectCompanyID = retVal[2];
+        }
+        var selectIDs = "";
+        if (retVal == "close") { }
+        else if (typeof (retVal) != "undefined" && retVal.length == 3) {
+            for (var i = 0; i < retVal[0].length; i++) {
+                selectIDs += retVal[0][i] + ";";
+            }
+        } else { return }
+        schedule_add_dialogArguments[1] = portlet_complete;
+        var URL = "/Myoffice/ezResource/ResSch/Schedule_Add.aspx?cmd=add&from=schedule&selsd=&seled=&day_view=&ownerID=" + retVal[0][0] + "&selectIDs=" + selectIDs + "&open=PORTLET&COMPANYID=" + SelectCompanyID;
+        DivPopUpShow_function(750, 900, URL);
+    }
+
+    function portlet_complete(type) {
+        DivPopUpHidden();
+        switch (type) {
+            case "MAIL":
+                getMailCount();
+                if (typeof (Mail_Approval_Portlet_Mail_Portlet_OnLoad) === "function") Mail_Approval_Portlet_Mail_Portlet_OnLoad();
+                if (typeof (Mail_Portlet_OnLoad) === "function") Mail_Portlet_OnLoad();
+                break;
+            case "APPROVAL":
+                getApprovalCount();
+                if (typeof (Mail_Approval_Portlet_Approval_Portlet_Onload) === "function") Mail_Approval_Portlet_Approval_Portlet_Onload();
+                if (typeof (Approval_Portlet_Onload) === "function") Approval_Portlet_Onload();
+                break;
+            case "SCHEDULE":
+                CalendarMiniView("CalendarMini");
+                CalendarMiniDataSource();
+                getScheduleList(selDate, pMode);
+                break;
+            case "BOARD":
+                if (typeof (MyBoardNewItem_OnLoad) === "function") MyBoardNewItem_OnLoad();
+                for (var i = 0; i < document.getElementsByName("tabPortlet_UL").length; i++) {
+                    try { document.getElementsByName("tabPortlet_UL")[i].getElementsByClassName("on")[0].childNodes[0].onclick; } catch (e) { }
+                    try { GetFavoriteCnt() } catch (e) { }
+                }
+                break;
+        }
+    }
+
+    function portlet_complete_Board(type, portletID) {
+        if (portletID == "NOTICE") {
+            if (typeof (MyBoardNewItem_OnLoad) === "function") MyBoardNewItem_OnLoad();
+            for (var i = 0; i < document.getElementsByName("tabPortlet_UL").length; i++) {
+                try { document.getElementsByName("tabPortlet_UL")[i].getElementsByClassName("on")[0].childNodes[0].onclick; } catch (e) { }
+                try { GetFavoriteCnt() } catch (e) { }
+            }
+        } else {
+            if (document.getElementById(portletID + "_Tab_UL") != null) {
+                for (var i = 0; i < document.getElementById(portletID + "_Tab_UL").children.length; i++) {
+                    if (document.getElementById(portletID + "_Tab_UL").children[i].className == "on") {
+                        if(document.getElementById(portletID + "_Tab_UL").children[i].children[0].click != null)
+                            document.getElementById(portletID + "_Tab_UL").children[i].children[0].click();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function getMailCount() {
+        var xmlhttp = createXMLHttpRequest();
+        xmlhttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetMailCount.aspx", false);
+        xmlhttp.send();
+
+        if (xmlhttp.status == 200 && xmlhttp.responseText != "") {
+            for (var i = 0; i < document.getElementsByName("mail_unreadCount").length; i++) {
+                document.getElementsByName("mail_unreadCount")[i].innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp = null;
+    }
+
+    function getApprovalCount() {
+        var xmlhttp = createXMLHttpRequest();
+        xmlhttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetApprovalCount.aspx", false);
+        xmlhttp.send();
+
+        if (xmlhttp.status == 200 && xmlhttp.responseText != "") {
+            var result = loadXMLString(xmlhttp.responseText);
+            for (var i = 0; i < document.getElementsByName("approval_doingCount").length; i++) {
+                document.getElementsByName("approval_doingCount")[i].innerHTML = getNodeText(GetElementsByTagName(result, "APPROVAL1")[0]);
+            }
+            for (var i = 0; i < document.getElementsByName("approval_susinCount").length; i++) {
+                document.getElementsByName("approval_susinCount")[i].innerHTML = getNodeText(GetElementsByTagName(result, "APPROVAL4")[0]);
+            }
+        }
+        xmlhttp = null;
+    }
+
+    CalendarMiniView("CalendarMini");
+    CalendarMiniDataSource();
+    getScheduleList(selDate, pMode);
+    if (typeof (GetWorkspaceUserActLogCount) === "function") {
+        GetWorkspaceUserActLogCount("COMMUNI");
+    }
+
+    function Boardmore_btnClick() {		
+        DirectSetTab("ezBoardSTD", "/myoffice/ezBoardSTD/main_Redirect.aspx?BoardID=" + BoardID);
+    }    
+
+    function btnVideo_Click() {
+	    //20181115 ahh 동영상 팝업 최대화
+		var pWidth = window.screen.availWidth;
+		var pHeight = window.screen.availHeight;
+		
+        GetOpenWindow("/myoffice/main/WebPartFolder/wp_FightingVideo_Popup.aspx", "nVideo", pWidth, pHeight);
+    }
+
+    function window_onload_FightingVideo() {
+        var VideoSrc = "/Upload_BoardSTD/{5fed0416-0f03-710e-0383-f2512e9de655}/UploadFile/{3e83d9fd-a57e-4d4c-a0a0-e874d40a08bc}_(1분45초-수어)코로나19 국민행동수칙 꼭 기억해주세요!.mp4";
+
+        if (VideoSrc != "") {
+            document.getElementById("divVideo").style.display = "";
+            document.getElementById("btnVideo").style.display = "";
+            $("#video").attr("src", VideoSrc);
+        }
+    }
+
+    window_onload_FightingVideo();
+</script></section><div class="sectionPosition"><ul class="sectionUl"><li><div style="width:100%; float:left;" class="portlet_100percent">
+<style>
+    .image_portletBox .image_portletBox_config 
+    { position: relative; float: right; margin: 12px 0px 0px 4px; padding: 0px; cursor: pointer; }
+    .admin_sectionPosition .sectionUl > li .div1 .content_portletBox .image_portletBox .main_icon_config 
+    { position: absolute; right: 75px; top: -2px; width:24px; height:24px; background: url(/images/kr/adminP_configBtn.png) no-repeat left top; }
+</style>
+<div class="col content_portletBox" style="border: 0px none;">
+    <div class="image_portletBox">
+        <div name="PhotoPortlet_config" class="image_portletBox_config" style="display:none; margin-right:19px;" onclick="Image_Portlet_Configuration(&#39;45d50f7f-41ee-437d-9223-5769080861ab&#39;)"><span class="main_img main_icon_config"></span></div>
+        <div id="imgportlet_45d50f7f-41ee-437d-9223-5769080861ab" style="height: 190px; background: url(/Upload_Portal/S907001/ImagePortlet/%EC%9B%90%EC%A7%84_%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C%EC%9D%B4%EB%AF%B8%EC%A7%80\(2\).JPG) #17131e no-repeat center top">
+
+</div>
+    </div>
+</div></div></li><li><div style="width:50%; float:left;" class="portlet_50percent">
+<div class="content_portletBox">
+    <div class="floatNone">
+        <div class="apprgraph">
+            <p class="graph_title">시간/미결재 문서</p>
+            <div class="apprgraph_area">
+                <dl>
+                    <dt>하루</dt>
+                    <dd>
+                        <div class="nomal_count">
+                            <span name="ONEDGAP">0</span>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>일주일</dt>
+                    <dd>
+                        <div class="nomal_count">
+                            <span name="SEVENDGAP">0</span>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>한달</dt>
+                    <dd>
+                        <div class="nomal_count">
+                            <span name="ONEMGAP">0</span>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>이후</dt>
+                    <dd>
+                        <div class="point_count">
+                            <span name="OTHER">0</span>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="list_mail_appr">
+            <dl class="tabpart_portletDL">
+                <dd title="더보기" onclick="Approval_Portlet_more_Click()"><span class="main_img main_icon_more"></span></dd>
+                <dt>
+                    <ul id="Approval_Portlet_tab_menu_list" class="tabpart_portletTitle">
+                        <li class="on">
+                            <span id="Apprval_Portlet_doingApprovalTab" onclick="Apprval_Portlet_ChangeTab(this)">미결함 <span name="approval_doingCount" class="point2">0</span></span>
+                        </li>
+                        <li>
+                            <span id="Apprval_Portlet_draftApprovalTab" onclick="Apprval_Portlet_ChangeTab(this)">진행함 <span name="approval_draftCount" class="point2">1</span></span>
+                        </li>                        
+                        <li>
+                            <span id="Apprval_Portlet_rejectApprovalTab" onclick="Apprval_Portlet_ChangeTab(this)">반려함 <span name="approval_rejectCount" class="point2">0</span></span>
+                        </li>
+                    </ul>
+                </dt>
+            </dl>
+            <ul id="Approval_Portlet_APPRLIST" class="tabpart_portlet_list"><div class="nodataBox"><p class="icon_nodata"></p><p class="text_nodata">No data.</p></div></ul>
+        </div>
+    </div>
+    
+</div>
+<script src="./ezApproval.js.다운로드" type="text/javascript"></script>
+<script type="text/javascript">
+    var Approval_Portlet_xmlhttp;
+    var Approval_Portlet_arr_userinfo = new Array();
+    Approval_Portlet_arr_userinfo[0] = "user";
+    Approval_Portlet_arr_userinfo[1] = "c001";
+    Approval_Portlet_arr_userinfo[2] = "최지후";
+    Approval_Portlet_arr_userinfo[3] = "이사";
+    Approval_Portlet_arr_userinfo[4] = "S230000";
+    Approval_Portlet_arr_userinfo[5] = "컨설팅팀";
+
+    Approval_Portlet_arr_userinfo[8] = "c001@ekp.kaoni.com";
+    var Approval_Portlet_pUserID = Approval_Portlet_arr_userinfo[1];
+    var Approval_Portlet_ApprovalListTypeValue = "1";
+    var Approval_Portlet_USE_MAXCOUNT = "";
+
+    selToggleList_Multi(document.getElementById("Approval_Portlet_tab_menu_list"));
+
+    function Approval_Portlet_Onload() {
+        var xmlpara = createXmlDom();
+        var objNode;
+        createNodeInsert(xmlpara, objNode, "PARAMETER");
+        createNodeAndInsertText(xmlpara, objNode, "pListTypeName", Approval_Portlet_ApprovalListTypeValue);
+        createNodeAndInsertText(xmlpara, objNode, "pDocTypeName", "A01000");
+        createNodeAndInsertText(xmlpara, objNode, "pUserID", Approval_Portlet_pUserID);
+        createNodeAndInsertText(xmlpara, objNode, "pUserDeptID", Approval_Portlet_arr_userinfo[4]);
+        createNodeAndInsertText(xmlpara, objNode, "pPageSize", "5");
+        createNodeAndInsertText(xmlpara, objNode, "pPageNum", "1");
+        createNodeAndInsertText(xmlpara, objNode, "companyID", "S907001");
+        createNodeAndInsertText(xmlpara, objNode, "orderCell", "");
+        createNodeAndInsertText(xmlpara, objNode, "orderOption", "");
+        createNodeAndInsertText(xmlpara, objNode, "SearchQuery", "");
+        createNodeAndInsertText(xmlpara, objNode, "SubQuery", "");
+
+        Approval_Portlet_xmlhttp = null;
+        Approval_Portlet_xmlhttp = createXMLHttpRequest();
+
+        if ("NO" == "YES")
+            Approval_Portlet_xmlhttp.open("POST", "/myoffice/ezApprovalG/aspx/getportletaprdoclist.aspx", true);
+        else
+            Approval_Portlet_xmlhttp.open("POST", "/myoffice/ezApproval/aspx/getportletaprdoclist.aspx", true);
+
+        Approval_Portlet_xmlhttp.onreadystatechange = Approval_Portlet_Onload_After;
+        Approval_Portlet_xmlhttp.send(xmlpara);
+    }
+
+    function Approval_Portlet_Onload_After() {
+        if (Approval_Portlet_xmlhttp == null || Approval_Portlet_xmlhttp.readyState != 4) return;
+        try {
+            document.getElementById("Approval_Portlet_APPRLIST").innerHTML = "";
+            var xmldom = createXmlDom();
+            xmldom = loadXMLString(Approval_Portlet_xmlhttp.responseText);
+            
+            var listHTML = "";
+
+            var doingApprovalCount, draftApprovalCount, rejectApprovalCount, ONEDGAP, SEVENDGAP, ONEMGAP, OTHER;
+
+            doingApprovalCount = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("TOTALCNT1").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("TOTALCNT1").item(0));
+            draftApprovalCount = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("TOTALCNT2").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("TOTALCNT2").item(0));
+            rejectApprovalCount = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("TOTALCNT3").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("TOTALCNT3").item(0));
+            ONEDGAP = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("ONEDGAP").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("ONEDGAP").item(0));
+            SEVENDGAP = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("SEVENDGAP").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("SEVENDGAP").item(0));
+            ONEMGAP = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("ONEMGAP").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("ONEMGAP").item(0));
+            OTHER = (Approval_Portlet_USE_MAXCOUNT == "YES" && parseInt(getNodeText(xmldom.getElementsByTagName("OTHER").item(0)) > 99)) ? "99+" : getNodeText(xmldom.getElementsByTagName("OTHER").item(0));
+
+            for (var i = 0; i < document.getElementsByName("approval_doingCount").length; i++) {
+                document.getElementsByName("approval_doingCount")[i].innerHTML = doingApprovalCount;
+            }
+            for (var i = 0; i < document.getElementsByName("approval_draftCount").length; i++) {
+                document.getElementsByName("approval_draftCount")[i].innerHTML = draftApprovalCount;
+            }
+            for (var i = 0; i < document.getElementsByName("approval_rejectCount").length; i++) {
+                document.getElementsByName("approval_rejectCount")[i].innerHTML = rejectApprovalCount;
+            }
+
+            for (var i = 0; i < document.getElementsByName("ONEDGAP").length; i++) {
+                document.getElementsByName("ONEDGAP")[i].innerHTML = ONEDGAP;
+            }
+            for (var i = 0; i < document.getElementsByName("SEVENDGAP").length; i++) {
+                document.getElementsByName("SEVENDGAP")[i].innerHTML = SEVENDGAP;
+            }
+            for (var i = 0; i < document.getElementsByName("ONEMGAP").length; i++) {
+                document.getElementsByName("ONEMGAP")[i].innerHTML = ONEMGAP;
+            }
+            for (var i = 0; i < document.getElementsByName("OTHER").length; i++) {
+                document.getElementsByName("OTHER")[i].innerHTML = OTHER;
+            }
+
+            if (xmldom.getElementsByTagName("CELL").length > 0) {
+                for (var i = 0; i < xmldom.getElementsByTagName("CELL").length; i++) {
+                    var DOCTITLE = getNodeText(xmldom.getElementsByTagName("DOCTITLE").item(i));
+                    var WRITERNAME = getNodeText(xmldom.getElementsByTagName("WRITERNAME").item(i));
+                    var STARTDATE = getNodeText(xmldom.getElementsByTagName("STARTDATE").item(i)).substr(0, 10);
+                    var DOCID = getNodeText(xmldom.getElementsByTagName("DOCID").item(i));
+                    var HREF = getNodeText(xmldom.getElementsByTagName("HREF").item(i));
+                    var APRMEMBERID = getNodeText(xmldom.getElementsByTagName("APRMEMBERID").item(i));
+                    var APRMEMBERNAME = getNodeText(xmldom.getElementsByTagName("APRMEMBERNAME").item(i));
+                    var APRMEMBERDEPTID = getNodeText(xmldom.getElementsByTagName("APRMEMBERDEPTID").item(i));
+                    var DOCSTATE = getNodeText(xmldom.getElementsByTagName("DOCSTATE").item(i));
+                    var FUNCTIONTYPE = getNodeText(xmldom.getElementsByTagName("FUNCTIONTYPE").item(i));
+                    var REFORMFLAG = getNodeText(xmldom.getElementsByTagName("REFORMFLAG").item(i));
+                    var GroupYN = getNodeText(xmldom.getElementsByTagName("GROUPYN").item(i));
+
+                    //HREF = HREF.substring(HREF.lastIndexOf("/") + 1, HREF.length);
+
+                    var APPR_PORTLET_LI = document.createElement("li");
+                    APPR_PORTLET_LI.onclick = new Function("Apprval_Portlet_open_docview('" + DOCID + "','" + HREF + "','" + APRMEMBERID + "','" + APRMEMBERNAME + "','" + APRMEMBERDEPTID + "','" + DOCSTATE + "','" + FUNCTIONTYPE + "','" + REFORMFLAG + "','" + GroupYN + "')");
+
+                    var APPR_PORTLET_SPAN_ICON = document.createElement("span");
+                    APPR_PORTLET_SPAN_ICON.className = "main_img main_icon_listdot floatLeft";
+                    APPR_PORTLET_SPAN_ICON.innerText = "";
+
+                    var APPR_PORTLET_SPAN_DATE = document.createElement("span");
+                    APPR_PORTLET_SPAN_DATE.className = "floatRight writedate";
+                    APPR_PORTLET_SPAN_DATE.innerText = STARTDATE;
+
+                    var APPR_PORTLET_SPAN_NAME = document.createElement("span");
+                    APPR_PORTLET_SPAN_NAME.className = "floatRight writername";
+                    APPR_PORTLET_SPAN_NAME.innerText = WRITERNAME;
+
+                    var APPR_PORTLET_SPAN_TXT = document.createElement("span");
+                    APPR_PORTLET_SPAN_TXT.className = "floatNone";
+                    APPR_PORTLET_SPAN_TXT.innerText = DOCTITLE;
+
+                    APPR_PORTLET_LI.appendChild(APPR_PORTLET_SPAN_ICON);
+                    APPR_PORTLET_LI.appendChild(APPR_PORTLET_SPAN_DATE);
+                    APPR_PORTLET_LI.appendChild(APPR_PORTLET_SPAN_NAME);
+                    APPR_PORTLET_LI.appendChild(APPR_PORTLET_SPAN_TXT);
+
+                    document.getElementById("Approval_Portlet_APPRLIST").appendChild(APPR_PORTLET_LI);
+                }
+            }
+            else
+                Append_NoData("Approval_Portlet_APPRLIST");
+        }
+        catch (e) {
+        }
+    }
+
+    function Apprval_Portlet_ChangeTab(obj) {
+        switch (obj.id) {
+            case "Apprval_Portlet_doingApprovalTab":
+                Approval_Portlet_ApprovalListTypeValue = "1";
+                break;
+            case "Apprval_Portlet_draftApprovalTab":
+                Approval_Portlet_ApprovalListTypeValue = "3";
+                break;
+            case "Apprval_Portlet_rejectApprovalTab":
+                Approval_Portlet_ApprovalListTypeValue = "4";
+                break;
+        }
+        Approval_Portlet_Onload();
+    }
+
+    function Approval_Portlet_more_Click() {
+        var listType = "";
+        if ("NO" == "YES") {
+            listType = "3" + Approval_Portlet_ApprovalListTypeValue;
+            GoToApplication(listType, "결재", false);
+        }
+        else {
+            Approval_Portlet_ApprovalListTypeValue = (Approval_Portlet_ApprovalListTypeValue == "4") ? "11" : Approval_Portlet_ApprovalListTypeValue;
+            listType = "2" + Approval_Portlet_ApprovalListTypeValue;
+            GoToApplication(listType, "결재", false);
+        }
+    }
+
+    function Apprval_Portlet_open_docview(pDocID, pHref, pAprMemberID, pAprMemberName, pAprMemberDeptID, pDocState, pFunctionType, reformFlag, GroupYN) {
+        var openLocation = "";
+        if ("NO" == "YES") {  //1:미결함, 3:진행함, 4:반려함
+            if (Approval_Portlet_ApprovalListTypeValue != "3") {
+                if (pFunctionType == "004" || pFunctionType == "006" || pFunctionType == "015") {
+                    if (pDocState == "012" || pDocState == "014" || pDocState == "018") {
+                        if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp")
+                            openLocation = "/myoffice/ezApprovalG/ezViewHWP/ezDeptRecevUI_HWP.aspx?DocID=";
+                        else
+                            openLocation = "/myoffice/ezApprovalG/ReceivUI/recev.aspx?DocID=";
+                        openLocation = openLocation + escape(pDocID) + "&DraftFlag=" + escape("REDRAFT");
+                    }
+                    else {
+                        var pDraftFlag = "REDRAFT";
+                        var SusinSn = (pDocState == "011") ? "1" : "0";
+                        var tempDocState = (pDocState == "011") ? "011" : "001";
+                        var AprState = (pFunctionType == "006") ? "006" : "004";
+                        if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp") {
+                            if (GroupYN == "Y")
+                                openLocation = "/myoffice/ezApprovalG/ezViewHWP/ezDraftAll_Hwp.aspx?formURL=";
+                            else
+                                openLocation = "/myoffice/ezApprovalG/ezViewHWP/ezDraftUI_HWP.aspx?formURL=";
+                           
+                        } else {
+                            if (GroupYN == "Y")
+                                openLocation = "/myoffice/ezApprovalG/DraftUIAll/draftuiAll.aspx?formURL=";
+                            else
+                                openLocation = "/myoffice/ezApprovalG/DraftUI/draftui.aspx?formURL=";
+                        }
+                        openLocation = openLocation + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=" + escape(pDocID) + "&SystemID=";
+                    }
+                }
+                else {
+                    if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp") {
+                        if (GroupYN == "Y")
+                            openLocation = "/myoffice/ezApprovalG/ezViewHWP/ApprovUIAll.aspx?DocID=";
+                        else
+                            openLocation = "/myoffice/ezApprovalG/ezViewHWP/ezAproveUI_HWP.aspx?DocID="
+                    } else {
+                        if (GroupYN == "Y")
+                            openLocation = "/myoffice/ezApprovalG/ApprovUIALL/approvuiAll.aspx?DocID=";
+                        else
+                            openLocation = "/myoffice/ezApprovalG/ApprovUI/approvui.aspx?DocID="
+                    }
+                    openLocation = openLocation + escape(pDocID) + "&uID=" + escape(pAprMemberID) + "&uName=" + escape(pAprMemberName) + "&uDeptID=" + escape(pAprMemberDeptID) + "&AllFlag=N";
+                }
+            }
+            else {
+                if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp") {
+                    if (GroupYN == "Y")
+                        openLocation = "/myoffice/ezApprovalG/ezViewHWP/aprDocViewAll.aspx?DocID=";
+                    else
+                        openLocation = "/myoffice/ezApprovalG/ezViewHWP/ezViewApr_HWP.aspx?DocID=";
+                } else {
+                    if (GroupYN == "Y") 
+                        openLocation = "/myoffice/ezApprovalG/AprDocViewAll.aspx?DocID=";
+                    else 
+                        openLocation = "/myoffice/ezApprovalG/AprDocView.aspx?DocID=";
+                }
+                openLocation = openLocation + escape(pDocID) + "&DocHref=" + escape(pHref) + "&OpinionFlag=&docState=&ListSusin=&odoc=&isOpinion=&ListType=";
+            }            
+            var width = window.screen.availWidth;            
+            var pleftpos = parseInt(width) - 1000;
+            var left = pleftpos / 2;
+                
+            window.open(openLocation, "", "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,height=1100,width=950,top=0,left = " + left);
+        }
+        else {
+            if (Approval_Portlet_ApprovalListTypeValue == "1") {
+                if (pFunctionType == strAprState6) {
+                    var pDraftFlag = "REDRAFT";
+                    var tempDocState = (pDocState == strDocState11) ? strDocState11 : strDocState1;
+                    var SusinSn = (pDocState == strDocState11) ? "1" : "0";
+                    var AprState = (pFunctionType == strAprState6) ? strAprState6 : strAprState4;
+                    if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp")
+                        openLocation = "/myoffice/ezApproval/ezViewHWP/ezDraftUI_HWP.aspx?formURL=" + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=";
+                    else {
+                        if (reformFlag == "Y") {
+                            openLocation = "/myoffice/ezApproval/DraftUI/DraftUI_reform.aspx?formURL=" + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=";
+                        } else {
+                            openLocation = "/myoffice/ezApproval/DraftUI/Draftui.aspx?formURL=" + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=";
+                        }
+                    }
+                }
+                else {
+                   // if (Approval_Portlet_arr_userinfo[4] != pAprMemberDeptID) {
+                   //     Alert_Message("기안 부서정보와 현재 부서정보가 일치하지 않습니다. 겸직정보를 변경하여 주십시오.", null, "");
+                   //     return;
+                   // }
+                    if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp")
+                        openLocation = "/myoffice/ezApproval/ezViewHWP/ezAproveUI_HWP.aspx?DocID=" + escape(pDocID) + "&uID=" + escape(pAprMemberID) + "&uName=" + escape(pAprMemberName) + "&uDeptID=" + escape(pAprMemberDeptID);
+                    else {
+                        if (reformFlag == "Y") {
+                            openLocation = "/myoffice/ezApproval/ApprovUI/ApprovUI_reform.aspx?DocID=" + escape(pDocID) + "&uID=" + escape(pAprMemberID) + "&uName=" + escape(pAprMemberName) + "&uDeptID=" + escape(pAprMemberDeptID);
+                        } else {
+                            openLocation = "/myoffice/ezApproval/ApprovUI/ApprovUI.aspx?DocID=" + escape(pDocID) + "&uID=" + escape(pAprMemberID) + "&uName=" + escape(pAprMemberName) + "&uDeptID=" + escape(pAprMemberDeptID);
+                        }
+                    }
+                }
+            }
+            else if (Approval_Portlet_ApprovalListTypeValue == "3") {
+                if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp")
+                    openLocation = "/myoffice/ezApproval/ezViewHWP/ezViewApr_HWP.aspx?DocID=" + escape(pDocID) + "&DocHref=" + escape(pHref) + "&OpinionFlag=&docState=&ListSusin=&odoc=&isOpinion=&ListType=2";
+                else
+                    openLocation = "/myoffice/ezApproval/aprDocView.aspx?DocID=" + escape(pDocID) + "&DocHref=" + escape(pHref) + "&OpinionFlag=&docState=&ListSusin=&odoc=&isOpinion=&ListType=2";
+            }
+            else if (Approval_Portlet_ApprovalListTypeValue == "4") {
+                if (Approval_Portlet_arr_userinfo[4] != pAprMemberDeptID) {
+                    Alert_Message("기안 부서정보와 현재 부서정보가 일치하지 않습니다. 겸직정보를 변경하여 주십시오.", null, "");
+                    return;
+                }
+                var pDraftFlag = "REDRAFT";
+                var tempDocState = (pDocState == strDocState11) ? strDocState11 : strDocState1;
+                var SusinSn = (pDocState == strDocState11) ? "1" : "0";
+                var AprState = (pFunctionType == strAprState6) ? strAprState6 : strAprState4;
+
+                if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp")
+                    openLocation = "/myoffice/ezApproval/ezViewHWP/ezDraftUI_HWP.aspx?formURL=" + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=";
+                else {
+                    if (reformFlag == "Y") {
+                        openLocation = "/myoffice/ezApproval/DraftUI/DraftUI_reform.aspx?formURL=" + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=";
+                    } else {
+                        openLocation = "/myoffice/ezApproval/DraftUI/Draftui.aspx?formURL=" + escape(pHref) + "&DraftFlag=" + escape(pDraftFlag) + "&formDocType=&susinSN=" + escape(SusinSn) + "&DocState=" + escape(tempDocState) + "&ListType=1&AprState=" + escape(AprState) + "&isTmpDoc=";
+                    }
+                }
+            }
+            else {
+                if (pHref.substr(pHref.length - 3, pHref.length).toLowerCase() == "hwp")
+                    openLocation = "/myoffice/ezApproval/ezViewHWP/ezViewApr_HWP.aspx?DocID=" + escape(pDocID) + "&DocHref=" + escape(pHref) + "&OpinionFlag=&docState=&ListSusin=&odoc=&isOpinion=&ListType=2";
+                else
+                    openLocation = "/myoffice/ezApproval/aprDocView.aspx?DocID=" + escape(pDocID) + "&DocHref=" + escape(pHref) + "&OpinionFlag=&docState=&ListSusin=&odoc=&isOpinion=&ListType=2";
+            }
+            DivPopUpShow_function(1100, 950, openLocation);  
+        }        
+    }
+    
+    Approval_Portlet_Onload();
+</script>
+</div><div style="width:50%; float:left;" class="portlet_50percent">
+<div class="content_portletBox">
+    <div class="floatNone">
+        <div class="apprgraph mailgraph">
+            <p class="graph_title">메일함 용량</p>
+            <p id="Mail_Portlet_UsingMail" class="graph_txt"><span class="point2">12MB</span> / 2.00G</p>
+            <div class="graphimg">
+                <div id="Mail_Portlet_mailquatersize" style="width: 150px; height: 130px; display: inline-block;"><svg height="100%" version="1.1" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.4</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><filter id="inner-shadow-Mail_Portlet_mailquatersize"><feoffset dx="0" dy="3"></feoffset><fegaussianblur result="offset-blur" stdDeviation="5"></fegaussianblur><fecomposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse"></fecomposite><feflood flood-color="black" flood-opacity="0.2" result="color"></feflood><fecomposite operator="in" in="color" in2="inverse" result="shadow"></fecomposite><fecomposite operator="over" in="shadow" in2="SourceGraphic"></fecomposite></filter></defs><path fill="#ffffff" stroke="none" d="M44.17142857142857,66.66666666666667L28.57142857142857,66.66666666666667A46.42857142857143,46.42857142857143,0,0,1,121.42857142857143,66.66666666666667A46.42857142857143,46.42857142857143,0,0,1,28.57142857142857,66.66666666666667L44.17142857142857,66.66666666666667A30.82857142857143,30.82857142857143,0,0,0,105.82857142857142,66.66666666666667A30.82857142857143,30.82857142857143,0,0,0,44.17142857142857,66.66666666666667Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" filter="url(#inner-shadow-Mail_Portlet_mailquatersize)"></path><path fill="#aad60a" stroke="none" d="M44.17142857142857,66.66666666666667L28.57142857142857,66.66666666666667A46.42857142857143,46.42857142857143,0,0,1,28.663044751544533,63.751392545662824L44.23226171502557,64.73092465032012A30.82857142857143,30.82857142857143,0,0,0,44.17142857142857,66.66666666666667Z" transform="matrix(0,1,-1,0,141.6667,-8.3333)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" filter="url(#inner-shadow-Mail_Portlet_mailquatersize)"></path><text x="75" y="11.818181818181818" text-anchor="middle" font-family="sans-serif" font-size="13px" stroke="none" fill="#999999" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 13px; font-weight: bold; fill-opacity: 1;" font-weight="bold" fill-opacity="1"><tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text><text x="75" y="70.27027027027027" text-anchor="middle" font-family="Arial" font-size="24px" stroke="none" fill="#010101" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 24px; font-weight: bold; fill-opacity: 1;" font-weight="bold" fill-opacity="1"><tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1</tspan></text><text x="75" y="80.27027027027027" text-anchor="middle" font-family="Arial" font-size="10px" stroke="none" fill="#808080" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 10px; font-weight: normal; fill-opacity: 1;" font-weight="normal" fill-opacity="1"><tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Percent(%)</tspan></text><text x="30.8" y="80.27027027027027" text-anchor="middle" font-family="Arial" font-size="10px" stroke="none" fill="#808080" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 10px; font-weight: normal; fill-opacity: 0;" font-weight="normal" fill-opacity="0"><tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><text x="119.2" y="80.27027027027027" text-anchor="middle" font-family="Arial" font-size="10px" stroke="none" fill="#808080" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 10px; font-weight: normal; fill-opacity: 0;" font-weight="normal" fill-opacity="0"><tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">100</tspan></text></svg></div>
+            </div>
+        </div>
+        <div class="list_mail_appr">
+            <dl class="tabpart_portletDL">
+                <dd title="더보기" onclick="Mail_Portlet_more_Click()"><span class="main_img main_icon_more"></span></dd>
+                <dt>
+                    <ul id="Mail_Portlet_tab_menu_list" class="tabpart_portletTitle">
+                        <li class="on">
+                            <span id="Mail_Portlet_totalMailTab" onclick="Mail_Portlet_ChangeTab(this)">받은 메일 <span name="mail_totalCount" class="point2" style="display:none;">3</span></span>
+                        </li>
+                        <li>
+                            <span id="Mail_Portlet_unreadMailTab" onclick="Mail_Portlet_ChangeTab(this)">읽지않은메일 <span name="mail_unreadCount" class="point2">0</span></span>
+                        </li>
+                    </ul>
+                </dt>
+            </dl>
+            <ul id="Mail_Portlet_MAILLIST" class="tabpart_portlet_list"><li><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2021-06-04</span><span class="floatRight writername">최지후</span><span class="floatNone">휴먼계정 알림 메일</span></li><li><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2021-06-04</span><span class="floatRight writername">최지후</span><span class="floatNone">회신: xxx</span></li><li><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2021-06-03</span><span class="floatRight writername">최지후</span><span class="floatNone">xxx</span></li></ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="./raphael-2.1.4.min.js.다운로드"></script>
+<script type="text/javascript" src="./justgage.js.다운로드"></script>
+<script type="text/javascript">
+    var Mail_Portlet_MailListTypeValue = "TOTAL";
+    selToggleList_Multi(document.getElementById("Mail_Portlet_tab_menu_list"));
+    var Mail_Portlet_MailQuater = new JustGage({
+        id: "Mail_Portlet_mailquatersize",
+        value: 0,
+        min: 0,
+        max: 100,
+        gaugeWidthScale: 0.8,
+        gaugeColor: "#ffffff",
+        label: "Percent(%)",
+        labelFontColor: "#808080",
+        donut: true,
+        levelColorsGradient: false
+    });
+    Mail_Portlet_OnLoad();
+    var Mail_Portlet_xmlhttp;
+    function Mail_Portlet_OnLoad() {
+        var xmlpara = createXmlDom();
+        var objNode;
+        Mail_Portlet_xmlhttp = createXMLHttpRequest();
+        createNodeInsert(xmlpara, objNode, "PARAMETER");
+        createNodeAndInsertText(xmlpara, objNode, "pMailType", "1");
+        createNodeAndInsertText(xmlpara, objNode, "MODE", Mail_Portlet_MailListTypeValue);
+        Mail_Portlet_xmlhttp.open("POST", "/myoffice/ezEmail/WebPartFolder/GetPortletMailList.aspx", true);
+        Mail_Portlet_xmlhttp.onreadystatechange = Mail_Portlet_OnLoad_after;
+        Mail_Portlet_xmlhttp.send(xmlpara);
+    }
+
+    function Mail_Portlet_OnLoad_after() {
+        //if (Mail_Portlet_xmlhttp == null || Mail_Portlet_xmlhttp.readyState != 4) return;
+        //var result = loadXMLString(Mail_Portlet_xmlhttp.responseText);
+
+        //var totalCount = parseInt(getNodeText(GetElementsByTagName(result, "TOTALCNT")[0]));
+        //var unreadCount = parseInt(getNodeText(GetElementsByTagName(result, "UNREADCNT")[0]));
+
+        //totalCount = (totalCount > 99) ? "99+" : totalCount;
+        //unreadCount = (unreadCount > 99) ? "99+" : unreadCount;
+
+        //for (var i = 0; i < document.getElementsByName("mail_totalCount").length; i++) {
+        //    document.getElementsByName("mail_totalCount")[i].innerHTML = totalCount;
+        //}
+
+        //for (var i = 0; i < document.getElementsByName("mail_unreadCount").length; i++) {
+        //    document.getElementsByName("mail_unreadCount")[i].innerHTML = unreadCount;
+        //}
+
+        //document.getElementById("Mail_Portlet_UsingMail").innerHTML = "<span class=\"point2\">" + getNodeText(GetElementsByTagName(result, "MAILBOXDETAIL")[0]) + "</span> / " + getNodeText(GetElementsByTagName(result, "MAILBOXSIZE")[0]);
+        //Mail_Portlet_MailQuater.refresh(parseInt(getNodeText(GetElementsByTagName(result, "MAILPERCENT")[0])));
+
+        //document.getElementById("Mail_Portlet_MAILLIST").innerHTML = "";
+
+        //if (SelectNodes(result, "NODE").length > 0) {
+        //    for (var i = 0; i < SelectNodes(result, "NODE").length; i++) {
+        //        var MAIL_PORTLET_LI = document.createElement("li");
+        //        MAIL_PORTLET_LI.onclick = new Function("Mail_Portlet_open_mail('" + getNodeText(SelectNodes(result, "HREF")[i]) + "')");
+
+        //        var MAIL_PORTLET_SPAN_ICON = document.createElement("span");
+        //        MAIL_PORTLET_SPAN_ICON.className = "main_img main_icon_listdot floatLeft";
+        //        MAIL_PORTLET_SPAN_ICON.innerText = "";
+
+        //        var MAIL_PORTLET_SPAN_DATE = document.createElement("span");
+        //        MAIL_PORTLET_SPAN_DATE.className = "floatRight writedate";
+        //        MAIL_PORTLET_SPAN_DATE.innerText = getNodeText(SelectNodes(result, "DATE")[i]).substr(0, 10);
+
+        //        var MAIL_PORTLET_SPAN_NAME = document.createElement("span");
+        //        MAIL_PORTLET_SPAN_NAME.className = "floatRight writername";
+        //        MAIL_PORTLET_SPAN_NAME.innerText = getNodeText(SelectNodes(result, "SENDER")[i]);
+
+        //        var MAIL_PORTLET_SPAN_TXT = document.createElement("span");
+        //        MAIL_PORTLET_SPAN_TXT.className = "floatNone";
+        //        var pSubject = decodeXMLText(getNodeText(SelectNodes(result, "SUBJECT")[i]));
+        //        if(pSubject != "")
+        //            MAIL_PORTLET_SPAN_TXT.innerText = pSubject;
+        //        else
+        //            MAIL_PORTLET_SPAN_TXT.innerHTML = "&nbsp;";
+
+        //        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_ICON);
+        //        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_DATE);
+        //        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_NAME);
+        //        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_TXT);
+
+        //        document.getElementById("Mail_Portlet_MAILLIST").appendChild(MAIL_PORTLET_LI);
+        //    }
+        //}
+        //else {
+        //    Append_NoData("Mail_Portlet_MAILLIST");
+        //}
+        if (Mail_Portlet_xmlhttp != null && Mail_Portlet_xmlhttp.readyState == 4) {
+            if (Mail_Portlet_xmlhttp.status == 200 || Mail_Portlet_xmlhttp.statusText == "OK") {
+
+                var result = loadXMLString(Mail_Portlet_xmlhttp.responseText);
+
+                var totalCount = parseInt(getNodeText(GetElementsByTagName(result, "TOTALCNT")[0]));
+                var unreadCount = parseInt(getNodeText(GetElementsByTagName(result, "UNREADCNT")[0]));
+
+                totalCount = (totalCount > 99) ? "99+" : totalCount;
+                unreadCount = (unreadCount > 99) ? "99+" : unreadCount;
+
+                for (var i = 0; i < document.getElementsByName("mail_totalCount").length; i++) {
+                    document.getElementsByName("mail_totalCount")[i].innerHTML = totalCount;
+                }
+
+                for (var i = 0; i < document.getElementsByName("mail_unreadCount").length; i++) {
+                    document.getElementsByName("mail_unreadCount")[i].innerHTML = unreadCount;
+                }
+
+                document.getElementById("Mail_Portlet_UsingMail").innerHTML = "<span class=\"point2\">" + getNodeText(GetElementsByTagName(result, "MAILBOXDETAIL")[0]) + "</span> / " + getNodeText(GetElementsByTagName(result, "MAILBOXSIZE")[0]);
+                Mail_Portlet_MailQuater.refresh(parseInt(getNodeText(GetElementsByTagName(result, "MAILPERCENT")[0])));
+
+                document.getElementById("Mail_Portlet_MAILLIST").innerHTML = "";
+
+                if (SelectNodes(result, "NODE").length > 0) {
+                    for (var i = 0; i < SelectNodes(result, "NODE").length; i++) {
+                        var MAIL_PORTLET_LI = document.createElement("li");
+                        MAIL_PORTLET_LI.onclick = new Function("Mail_Portlet_open_mail('" + getNodeText(SelectNodes(result, "HREF")[i]) + "')");
+
+                        var MAIL_PORTLET_SPAN_ICON = document.createElement("span");
+                        MAIL_PORTLET_SPAN_ICON.className = "main_img main_icon_listdot floatLeft";
+                        MAIL_PORTLET_SPAN_ICON.innerText = "";
+
+                        var MAIL_PORTLET_SPAN_DATE = document.createElement("span");
+                        MAIL_PORTLET_SPAN_DATE.className = "floatRight writedate";
+                        MAIL_PORTLET_SPAN_DATE.innerText = getNodeText(SelectNodes(result, "DATE")[i]).substr(0, 10);
+
+                        var MAIL_PORTLET_SPAN_NAME = document.createElement("span");
+                        MAIL_PORTLET_SPAN_NAME.className = "floatRight writername";
+                        MAIL_PORTLET_SPAN_NAME.innerText = getNodeText(SelectNodes(result, "SENDER")[i]);
+
+                        var MAIL_PORTLET_SPAN_TXT = document.createElement("span");
+                        MAIL_PORTLET_SPAN_TXT.className = "floatNone";
+                        var pSubject = decodeXMLText(getNodeText(SelectNodes(result, "SUBJECT")[i]));
+                        if (pSubject != "")
+                            MAIL_PORTLET_SPAN_TXT.innerText = pSubject;
+                        else
+                            MAIL_PORTLET_SPAN_TXT.innerHTML = "&nbsp;";
+
+                        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_ICON);
+                        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_DATE);
+                        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_NAME);
+                        MAIL_PORTLET_LI.appendChild(MAIL_PORTLET_SPAN_TXT);
+
+                        document.getElementById("Mail_Portlet_MAILLIST").appendChild(MAIL_PORTLET_LI);
+                    }
+                }
+                else {
+                    Append_NoData("Mail_Portlet_MAILLIST");
+                }
+            }
+            Mail_Portlet_xmlhttp == null
+        }
+    }
+
+    function Mail_Portlet_ChangeTab(obj) {
+        switch (obj.id) {
+            case "Mail_Portlet_totalMailTab":
+                Mail_Portlet_MailListTypeValue = "TOTAL";
+                break;
+            case "Mail_Portlet_unreadMailTab":
+                Mail_Portlet_MailListTypeValue = "UNREAD";
+                break;
+        }
+        Mail_Portlet_OnLoad();
+    }
+
+    function Mail_Portlet_open_mail(url) {
+        var pURI = "/myoffice/ezEmail/mail_read.aspx?URL=" + encodeURIComponent(url) + "&PNFlag=N&CONTENTCLASS="+"&open=PORTLET";
+        DivPopUpShow_function(1000, 900, pURI);
+        Mail_Portlet_OnLoad();
+    }
+
+    function Mail_Portlet_more_Click() {
+        
+            GoToApplication("10", "메일", false);
+        
+    }
+
+    function decodeXMLText(str) {
+        return str.replace(/&amp;/gi, "&").replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
+    }
+
+    //Mail_Portlet_OnLoad();
+</script></div></li><li><div style="width:50%; float:left;" class="portlet_50percent">
+<div class="col content_portletBox">
+    <dl class="tabpart_portletDL noUnderline">
+        <dd title="더보기" onclick="BoardPhoto_Portlet_more_Click()"><span class="main_img main_icon_more"></span></dd>
+        <dd name="portlet_setting_button" onclick="Board_Portlet_Configuration(&#39;PHOTO&#39;, &#39;&#39;, &#39;BoardPhoto_Portlet&#39;)" title="설정"><span class="main_img main_icon_config"></span></dd>
+        <dt><p>포토게시판</p></dt>
+    </dl>
+    <div class="photo_boardBox">
+        <div class="photo_boardList">
+            <ul id="BoardPhoto_Portlet_List" class="photo_boardListUL">
+                <li><span class="photo_board_liBox"><img onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{e01832f2-efa2-5bf2-3eb0-73c2ec9ff298}&#39;, &#39;N&#39;)" title="‘성우공동모금’, 백혈병 환우 돕기 후원금 전달 " src="./s_{a0f30930-0ac6-4beb-aeaa-b034d7eb1be7}.png"><span class="photo_imgText">‘성우공동모금’, 백혈병 환우 돕기 후원금 전달 </span></span></li><li><span class="photo_board_liBox"><img onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{416035be-a1f4-ca42-2a17-15aa5b9655c6}&#39;, &#39;N&#39;)" title="㈜성우하이텍, “2020년 겨울愛(애) 희망饌(찬) 김장나누기” 행사 " src="./s_{8794a42c-a47b-4ea0-ab8b-5035b7030fc6}.png"><span class="photo_imgText">㈜성우하이텍, “2020년 겨울愛(애) 희망饌(찬) 김장나누기” 행사 </span></span></li><li><span class="photo_board_liBox"><img onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{9d34d9f6-6fa7-b6dc-c0c6-0a2ac5c2940d}&#39;, &#39;N&#39;)" title="성우하이텍과 함께하는 2020 국제신문 Virtual Race 개최 " src="./s_{a5e0b5bb-e0f5-4cff-90c3-f97f245dee8c}.png"><span class="photo_imgText">성우하이텍과 함께하는 2020 국제신문 Virtual Race 개최 </span></span></li><li><span class="photo_board_liBox"><img onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{ae4e4031-f522-6e4a-7521-bd48a04f3734}&#39;, &#39;N&#39;)" title="성우하이텍과 함께하는 2020 부산바다마라톤 대회 개최 " src="./s_{40bbc6cc-988e-40c2-bbf7-7e51ef5c7017}.jpg"><span class="photo_imgText">성우하이텍과 함께하는 2020 부산바다마라톤 대회 개최 </span></span></li><li><span class="photo_board_liBox"><img onclick="Board_Photo_itemClick(&#39;{33575e7f-68d4-4ee8-363b-8775dc3f1856}&#39;, &#39;{5f8a1a29-dbc0-af2d-51f0-5e33b88894fc}&#39;, &#39;N&#39;)" title="신한금융그룹, 디지털 전략적 투자를 위한 3,000억 원 규모 펀드 조성" src="./s_{b2197e4d-f7f2-441d-b4b9-11eaac01049a}.jpg"><span class="photo_imgText">신한금융그룹, 디지털 전략적 투자를 위한 3,000억 원 규모 펀드 조성</span></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var BoardPhoto_Portlet_BoardID = "{a1688975-ea4a-043d-8b4c-b781560dba7c};";
+
+    function BoardPhoto_Portlet_more_Click() {
+        if (typeof (BoardPhoto_Portlet_BoardID) === "string" && BoardPhoto_Portlet_BoardID != "") {
+            var xmlHttpCheck = new createXMLHttpRequest();
+            xmlHttpCheck.open("POST", "/myoffice/ezPortal/Portlet/aspx/BoardCheck_core.aspx?BoardID=" + BoardPhoto_Portlet_BoardID.replace(";", ""), false);
+            xmlHttpCheck.send();
+
+            if (xmlHttpCheck.status == 200) {
+                var isCoreValue = xmlHttpCheck.responseText;
+
+                if (isCoreValue.trim() == "CORE") {
+                    GoToApplication("42", "게시판", false, BoardPhoto_Portlet_BoardID.replace(";", ""));
+                } else if (isCoreValue.trim() == "SHARE") {
+                    GoToApplication("43", "게시판", false, BoardPhoto_Portlet_BoardID.replace(";", ""));
+                } else {
+                    GoToApplication("40", "게시판", false, BoardPhoto_Portlet_BoardID.replace(";", ""));
+                }
+            }
+
+            //GoToApplication("40", "게시판", false, BoardPhoto_Portlet_BoardID.replace(";", ""));
+        }
+        else
+            GoToApplication("40", "게시판", false);
+    }
+
+    function PhotoBoard_Reload() {
+        try {
+            var xmlHttp = new createXMLHttpRequest();
+            xmlHttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetPhotoBoardList_Portlet.aspx", false);
+            xmlHttp.send();
+            if (xmlHttp.status == 200) {
+                var pXmlDom = loadXMLString(xmlHttp.responseText);
+                if (xmlHttp.responseText != "") {
+                    document.getElementById("BoardPhoto_Portlet_List").innerHTML = "";
+                    document.getElementById("BoardPhoto_Portlet_List").innerHTML = xmlHttp.responseText;
+                } else {
+                    document.getElementById("BoardPhoto_Portlet_List").innerHTML = "";
+                    document.getElementById("NoticeBoard_Portlet_List").innerHTML = "<div class=\"nodataBox\"><p class=\"icon_nodata\"></p><p class=\"text_nodata\">No data.</p></div>";
+                }
+            }
+            xmlHttp = null;
+        } catch (e) { }
+    }
+</script></div><div style="width:50%; float:left;" class="portlet_50percent">
+
+<div class="col content_portletBox" name="tabPortlet">
+    <dl class="tabpart_portletDL">
+        <dd title="더보기" onclick="Board_Portlet_more_Click(&#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;)"><span class="main_img main_icon_more"></span></dd>
+        <dd name="portlet_setting_button" onclick="Board_Portlet_Configuration(&#39;GENERAL&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;, &#39;false&#39;)" title="설정" style=""><span class="main_img main_icon_config"></span></dd>
+        <dd name="tabPortlet_MOVEICON" style="">
+            <span class="main_img main_icon_tabprev" onclick="tabLeft(&#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;)" title="왼쪽"></span><span class="main_img main_icon_tabnext" onclick="tabRight(&#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab&#39;)" title="오른쪽"></span>
+        </dd>
+        <dt id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab">
+            <ul id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_UL" name="tabPortlet_UL" class="tabpart_portletTitle" style="width: 357px;" _totaltabmenuwidth="354">
+	<li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_0" class="on" _menuwidth="68"><span name="boardG_span" onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)" boardid="{f6f9a991-fe62-c511-4629-f6b1cf11b473};" portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527" title="경조사">경조사<span class="point2" name="boardG_span_span"></span></span></li><li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_1" _menuwidth="100"><span name="boardG_span" onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)" boardid="{6d9afbd5-9218-9f54-f899-d4d1d60f1e8b};" portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527" title="일반게시판">일반게시판<span class="point2" name="boardG_span_span"></span></span></li><li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_2" _menuwidth="84"><span name="boardG_span" onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)" boardid="{3ced2ce7-41fa-da26-1f42-d6e68e2d9ca6};" portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527" title="전사공지">전사공지<span class="point2" name="boardG_span_span"></span></span></li><li id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_3" _menuwidth="102"><span name="boardG_span" onclick="Tab_onClick(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)" boardid="{5d920f17-11f1-2e7c-0e23-91231e1b55f5};" portlet_uid="b1e5ccd5-e0f9-45c7-beca-8256548e0527" title="URL 게시판">URL 게시판<span class="point2" name="boardG_span_span"></span></span></li>
+</ul><select id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_SELECT" name="tabPortlet_SELECT" onchange="Tab_selectChange(this, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)" style="display:none;">
+	<option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_0" value="{f6f9a991-fe62-c511-4629-f6b1cf11b473};" title="경조사">
+		경조사
+	</option><option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_1" value="{6d9afbd5-9218-9f54-f899-d4d1d60f1e8b};" title="일반게시판">
+		일반게시판
+	</option><option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_2" value="{3ced2ce7-41fa-da26-1f42-d6e68e2d9ca6};" title="전사공지">
+		전사공지
+	</option><option subid="b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab_ITEM_3" value="{5d920f17-11f1-2e7c-0e23-91231e1b55f5};" title="URL 게시판">
+		URL 게시판
+	</option>
+</select>
+        </dt>
+    </dl>
+    <ul id="b1e5ccd5-e0f9-45c7-beca-8256548e0527_List" class="tabpart_portlet_list"><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{1D8C6AC8-BAE9-45D0-B795-67A94242A553}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2019-01-10</span><span class="floatRight writername">임우진</span><span class="floatNone">[축돌]이몽룡 과장 돌잔치 안내 </span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{B7D1BBC2-CAAE-4247-8041-F86ED79E725B}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-11-02</span><span class="floatRight writername">김유진</span><span class="floatNone">♡~“장세용부장” 차남 결혼식을 알려드립니다~♡	</span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{DF87E938-0410-4563-95D9-0F847591417E}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-11-02</span><span class="floatRight writername">김유진</span><span class="floatNone">※※이종무 수석부장님 장남 결혼식 알림※※</span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{95fa1ba4-78f1-4d21-aea5-950674068711}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-10-31</span><span class="floatRight writername">기사원</span><span class="floatNone">[결혼] 경영관리팀 강진우 대리 결혼합니다!!</span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{b697e585-d93a-42b4-94d0-c0e8773db01c}&#39;, &#39;BOARD&#39;, &#39;b1e5ccd5-e0f9-45c7-beca-8256548e0527&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-10-31</span><span class="floatRight writername">이진수</span><span class="floatNone">[결혼] SS개발1팀 최찬규 사원 2018.11.17</span></li></ul>
+    
+</div>
+<script type="text/javascript">
+    selToggleList_Multi(document.getElementById("b1e5ccd5-e0f9-45c7-beca-8256548e0527_Tab" + "_UL"));
+
+    var xmlHttpBoardCnt;
+    var Board_boforeObj;
+    var Board_TargetID = "b1e5ccd5-e0f9-45c7-beca-8256548e0527";
+    $(this).ready(function () {
+        try {
+            if (document.getElementsByName("boardG_span") != null)
+                Board_boforeObj = document.getElementsByName("boardG_span")[0];
+            else
+                Board_boforeObj = ""
+
+            //GetBoardCnt();
+        } catch (e) { }
+    })
+
+    function Board_Reload() {
+        try {
+            //GetBoardCnt();
+            if (Board_boforeObj != "" && Board_TargetID != "")
+                Tab_onClick(Board_boforeObj, Board_TargetID);
+        } catch (e) { }
+    }
+
+    function GetBoardCnt() {
+        var pboardG_span = document.getElementsByName("boardG_span");
+        var pBoardGXml = "<DATA>";
+
+        for (var i = 0; i < pboardG_span.length; i++) {
+            pBoardGXml += "<BOARDID>" + pboardG_span[i].getAttribute("boardid") + "</BOARDID>"
+        }
+        pBoardGXml += "</DATA>";
+
+        xmlHttpBoardCnt = new createXMLHttpRequest();
+        xmlHttpBoardCnt.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetBoardCount.aspx?portlet=board", true);
+        xmlHttpBoardCnt.onreadystatechange = getBoard_after;
+        xmlHttpBoardCnt.send(loadXMLString(pBoardGXml));
+    }
+
+    function getBoard_after() {
+        if (xmlHttpBoardCnt == null || xmlHttpBoardCnt.readyState != 4) {
+            return;
+        }
+
+        var pboardG_span = document.getElementsByName("boardG_span_span");
+        var pBoardCnt = xmlHttpBoardCnt.responseText.split(';');
+
+        for (var i = 0; i < pboardG_span.length; i++) {
+            if (pBoardCnt[i] != "0")
+                pboardG_span[i].innerHTML = "&nbsp;" + pBoardCnt[i];
+            else
+                pboardG_span[i].innerHTML = "";
+        }
+
+        xmlHttpBoardCnt = null;
+    }
+
+    function Tab_onClick(thisObj, targetID) {
+        var select_obj = document.getElementById(GetAttribute(thisObj, "portlet_uid") + "_Tab_SELECT");
+        for (var i = 0; i < select_obj.options.length; i++) {
+            if (GetAttribute(select_obj.options[i], "subid") == thisObj.parentElement.id) {
+                select_obj.options[i].selected = true;
+            }
+        }
+
+        Board_Portlet_BoardID = GetAttribute(thisObj, "boardid");
+        if (Board_Portlet_BoardID === "pams;") {
+            document.getElementById(GetAttribute(thisObj, "portlet_uid") + "_List").style.display = "none";
+            //document.getElementById(GetAttribute(thisObj, "portlet_uid") + "_fmeStock").style.display = "";
+        }
+        else {
+            var xmlHttp = new createXMLHttpRequest();
+            var xmlpara = createXmlDom();
+
+            var objNode;
+            createNodeInsert(xmlpara, objNode, "DATA");
+            createNodeAndInsertText(xmlpara, objNode, "IDLIST", Board_Portlet_BoardID);
+            xmlHttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetBoardList_Portlet.aspx?pBoardType=GENERAL&PortletID=" + GetAttribute(thisObj, "portlet_uid"), false);
+            xmlHttp.send(xmlpara);
+            if (xmlHttp.status == 200) {
+                var pXmlDom = loadXMLString(xmlHttp.responseText);
+                if (getNodeText(pXmlDom.getElementsByTagName("STRINGWRITER")[0]) != "") {
+                    document.getElementById(targetID + "_List").innerHTML = "";
+                    document.getElementById(targetID + "_List").innerHTML = getNodeText(pXmlDom.getElementsByTagName("STRINGWRITER")[0]);
+                } else {
+                    document.getElementById(targetID + "_List").innerHTML = "<div class=\"nodataBox\"><p class=\"icon_nodata\"></p><p class=\"text_nodata\">No data.</p></div>";
+                }
+            }
+            xmlHttp = null;
+            Board_boforeObj = thisObj;
+            Board_TargetID = targetID;
+
+            document.getElementById(GetAttribute(thisObj, "portlet_uid") + "_List").style.display = "";
+            //document.getElementById(GetAttribute(thisObj, "portlet_uid") + "_fmeStock").style.display = "none";
+        }
+    }
+
+    function Tab_selectChange(thisObj, targetID) {
+        var select_obj = thisObj.options[thisObj.selectedIndex];
+        document.getElementById(GetAttribute(select_obj, "subid")).click();
+
+        Board_Portlet_BoardID = select_obj.value;
+        if (Board_Portlet_BoardID === "pams;") {
+            document.getElementById(targetID + "_List").style.display = "none";
+            //document.getElementById(targetID + "_fmeStock").style.display = "";
+        }
+        else {
+            var xmlHttp = new createXMLHttpRequest();
+            var xmlpara = createXmlDom();
+
+            var objNode;
+            createNodeInsert(xmlpara, objNode, "DATA");
+            createNodeAndInsertText(xmlpara, objNode, "IDLIST", select_obj.value);
+            xmlHttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetBoardList_Portlet.aspx?pBoardType=GENERAL", false);
+            xmlHttp.send(xmlpara);
+
+            if (xmlHttp.status == 200) {
+                var pXmlDom = loadXMLString(xmlHttp.responseText);
+                if (getNodeText(pXmlDom.getElementsByTagName("STRINGWRITER")[0]) != "") {
+                    document.getElementById(targetID + "_List").innerHTML = "";
+                    document.getElementById(targetID + "_List").innerHTML = getNodeText(pXmlDom.getElementsByTagName("STRINGWRITER")[0]);
+                } else {
+                    document.getElementById(targetID + "_List").innerHTML = "<div class=\"nodataBox\"><p class=\"icon_nodata\"></p><p class=\"text_nodata\">No data.</p></div>";
+                }
+            }
+            xmlHttp = null;
+
+            document.getElementById(targetID + "_List").style.display = "";
+            //document.getElementById(targetID + "_fmeStock").style.display = "none";
+        }
+    }
+
+    function Board_Portlet_more_Click(BoardTabID) {
+        try {
+            var boardid = GetAttribute(document.getElementById(BoardTabID + "_UL").getElementsByClassName("on")[0].childNodes[0], "boardid");
+            if (boardid === "pams;") {
+                var url = "http://www.koreapds.com:7000/spage/kkpc/login_process.jsp?key=S1VNSE8gvK7Ar8itx9A&pi=wdk1dtZ3syk="
+                    window.open(url, "", "");
+                }
+                else {
+                    var xmlHttpCheck = new createXMLHttpRequest();
+                    xmlHttpCheck.open("POST", "/myoffice/ezPortal/Portlet/aspx/BoardCheck.aspx?BoardID=" + boardid.replace(/;/g, ""), false);
+                    xmlHttpCheck.send();
+                    if (xmlHttpCheck.status == 200) {
+                        var isCoreValue = xmlHttpCheck.responseText;
+
+                        if (isCoreValue.trim() == "CORE") {
+                            GoToApplication("42", "게시판", false, boardid.replace(/;/g, ""));
+                    } else if (isCoreValue.trim() == "SHARE") {
+                        GoToApplication("43", "게시판", false, boardid.replace(/;/g, ""));
+                	} else {
+                	    GoToApplication("40", "게시판", false, boardid.replace(/;/g, ""));
+                	}
+                }
+            }
+        } catch (e) {
+            GoToApplication("40", "게시판", false);
+        }
+    }
+</script>
+</div></li><li><div style="width:25%; float:left;" class="portlet_25percent">
+<div class="col content_portletBox">
+    <dl style="height:40px;" class="tabpart_portletDL Underline">
+        <dd title="더보기" onclick="Resource_Portlet_more_Click()"><span class="main_img main_icon_more"></span></dd>
+        <dd name="portlet_setting_button" onclick="Resource_Config_OnClick()" title="설정"><span class="main_img main_icon_config"></span></dd>
+        
+            <dd style="margin:9px 0px 0px 4px"><input type="text" class="DatePicker_class hasDatepicker" name="Datepicker_name" id="Sdatepicker" readonly="readonly" style="text-align: center; width: 100px" size="10"><img class="ui-datepicker-trigger" src="./calendar-month.gif" alt="" title=""></dd>
+        
+        <dt><p class="notice_portletTitle">자원예약</p></dt>
+    </dl>
+    <div class="resource_listBox">
+        <ul class="resource_listBoxUL" id="Resource_Portlet_List">
+            <li><dl class="resource_listBoxDL">
+	<dt><span class="icon_tree tree_resource_ok"></span><span onclick="resourceWrite_onclick(&#39;5&#39;,&#39;S907001&#39;)" id="5_S907001" class="resource_list_text">Vision Room</span></dt><dd><span id="5_123" onclick="resourceView_onclick(&#39;5&#39;,&#39;123&#39;,&#39;2021-07-29 08:00&#39;,&#39;2021-07-29 09:30&#39;,&#39;S907001&#39;)" onmouseover="selectItem(&#39;5_123&#39;,&#39;2021-07-29 08:00~2021-07-29 09:30&#39;,&#39;재무팀 주간보고&#39;,&#39;이진수&#39;,&#39;영업팀&#39;,&#39;1&#39;,&#39;1&#39;)" onmouseout="hideTooltip(&#39;5_123&#39;)" class="resource_list_item">08:00~09:30</span></dd>
+</dl></li><li><dl class="resource_listBoxDL">
+	<dt><span class="icon_tree tree_resource_ok"></span><span onclick="resourceWrite_onclick(&#39;7&#39;,&#39;S907001&#39;)" id="7_S907001" class="resource_list_text">소형차</span></dt><dd><p onclick="resourceWrite_onclick(&#39;7&#39;,&#39;S907001&#39;)" id="7_S907001" class="resource_list_add"><span class="icon16 icon_resource_add"></span></p></dd>
+</dl></li><li><dl class="resource_listBoxDL">
+	<dt><span class="icon_tree tree_resource_ok"></span><span onclick="resourceWrite_onclick(&#39;10&#39;,&#39;S907001&#39;)" id="10_S907001" class="resource_list_text">아이폰8</span></dt><dd><p onclick="resourceWrite_onclick(&#39;10&#39;,&#39;S907001&#39;)" id="10_S907001" class="resource_list_add"><span class="icon16 icon_resource_add"></span></p></dd>
+</dl></li><li><dl class="resource_listBoxDL">
+	<dt><span class="icon_tree tree_resource_item"></span><span onclick="resourceWrite_onclick(&#39;11&#39;,&#39;S907001&#39;)" id="11_S907001" class="resource_list_text">Innovation Room</span></dt><dd><p onclick="resourceWrite_onclick(&#39;11&#39;,&#39;S907001&#39;)" id="11_S907001" class="resource_list_add"><span class="icon16 icon_resource_add"></span></p></dd>
+</dl></li><li><dl class="resource_listBoxDL">
+	<dt><span class="icon_tree tree_resource_ok"></span><span onclick="resourceWrite_onclick(&#39;24&#39;,&#39;S907001&#39;)" id="24_S907001" class="resource_list_text">노트북</span></dt><dd><p onclick="resourceWrite_onclick(&#39;24&#39;,&#39;S907001&#39;)" id="24_S907001" class="resource_list_add"><span class="icon16 icon_resource_add"></span></p></dd>
+</dl></li>
+        </ul>
+    </div>
+
+    
+    <div id="tooltip" style="position:absolute; z-index:200;visibility:hidden"></div>
+</div>
+ 
+
+
+
+<link rel="stylesheet" href="./jquery.ui.all.css">
+<link rel="stylesheet" href="./demos.css">
+<link rel="stylesheet" type="text/css" href="./jquery.timepicker.css">
+<script type="text/javascript" src="./jquery-1.9.1.js.다운로드"></script>
+<script type="text/javascript" src="./jquery.ui.core.js.다운로드"></script>
+<script type="text/javascript" src="./jquery.ui.datepicker.js.다운로드"></script>
+<script type="text/javascript" src="./jquery.timepicker.js.다운로드"></script>
+<script type="text/javascript">
+    var selectDate = "";
+    var pItemListCheck = "";
+    var Resource_Portlet_ID = "5";
+    var schedule_add_select_dialogArguments = new Array();
+    var schedule_add_dialogArguments = new Array();
+    var $ContentDiv = jQuery.noConflict();
+
+    $(this).ready(function () {
+        try {
+            $ContentDiv(this).ready(function () {
+                removeDatePicker("ui-datepicker-div");
+                setDatePicker_scheduleAdd();
+                document.getElementById("Sdatepicker").onmouseover = new Function("return KeEventControl(this)");
+                initPopUpSetting("이미지 클릭시 새창으로 오픈 여부) ");
+            })
+        } catch (e) { }
+    })
+
+    function setDatePicker_scheduleAdd() {
+            $ContentDiv(function () {
+                $ContentDiv("input[name='Datepicker_name']").each(function () {
+                    var _this = this.id;
+                    $ContentDiv('#' + _this).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        autoSize: true,
+                        showOn: "both",
+                        buttonImage: "/images/imgicon/calendar-month.gif",
+                        buttonImageOnly: true,
+                        onSelect: function (selected) {
+                            selectDate = $ContentDiv("#Sdatepicker").datepicker({ dateFormat: 'yy-mm-dd' }).val();
+                            Resource_Portlet_Reload();
+                        }
+                    });
+                });
+                var SDate = new Date("2021-07-29 오후 1:20:24");
+                SDate.setHours(SDate.getHours() - 9);
+
+                
+                $ContentDiv("#Sdatepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+                $ContentDiv("#Sdatepicker").datepicker('setDate', SDate);
+                
+            });
+        
+            $ContentDiv(function () {
+                $ContentDiv.datepicker.regional['ko'] = {
+                    closeText: '닫기',
+                    prevText: '이전달',
+                    nextText: '다음달',
+                    currentText: '오늘',
+                    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+                    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+                    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                    weekHeader: 'Wk',
+                    dateFormat: 'yy-mm-dd',
+                    firstDay: 0,
+                    isRTL: false,
+                    duration: 200,
+                    showAnim: 'show',
+                    showMonthAfterYear: true
+                };
+                $ContentDiv.datepicker.setDefaults($ContentDiv.datepicker.regional['ko']);
+            });
+        
+    }
+
+    function Resource_Portlet_Reload() {
+        try {
+            var xmlHttp = new createXMLHttpRequest();
+            xmlHttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetResource_Portlet.aspx?selectDate=" + selectDate + " 00:00:01", false);
+            xmlHttp.send();
+            if (xmlHttp.status == 200) {
+                var pHTML = xmlHttp.responseText;
+                if (xmlHttp.responseText != "") {
+                    document.getElementById("Resource_Portlet_List").innerHTML = "";
+                    document.getElementById("Resource_Portlet_List").innerHTML = pHTML;
+                    if(document.getElementById("nodataBox"))
+                        document.getElementById("nodataBox").innerHTML = "";
+                } else {
+                    document.getElementById("Resource_Portlet_List").innerHTML = "";
+                    if(document.getElementById("nodataBox"))
+                        document.getElementById("nodataBox").innerHTML = "";
+                    document.getElementById("Resource_Portlet_List").innerHTML = "<div class=\"nodataBox\"><p class=\"icon_nodata\"></p><p class=\"text_nodata\">No data.</p></div>";
+                }
+            }
+            xmlHttp = null;
+        } catch (e) { }
+    }
+
+    function selectItem(pID, pTime, pSubject, pWriterName, pWriterDeptName, reFlag, pApproveFlag) {
+        ShowTooltip(pID, pTime, pSubject, pWriterName, pWriterDeptName, reFlag, pApproveFlag);
+    }
+
+    function hideTooltip(pID) {
+        document.getElementById('tooltip').style.visibility = 'hidden';
+    }
+
+    function ShowTooltip(pID, pTime, pSubject, pWriterName, pWriterDeptName, reFlag, pApproveFlag) {
+        var tTip = document.getElementById('tooltip');
+        tTip.innerHTML = "";
+        var tTable = document.createElement("TABLE");
+        var tTr = document.createElement("TR");
+        var tTh = document.createElement("TH");
+        tTable.className = "calendar_layer";
+        tTable.setAttribute("cellpadding", "0");
+        tTable.setAttribute("cellspacing", "0");
+        tTable.setAttribute("border", "0");
+        tTable.setAttribute("width", "100%");
+        tTh.setAttribute("scope", "col");
+        setNodeText(tTh,pSubject.split("&apos;").join("'"));
+        tTr.appendChild(tTh);
+        tTable.appendChild(tTr);
+
+        var tTr = document.createElement("TR");
+        var tTd = document.createElement("TD");
+        tTd.className = "text";
+
+        var sTable = document.createElement("TABLE");
+        var sTr = document.createElement("TR");
+        var sTd = document.createElement("TD");
+        sTable.className = "td_list";
+        sTable.setAttribute("cellpadding", "0");
+        sTable.setAttribute("cellspacing", "0");
+        sTable.setAttribute("border", "0");
+        sTable.setAttribute("width", "100%");
+        sTd.className = "individual";
+
+        var sSpan = document.createElement("SPAN");
+        var _span = document.createElement("SPAN");
+        if (pApproveFlag == "1") {
+            _span.className = "icon16_listview icon_resource_ok"
+            sSpan.appendChild(_span);
+            sTd.appendChild(sSpan);
+            sTd.innerHTML += "승인";
+        }
+        else if (pApproveFlag == "2") {
+            _span.className = "icon16_listview icon_resource_no"
+            sSpan.appendChild(_span);
+            sTd.appendChild(sSpan);
+            sTd.innerHTML += "승인거부";
+        }
+        else {
+            _span.className = "icon16_listview icon_resource_no"
+            sSpan.appendChild(_span);
+            sTd.appendChild(sSpan);
+            sTd.innerHTML += "승인대기";
+        }
+
+        sTr.appendChild(sTd);
+        sTable.appendChild(sTr);
+
+        var reFlagValue = "";
+        if (reFlag == "1") {
+            reFlagValue = " (" + "반복" + ")";
+        }
+
+        if (pTime == "하루종일") {
+            var sTr = document.createElement("TR");
+            var sTd = document.createElement("TD");
+            var sSpan = document.createElement("SPAN");
+
+            sTd.appendChild(sSpan);
+
+            sTd.innerHTML += "[" + "시간" + "]<br />" + pTime + reFlagValue;
+            sTr.appendChild(sTd);
+            sTable.appendChild(sTr);
+            tTd.appendChild(sTable);
+            tTr.appendChild(tTd);
+            tTable.appendChild(tTr);
+        } else {
+            var sTr = document.createElement("TR");
+            var sTd = document.createElement("TD");
+            var sSpan = document.createElement("SPAN");
+
+            sTd.appendChild(sSpan);
+
+            var pStartDate = "";
+            var pEndDate = "";
+            var pStartTime = "";
+            var pEndTime = "";
+            var pAllTime = "";
+
+            pStartDate = pTime.split("~")[0].substring(0, 10);
+            pStartTime = pTime.split("~")[0].substring(11, 16);
+            pEndDate = pTime.split("~")[1].substring(0, 10);
+            pEndTime = pTime.split("~")[1].substring(11, 16);
+
+            if (reFlag == "1") {
+                pAllTime = pStartDate + " " + pStartTime + reFlagValue + "<br />&nbsp;~&nbsp;"+ pStartDate + " " + pEndTime + reFlagValue;
+            } else {
+                pAllTime = pStartDate + " " + pStartTime + reFlagValue + "<br />&nbsp;~&nbsp;"+ pEndDate + " "  + pEndTime + reFlagValue;
+            }
+
+            sTd.innerHTML += "[" + "기간" + "]<br />" + pAllTime;
+            sTr.appendChild(sTd);
+            sTable.appendChild(sTr);
+            tTd.appendChild(sTable);
+            tTr.appendChild(tTd);
+            tTable.appendChild(tTr);
+        }
+        var sTr = document.createElement("TR");
+        var sTd = document.createElement("TD");
+        var sSpan = document.createElement("SPAN");
+        sTd.appendChild(sSpan);
+        sTd.innerHTML += "[" + "예약자" + "]<br />" + pWriterName + "(" + pWriterDeptName + ")";
+        sTr.appendChild(sTd);
+        sTable.appendChild(sTr);
+        tTd.appendChild(sTable);
+        tTr.appendChild(tTd);
+        tTable.appendChild(tTr);
+
+        sTd.appendChild(sSpan);
+        sTr.appendChild(sTd);
+        sTable.appendChild(sTr);
+        tTd.appendChild(sTable);
+        tTr.appendChild(tTd);
+        tTable.appendChild(tTr);
+
+        tTip.appendChild(tTable);
+        
+        tTip.style.left = getMouseXLocation() + 'px';
+        tTip.style.top = getMouseYLocation() + 'px';
+        tTip.style.visibility = 'visible';
+    }
+   
+    function Resource_Config_OnClick()
+    {
+        schedule_add_select_dialogArguments[1] = Resource_Config_OnClick_Complete;
+        DivPopUpShow_function(880, 510, "/myoffice/ezResource/ResSch/Resource_Portlet_Config.aspx");
+    }
+
+    function Resource_Config_OnClick_Complete() {
+        DivPopUpHidden();
+        selectDate = $ContentDiv("#Sdatepicker").datepicker({ dateFormat: 'yy-mm-dd' }).val();
+        Resource_Portlet_Reload();
+    }
+
+    function resourceWrite_onclick(pBrdID, pBrdCompany) {
+        DivPopUpHidden();
+        var SelectCompanyID = "S907001";
+        if (pBrdCompany == "TOP") {
+            SelectCompanyID = pBrdCompany;
+        }
+        var selectIDs = pBrdID + ";";
+        var URL = "/Myoffice/ezResource/ResSch/Schedule_Add.aspx?cmd=add&from=schedule&selsd=&seled=&day_view=&ownerID=" + pBrdID + "&selectIDs=" + selectIDs + "&open=PORTLET&COMPANYID=" + SelectCompanyID;
+        schedule_add_dialogArguments[1] = Resource_Config_OnClick_Complete;
+        DivPopUpShow_function(750, 900, URL);
+    }
+
+    var schedule_read_dialogArguments = new Array();
+    function resourceView_onclick(BrdID,BrdNum,StartDate,EndDate, BrdCompany) {
+        schedule_read_dialogArguments[1] = Resource_Config_OnClick_Complete;
+        DivPopUpShow(820, 700, "/myoffice/ezResource/ResSch/Schedule_Read.aspx?cmd=mod&from=schedule&num=" + BrdNum + "&ownerID=" + BrdID + "&type=Master&startDate=" + StartDate + "&endDate=" + EndDate + "&COMPANYID=" + BrdCompany);
+    }
+    
+    function Resource_Portlet_more_Click() {
+        if (typeof (Resource_Portlet_ID) === "string" && Resource_Portlet_ID != "") {
+            GoToApplication("60");
+        }
+    }
+
+    function getMouseYLocation() {
+        return window.event.pageY + document.body.scrollTop - 185;
+    }
+
+    function getMouseXLocation(e) {
+        var E = window.event;
+        
+        var tTip = document.getElementById("tooltip");
+        if (navigator.userAgent.indexOf('Firefox') != -1) {
+            if (E.clientX > 1000) {
+                var locationX = E.clientX + document.documentElement.scrollLeft - tTip.clientWidth;
+            } else {
+                if (E.clientX > 300) {
+                    var locationX = E.clientX + document.documentElement.scrollLeft - tTip.clientWidth;
+                }
+                else
+                    var locationX = E.clientX + document.documentElement.scrollLeft;
+            }
+        }
+        else {
+            if (E.clientX > 1000) {
+                var locationX = E.clientX + document.body.scrollLeft - tTip.clientWidth;
+            } else {
+                if (E.clientX > 300) {
+                    var locationX = E.clientX + document.body.scrollLeft - tTip.clientWidth;
+                }
+                else
+                    var locationX = E.clientX + document.body.scrollLeft;
+            }
+        }
+
+        return locationX;
+    }
+</script>
+</div><div style="width:25%; float:left;" class="portlet_25percent">
+
+<div class="col content_portletBox">
+    <dl class="tabpart_portletDL noUnderline">
+        <dd title="더보기" onclick="Poll_Portlet_more_Click()"><span class="main_img main_icon_more"></span></dd>
+        <dd title="설정" style="display:none;"><span class="main_img main_icon_config"></span></dd>
+        <dt>
+            <p class="notice_portletTitle">설문</p>
+        </dt>
+    </dl>
+    <div class="tabpart_portlet_list content_poll">
+        <div class="poll_table">
+            <ul class="contentlayout">                
+                <li class="contentlayout_left">Q.</li><li class="contentlayout_none">사내식당 만족도 조사</li>
+            </ul>
+        </div>
+        <dl class="poll_footer">
+            <dt onclick="Poll_Detail_Click()">
+                <span class="main_img main_icon_poll_arrow_left" title="설문참여하기"></span>설문참여하기
+            </dt>
+            <dd onclick="Poll_Portlet_more_Click()"> 
+                기본설문보기<span class="main_img main_icon_poll_arrow_right" title="기본설문보기"></span>
+            </dd>
+        </dl>
+    </div>
+</div>
+<script type="text/javascript">    
+
+    var item_no = "339";
+
+    function Poll_Portlet_more_Click() {
+        GoToApplication("41", "설문", false);
+    }
+
+    function Poll_Detail_Click() {
+        if (item_no != "") {
+            var pReceve = "brd_id=5&writer=&title=&range=&sdate=&edate=&page=&item_no=" + item_no;
+
+            var xmlHttp = createXMLHttpRequest();
+            xmlHttp = createXMLHttpRequest();
+            xmlHttp.open("POST", "/myoffice/ezQuestion/poll/poll_open.aspx?" + pReceve + "&aprResponse=1", false);
+            xmlHttp.send();
+            var URL = "";
+            if (xmlHttp.status == 200) {
+                if (xmlHttp.responseText != "ERROR") {
+                    var _responseText = xmlHttp.responseText;
+                    if (_responseText.toUpperCase().indexOf('LOADURLCONTENT') > -1) {
+                        URL = _responseText.split('|||')[1] + "&NOTI=Y";
+
+                        DivPopUpShow_function(800, 900, URL);
+                    }
+                }
+            }
+        } else {
+            GoToApplication("41", "설문", false);
+        }
+    }
+
+</script>
+</div><div style="width:50%; float:left;" class="portlet_50percent">
+<div class="col content_portletBox">
+    <dl class="tabpart_portletDL noUnderline">
+        <dd title="더보기" onclick="Community_Portlet_more_Click()"><span class="main_img main_icon_more"></span></dd>
+        <dd title="설정" style="display:none;"><span class="main_img main_icon_config"></span></dd>
+        <dt>
+            <p class="notice_portletTitle">커뮤니티</p>
+        </dt>
+    </dl>
+    <ul class="tabpart_portlet_list">
+        <div class="nodataBox">
+	<p class="icon_nodata"></p><p class="text_nodata">No data.</p>
+</div>        
+    </ul>
+</div>
+<script type="text/javascript">
+
+    function Community_Portlet_more_Click() {
+        var width = window.screen.availWidth;
+        var left = 0;
+        var top = 0;
+
+        if (window.screen.width > 800) {
+            var pleftpos;
+            pleftpos = parseInt(width) - 967;
+            left = pleftpos / 2;
+        }
+
+        var URL = "/myoffice/ezCommunity/main_page.aspx";
+        window.open(URL, "", "width=1200px, height=1000px, resizable=YES,top=" + top + ",left = " + left);
+    }
+
+    function Community_itemClick(BoardID, ItemID, pCode) {
+        var URL = "/myoffice/ezCommunity/BoardItemView_Cross.aspx?ItemID=" + ItemID + "&BoardID=" + BoardID + "&code=" + pCode;
+        GetOpenWindow(URL, "", 900, 800, "YES");
+    }
+    </script>
+</div></li><li><div style="width:25%; float:left;" class="portlet_25percent">
+<div class="col content_portletBox">
+    <dl class="tabpart_portletDL noUnderline">
+        <dd title="더보기" onclick="Familyevents_Portlet_more_Click(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;)"><span class="main_img main_icon_more"></span></dd>
+        <dd name="Familyevents_Portlet_config" onclick="Familyevents_Portlet_Configuration()" title="설정" style="display:none;"><span class="main_img main_icon_config"></span></dd>
+        <dt>
+            <p class="notice_portletTitle">경조사</p>
+        </dt>
+    </dl>
+    <ul class="tabpart_portlet_list" id="Familyevents_List">
+        <li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{1D8C6AC8-BAE9-45D0-B795-67A94242A553}&#39;, &#39;BOARD&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2019-01-10</span><span class="floatNone">[축돌]이몽룡 과장 돌잔치 안내 </span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{B7D1BBC2-CAAE-4247-8041-F86ED79E725B}&#39;, &#39;BOARD&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-11-02</span><span class="floatNone">♡~“장세용부장” 차남 결혼식을 알려드립니다~♡	</span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{DF87E938-0410-4563-95D9-0F847591417E}&#39;, &#39;BOARD&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-11-02</span><span class="floatNone">※※이종무 수석부장님 장남 결혼식 알림※※</span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{95fa1ba4-78f1-4d21-aea5-950674068711}&#39;, &#39;BOARD&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-10-31</span><span class="floatNone">[결혼] 경영관리팀 강진우 대리 결혼합니다!!</span></li><li onclick="Board_itemClick(&#39;{f6f9a991-fe62-c511-4629-f6b1cf11b473}&#39;, &#39;{b697e585-d93a-42b4-94d0-c0e8773db01c}&#39;, &#39;BOARD&#39;)"><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedate">2018-10-31</span><span class="floatNone">[결혼] SS개발1팀 최찬규 사원 2018.11.17</span></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    var BoardID = "{f6f9a991-fe62-c511-4629-f6b1cf11b473}";
+    function Familyevents_Board_Reload() {
+        var xmlHttp = new createXMLHttpRequest();
+        var xmlpara = createXmlDom();
+
+        var objNode;
+        createNodeInsert(xmlpara, objNode, "DATA");
+        createNodeAndInsertText(xmlpara, objNode, "IDLIST", BoardID);
+        xmlHttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/GetBoardList_Portlet.aspx?pBoardType=GENERAL&portlettype=familyevents", false);
+        xmlHttp.send(xmlpara);
+        if (xmlHttp.status == 200) {
+            var pXmlDom = loadXMLString(xmlHttp.responseText);
+            if (getNodeText(pXmlDom.getElementsByTagName("STRINGWRITER")[0]) != "") {
+                document.getElementById("Familyevents_List").innerHTML = "";
+                document.getElementById("Familyevents_List").innerHTML = getNodeText(pXmlDom.getElementsByTagName("STRINGWRITER")[0]);
+            } else {
+                document.getElementById("Familyevents_List").innerHTML = "<div class=\"nodataBox\"><p class=\"icon_nodata\"></p><p class=\"text_nodata\">No data.</p></div>";
+            }
+        }
+        xmlHttp = null;
+    }
+    function Familyevents_Portlet_more_Click(BoardTabID) {
+            GoToApplication("40", "게시판", false, BoardTabID.replace(/;/g, ""));
+    }
+</script>
+
+</div><div style="width:25%; float:left;" class="portlet_25percent">
+
+
+<div class="col content_portletBox">
+    <dl class="tabpart_portletDL noUnderline">
+        <dd title="더보기" style="display: none;"><span class="main_img main_icon_more"></span></dd>
+        <dd title="설정" style="display: none;"><span class="main_img main_icon_config"></span></dd>
+        <dt>
+            <p class="notice_portletTitle">생일자</p>
+        </dt>
+    </dl>
+    <div class="tabpart_portlet_list content_birthday">
+        <ul class="contentlayout" id="birthday_portlet_listBox" style="display: block;">
+            <!-- 카드보기 클릭시 display:block; 로 변경 / 전체보기 클릭시 display:none; 로 변경 -->
+            <li class="contentlayout_left" id="main_icon_left"><span class="main_img main_icon_brithday_arrow_left" onclick="LeftBirth_Click()"></span></li>
+            <li class="contentlayout_right" id="main_icon_right"><span class="main_img main_icon_brithday_arrow_right" onclick="RightBirth_Click()"></span></li>
+            
+            <li class="contentlayout_none">
+                <div class="layout_table">
+                    <ul class="layout_table_tr">
+                        <li class="layout_table_td" id="birthday_listBox_1" style="text-align:right;"><div class="birthday_listBox">
+	<p class="userImg"><img src="./kaoni004.jpg"></p><dl class="birthdayDL">
+		<dt>정채원대리</dt><dd>회계관리팀</dd><dd>2021-07-10</dd>
+	</dl>
+</div></li><li class="layout_table_td" id="birthday_listBox_2" style="text-align:left;"><div class="birthday_listBox">
+	<p class="userImg"><img src="./co004.jpg"></p><dl class="birthdayDL">
+		<dt>윤서연과장</dt><dd>기획팀</dd><dd>2021-07-24</dd>
+	</dl>
+</div></li><li class="layout_table_td" id="birthday_listBox_3" style="display: none;"><div class="birthday_listBox">
+	<p class="userImg"><img src="./user_noimg.png"></p><dl class="birthdayDL">
+		<dt>정현준차장</dt><dd>교무처</dd><dd>2021-07-26</dd>
+	</dl>
+</div>
+                    </li></ul>
+                </div>
+            </li>
+        </ul>
+        <ul class="tabpart_portlet_list" id="birthday_portlet_list" style="display: none;">
+            <!-- 전체보기 클릭시 display:block; 로 변경 -->
+            <li><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedatebirthday">2021-07-10</span><span class="floatRight writernamebirthday">회계관리팀</span><span class="floatNone">정채원대리</span></li><li><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedatebirthday">2021-07-24</span><span class="floatRight writernamebirthday">기획팀</span><span class="floatNone">윤서연과장</span></li><li><span class="main_img main_icon_listdot floatLeft"></span><span class="floatRight writedatebirthday">2021-07-26</span><span class="floatRight writernamebirthday">교무처</span><span class="floatNone">정현준차장</span></li>            
+        </ul>
+        <dl class="birthday_footer" id="birthday_footer">
+            <dt onclick="Change_ViewType()" id="Change_ViewType">
+                <span class="main_img main_icon_brithday_allbtn" title="전체보기"></span>전체보기
+                <!-- 전체보기 클릭시 명칭 카드보기로 변경 -->
+            </dt>
+            <dd id="birthday_portlet_Page" style="display: block;">
+                <!-- 전체보기 클릭시 display:none; 로 변경 / 카드보기 클릭시 display:block; -->
+                <span class="main_img main_icon_tabprev" onclick="LeftBirth_Click()" title="왼쪽"></span>
+                <span><span class="point2" id="birth_count">1</span>/2</span> 
+                <span class="main_img main_icon_tabnext" onclick="RightBirth_Click()" title="오른쪽"></span>
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<script type="text/javascript">    
+    var birth_totalcount = 3;
+
+    function Birth_Portlet_OnLoad() {
+        if (birth_totalcount == 0) {
+            document.getElementById("main_icon_left").style.display = "none";
+            document.getElementById("main_icon_right").style.display = "none";
+            document.getElementById("birthday_footer").style.display = "none";
+        }
+    }       
+
+    function Change_ViewType() {
+        if (document.getElementById("birthday_portlet_list").style.display == "none") {
+            document.getElementById("birthday_portlet_listBox").style.display = "none";
+            document.getElementById("birthday_portlet_list").style.display = "block";
+            document.getElementById("birthday_portlet_Page").style.display = "none";
+            document.getElementById("Change_ViewType").innerHTML = "<span class='main_img main_icon_brithday_allbtn' title='카드보기'></span>카드보기";
+        } else {
+            document.getElementById("birthday_portlet_listBox").style.display = "block";
+            document.getElementById("birthday_portlet_list").style.display = "none";
+            document.getElementById("birthday_portlet_Page").style.display = "block";
+            document.getElementById("Change_ViewType").innerHTML = "<span class='main_img main_icon_brithday_allbtn' title='전체보기'></span>전체보기";
+        }
+    }
+    function LeftBirth_Click() {
+        var i = parseInt(document.getElementById("birth_count").innerHTML) * 2;
+        if ((i / 2) == 1) {
+            if(document.getElementById("birthday_listBox_1") != null)
+                document.getElementById("birthday_listBox_1").style.display = "none"
+            if(document.getElementById("birthday_listBox_2") != null)
+                document.getElementById("birthday_listBox_2").style.display = "none"
+
+            if(document.getElementById("birthday_listBox_" + (Math.ceil(parseInt(birth_totalcount) / 2) + 1)) != null)
+                document.getElementById("birthday_listBox_" + (Math.ceil(parseInt(birth_totalcount) / 2) + 1)).style = "text-align:right;"
+            if(document.getElementById("birthday_listBox_" + (Math.ceil(parseInt(birth_totalcount) / 2) + 2)) != null)
+                document.getElementById("birthday_listBox_" + (Math.ceil(parseInt(birth_totalcount) / 2) + 2)).style = "text-align:left;"
+
+            document.getElementById("birth_count").innerHTML = Math.ceil(parseInt(birth_totalcount) / 2);
+        } else {
+            if(document.getElementById("birthday_listBox_" + (i - 1)) != null)
+                document.getElementById("birthday_listBox_" + (i - 1)).style.display = "none"
+            if(document.getElementById("birthday_listBox_" + (i)) != null)
+                document.getElementById("birthday_listBox_" + (i)).style.display = "none"
+
+            if(document.getElementById("birthday_listBox_" + (i - 3)) != null)
+                document.getElementById("birthday_listBox_" + (i - 3)).style = "text-align:right;"
+            if(document.getElementById("birthday_listBox_" + (i - 2)) != null)
+                document.getElementById("birthday_listBox_" + (i - 2)).style = "text-align:left;"
+
+            document.getElementById("birth_count").innerHTML = parseInt((i / 2)) - 1;
+        }
+    }
+    function RightBirth_Click() {
+        var i = parseInt(document.getElementById("birth_count").innerHTML) * 2;
+        if (document.getElementById("birthday_listBox_" + (i + 1)) == null) {
+            if(document.getElementById("birthday_listBox_" + (i - 1)) != null)
+                document.getElementById("birthday_listBox_" + (i - 1)).style.display = "none"
+            if(document.getElementById("birthday_listBox_" + (i)) != null)
+                document.getElementById("birthday_listBox_" + (i)).style.display = "none"
+
+            document.getElementById("birthday_listBox_1").style = "text-align:right;"
+            document.getElementById("birthday_listBox_2").style = "text-align:left;"
+
+            document.getElementById("birth_count").innerHTML = 1;
+        } else {
+            if(document.getElementById("birthday_listBox_" + (i - 1)) != null)
+                document.getElementById("birthday_listBox_" + (i - 1)).style.display = "none"
+            if(document.getElementById("birthday_listBox_" + (i)) != null)
+                document.getElementById("birthday_listBox_" + (i)).style.display = "none"
+
+            if(document.getElementById("birthday_listBox_" + (i + 1)) != null)
+                document.getElementById("birthday_listBox_" + (i + 1)).style = "text-align:right;"
+            if(document.getElementById("birthday_listBox_" + (i + 2)) != null)
+                document.getElementById("birthday_listBox_" + (i + 2)).style = "text-align:left;"
+
+            document.getElementById("birth_count").innerHTML = parseInt((i / 2)) + 1;
+        }
+    }
+    
+    Birth_Portlet_OnLoad();
+</script>
+</div><div style="width:50%; float:left;" class="portlet_50percent">
+<article class="weather box_shadow">
+    <div class="content_portletBox">
+        <div class="layDiv">
+            
+            <div class="weather_content">
+                <div class="weather_title">
+                    <dl class="weatherPresent">
+                        <dt><img id="currentIcon" src="./weatherIcon04.png"></dt>
+                        <dd><select id="cityList" class="weatherSelect"><option value="1835848">서울</option><option value="1835235">대전</option><option value="1835329">대구</option><option value="1838524">부산</option><option value="1843137">강릉</option><option value="1845136">춘천</option><option value="1833747">울산</option><option value="1845457">전주</option><option value="1841811">광주</option><option value="1832157">여수</option><option value="1846266">제주도</option></select><br><span id="mainWeather">흐림</span>&nbsp;<span id="currentTemp">33.1℃</span></dd>
+                    </dl>
+                    <ul class="weatherPer">
+                        <li class="weatherPerLi" style="display: list-item;"><span class="icon iconbg01"><img src="./weatherIcon_add01.png"></span>
+		                <span class="text"><span class="text" id="humidity" style="margin-right:5px;font-weight: normal">습도</span><span id="currentHumidity">41</span><span class="text" id="humidityPer">%</span></span></li>
+		                <li class="weatherPerLi" style="display: list-item;"><span class="icon iconbg02"><img src="./weatherIcon_add02.png"></span>
+		                <span class="text"><span class="text" id="clouds" style="margin-right:5px;font-weight: normal">구름</span><span id="currentClouds">96</span><span class="text" id="cloudsPer">%</span></span></li>
+		                <li class="weatherPerLi" style="display: list-item;"><span class="icon iconbg03"><img src="./weatherIcon_add03.png"></span>
+		                <span class="text"><span class="text" id="wind" style="margin-right:5px;font-weight: normal">바람</span><span id="currentWind">3.11</span><span class="text" id="windPer">m/s</span></span></li>
+                    </ul>
+                </div>
+                <div class="weather_mini" style="">
+                    <dl>
+		                <dt><img id="icon1" src="./weatherIcon_mini04.png"></dt>
+		                <dd><span id="date1">06시</span><span id="temp1">33.3℃</span></dd>
+		            </dl>
+		            <dl>
+		                <dt><img id="icon2" src="./weatherIcon_mini04.png"></dt>
+		                <dd><span id="date2">09시</span><span id="temp2">31.8℃</span></dd>
+		            </dl>
+		            <dl>
+		                <dt><img id="icon3" src="./weatherIcon_mini04.png"></dt>
+		                <dd><span id="date3">12시</span><span id="temp3">29.2℃</span></dd>
+		            </dl>
+		            <dl>
+		                <dt><img id="icon4" src="./weatherIcon_mini04.png"></dt>
+		                <dd><span id="date4">15시</span><span id="temp4">27.8℃</span></dd>
+		            </dl>
+		            <dl>
+		                <dt><img id="icon5" src="./weatherIcon_mini04.png"></dt>
+		                <dd><span id="date5">18시</span><span id="temp5">26.7℃</span></dd>
+		            </dl>
+                </div>
+                <span style="font-size:10px;margin-right:6px;margin-top:3px;margin-bottom:1px;float:right;">Weather from OpenWeatherMap</span>
+            </div>
+        </div>
+    </div>
+</article>
+<script type="text/javascript" src="./jquery-1.11.2.min.js.다운로드"></script>
+<script type="text/javascript" src="./jquery.orbit-1.2.3.min.js.다운로드"></script>
+
+<script type="text/javascript">
+    var currentWeather = "04d;Clouds;33.16;41;96;3.11";
+    var todayWeather = "04d;33.39;2021-07-29 06:00:00!04d;31.8;2021-07-29 09:00:00!04n;29.24;2021-07-29 12:00:00!04n;27.89;2021-07-29 15:00:00!04n;26.79;2021-07-29 18:00:00";
+    var cityCode = "1835848";
+    var displayName = "서울";
+    var lang = "1";
+    var cityList = [{"cityCode":"1835848","displayCityName":"서울"},{"cityCode":"1835235","displayCityName":"대전"},{"cityCode":"1835329","displayCityName":"대구"},{"cityCode":"1838524","displayCityName":"부산"},{"cityCode":"1843137","displayCityName":"강릉"},{"cityCode":"1845136","displayCityName":"춘천"},{"cityCode":"1833747","displayCityName":"울산"},{"cityCode":"1845457","displayCityName":"전주"},{"cityCode":"1841811","displayCityName":"광주"},{"cityCode":"1832157","displayCityName":"여수"},{"cityCode":"1846266","displayCityName":"제주도"}];
+
+    var currentWeatherArr = currentWeather.split(";");
+    var currentIcon = currentWeatherArr[0];
+    var currentMain = currentWeatherArr[1];
+    var currentTemp = currentWeatherArr[2];
+    var currentHumidity = currentWeatherArr[3];
+    var currentClouds = currentWeatherArr[4];
+    var currentWind = currentWeatherArr[5];
+
+    var todayWeatherArr = todayWeather.split("!");
+    var today1Arr = todayWeatherArr[0].split(";");
+    var today2Arr = todayWeatherArr[1].split(";");
+    var today3Arr = todayWeatherArr[2].split(";");
+    var today4Arr = todayWeatherArr[3].split(";");
+    var today5Arr = todayWeatherArr[4].split(";");
+
+    var today1Icon = today1Arr[0];
+    var today1Temp = today1Arr[1];
+    var today1Time = today1Arr[2].substring(11, 13);
+
+    var today2Icon = today2Arr[0];
+    var today2Temp = today2Arr[1];
+    var today2Time = today2Arr[2].substring(11, 13);
+
+    var today3Icon = today3Arr[0];
+    var today3Temp = today3Arr[1];
+    var today3Time = today3Arr[2].substring(11, 13);
+
+    var today4Icon = today4Arr[0];
+    var today4Temp = today4Arr[1];
+    var today4Time = today4Arr[2].substring(11, 13);
+
+    var today5Icon = today5Arr[0];
+    var today5Temp = today5Arr[1];
+    var today5Time = today5Arr[2].substring(11, 13);
+            
+	$(function(){
+		$("#cityList").change(function(){
+			$.ajax({
+			    type : "GET",
+			    dataType : "json",
+			    async : false,
+			    url : "/myoffice/ezPortal/Portlet/aspx/ChangeCity.aspx",
+			    data : {
+			    	cityCode : this.value
+			    },
+			    success: function(data) {		
+				    $("#cityName").text(data.displayCityName);
+			    			
+			    	currentWeatherArr = data.currentWeather.split(";");
+			    			
+			    	currentIcon = currentWeatherArr[0];
+			    	currentMain = currentWeatherArr[1];
+			    	currentTemp = currentWeatherArr[2];
+			    	currentHumidity = currentWeatherArr[3];
+			    	currentClouds = currentWeatherArr[4];
+			    	currentWind = currentWeatherArr[5];
+			    			
+			    	$("#currentIcon").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon" +  currentIcon.substring(0,2) + ".png");
+			
+			    	switch (currentMain) {
+                        case "Clear":
+                            $("#mainWeather").text(garm01);
+			    			break;
+                        case "Clouds":
+                            $("#mainWeather").text(yej05);
+			    			break;
+                        case "Haze":
+                            $("#mainWeather").text(garm03);
+                            break;
+                        case "Rain":
+                            $("#mainWeather").text(garm04);
+			    			break;
+                        case "Snow":
+                            $("#mainWeather").text(garm05);
+			    			break;
+                        case "Thunderstorm":
+                            $("#mainWeather").text(garm06);
+			    				break;
+                        case "Drizzle":
+                            $("#mainWeather").text(yej09);
+			    			break;
+                        case "Fog":
+                            $("#mainWeather").text(yej10);
+ 							break;
+                        default:
+                            $("#mainWeather").text(currentMain);
+			    	}
+			    			
+			    	if (currentTemp.indexOf(".") == -1) {
+			    		$("#currentTemp").text(currentTemp + "℃");
+			    	} else {
+			    		$("#currentTemp").text(currentTemp.substring(0,currentTemp.indexOf(".") + 2) + "℃");
+			    	}
+			    			
+			    	$("#currentHumidity").text(currentHumidity);
+			    	$("#currentClouds").text(currentClouds);
+			    	$("#currentWind").text(currentWind);
+			    			
+			    	TodayWeatherArr = data.todayWeather.split("!");
+			
+			    	today1Arr = TodayWeatherArr[0].split(";");
+			    	today2Arr = TodayWeatherArr[1].split(";");
+			    	today3Arr = TodayWeatherArr[2].split(";");
+			    	today4Arr = TodayWeatherArr[3].split(";");
+			    	today5Arr = TodayWeatherArr[4].split(";");
+			
+			    	today1Icon = today1Arr[0];
+			    	today1Temp = today1Arr[1];
+			    	today1Time = today1Arr[2].substring(11, 13);
+			
+			    	today2Icon = today2Arr[0];
+			    	today2Temp = today2Arr[1];
+			    	today2Time = today2Arr[2].substring(11, 13);
+			
+			    	today3Icon = today3Arr[0];
+			    	today3Temp = today3Arr[1];
+			    	today3Time = today3Arr[2].substring(11, 13);
+			
+			    	today4Icon = today4Arr[0];
+			    	today4Temp = today4Arr[1];
+			    	today4Time = today4Arr[2].substring(11, 13);
+			
+			    	today5Icon = today5Arr[0];
+			    	today5Temp = today5Arr[1];
+			    	today5Time = today5Arr[2].substring(11, 13);
+			    			
+			    	$("#icon1").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today1Icon.substring(0,2) + ".png");
+			    	$("#icon2").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today2Icon.substring(0,2) + ".png");
+			    	$("#icon3").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today3Icon.substring(0,2) + ".png");
+			    	$("#icon4").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today4Icon.substring(0,2) + ".png");
+			    	$("#icon5").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today5Icon.substring(0,2) + ".png");
+			    			
+			    	if (today1Temp.indexOf(".") == -1) {
+			    		$("#temp1").text(today1Temp + "℃");
+			    	} else {
+			    				
+			    		$("#temp1").text(today1Temp.substring(0,today1Temp.indexOf(".") + 2) + "℃");
+			    	}
+			    			
+			    	if (today2Temp.indexOf(".") == -1) {
+			    		$("#temp2").text(today2Temp + "℃");
+			    	} else {
+			    		$("#temp2").text(today2Temp.substring(0,today2Temp.indexOf(".") + 2) + "℃");
+			    	}
+			    			
+			    	if (today3Temp.indexOf(".") == -1) {
+			    		$("#temp3").text(today3Temp + "℃");
+			    	} else {
+			    		$("#temp3").text(today3Temp.substring(0,today3Temp.indexOf(".") + 2) + "℃");
+			    	}
+			    			
+			    	if (today4Temp.indexOf(".") == -1) {
+			    		$("#temp4").text(today4Temp + "℃");
+			    	} else {
+			    		$("#temp4").text(today4Temp.substring(0,today4Temp.indexOf(".") + 2) + "℃");
+			    	}
+			    			
+			    	if (today5Temp.indexOf(".") == -1) {
+			    		$("#temp5").text(today5Temp + "℃");
+			    	} else {
+			    		$("#temp5").text(today5Temp.substring(0,today5Temp.indexOf(".") + 2) + "℃");
+			    	}
+			    			
+			    	if (lang == "2") {
+				    	$("#date1").text(today1Time + "h");
+				    	$("#date2").text(today2Time + "h");
+				    	$("#date3").text(today3Time + "h");
+				    	$("#date4").text(today4Time + "h");
+				    	$("#date5").text(today5Time + "h");
+			    	} else {
+				    	$("#date1").text(today1Time + "시");
+				    	$("#date2").text(today2Time + "시");
+				    	$("#date3").text(today3Time + "시");
+				    	$("#date4").text(today4Time + "시");
+				    	$("#date5").text(today5Time + "시");
+			    	}
+				},
+				error: function(error) {
+                    alert("error" + error);
+                    console.log(error);
+				}
+			});	
+		});
+    });
+
+    $('#currentIcon').attr('src', '/images/ezNewPortal/weather' + '/weatherIcon' + currentIcon.substring(0, 2) + ".png");
+            
+    switch (currentMain) {
+        case "Clear":
+            $("#mainWeather").text(garm01);
+            break;
+        case "Clouds":
+            $("#mainWeather").text(yej05);
+            break;
+        case "Mist":
+        case "Haze":
+            $("#mainWeather").text(garm03);
+            break;
+        case "Rain":
+        case "Drizzle":
+            $("#mainWeather").text(garm04);
+            break;
+        case "Snow":
+            $("#mainWeather").text(garm05);
+            break;
+        case "Thunderstorm":
+            $("#mainWeather").text(garm06);
+            break;
+        case "Drizzle":
+            $("#mainWeather").text(yej09);
+            break;
+        case "Fog":
+            $("#mainWeather").text(yej10);
+            break;
+        default:
+            $("#mainWeather").text(currentMain);
+    }
+
+    $("#humidity").text(yej01);
+    $("#clouds").text(garm02);
+    $("#wind").text(yej02);
+
+    $(".weatherPerLi").show();
+    $(".weather_mini").show();
+
+    $("#humidityPer").text("%");
+    $("#cloudsPer").text("%");
+    $("#windPer").text("m/s");
+
+    if (currentTemp.indexOf(".") == -1) {
+        $("#currentTemp").text(currentTemp + "℃");
+    } else {
+        $("#currentTemp").text(currentTemp.substring(0,currentTemp.indexOf(".") + 2) + "℃");
+    }
+    $("#currentHumidity").text(currentHumidity);
+	$("#currentClouds").text(currentClouds);
+    $("#currentWind").text(currentWind);
+
+    $("#icon1").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today1Icon.substring(0,2) + ".png");
+	$("#icon2").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today2Icon.substring(0,2) + ".png");
+	$("#icon3").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today3Icon.substring(0,2) + ".png");
+	$("#icon4").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" +  today4Icon.substring(0,2) + ".png");
+    $("#icon5").attr("src", "/images/ezNewPortal/weather/" + "weatherIcon_mini" + today5Icon.substring(0, 2) + ".png");
+
+    if (today1Temp.indexOf(".") == -1) {
+		$("#temp1").text(today1Temp + "℃");
+	} else {
+		$("#temp1").text(today1Temp.substring(0,today1Temp.indexOf(".") + 2) + "℃");
+	}
+			
+	if (today2Temp.indexOf(".") == -1) {
+		$("#temp2").text(today2Temp + "℃");
+	} else {
+		$("#temp2").text(today2Temp.substring(0,today2Temp.indexOf(".") + 2) + "℃");
+	}
+			
+	if (today3Temp.indexOf(".") == -1) {
+		$("#temp3").text(today3Temp + "℃");
+	} else {
+		$("#temp3").text(today3Temp.substring(0,today3Temp.indexOf(".") + 2) + "℃");
+	}
+			
+	if (today4Temp.indexOf(".") == -1) {
+		$("#temp4").text(today4Temp + "℃");
+	} else {
+		$("#temp4").text(today4Temp.substring(0,today4Temp.indexOf(".") + 2) + "℃");
+	}
+			
+	if (today5Temp.indexOf(".") == -1) {
+		$("#temp5").text(today5Temp + "℃");
+	} else {
+		$("#temp5").text(today5Temp.substring(0,today5Temp.indexOf(".") + 2) + "℃");
+    }
+
+    if (lang == 2) {
+    	$("#date1").text(today1Time + "h");
+    	$("#date2").text(today2Time + "h");
+    	$("#date3").text(today3Time + "h");
+    	$("#date4").text(today4Time + "h");
+    	$("#date5").text(today5Time + "h");
+	} else {
+    	$("#date1").text(today1Time + "시");
+    	$("#date2").text(today2Time + "시");
+    	$("#date3").text(today3Time + "시");
+    	$("#date4").text(today4Time + "시");
+    	$("#date5").text(today5Time + "시");
+    }
+            
+    for (var i = 0; i < cityList.length; i++) {
+		$("#cityList").append("<option value='" + cityList[i].cityCode + "'>" + cityList[i].displayCityName + "</option>");
+    }
+    $("#cityList").val(cityCode).prop("selected", true);
+</script>
+</div></li></ul></div></div></div>
+<script type="text/javascript">
+    window.onload = function () {
+        TabPortlet_MenuWidthCheck();
+        section_rh_Resize();
+        Resize_TabPortlet();
+        for (var i = 0; i < document.getElementsByName("portlet_setting_button").length; i++) {
+            document.getElementsByName("portlet_setting_button")[i].style.display = "";
+        }
+    }
+
+    window.onresize = function () {
+    }
+
+    // resize 완료 시 함수 수행
+    var delta = 100;
+    var timer = null;
+    window.addEventListener('resize', function () {
+        clearTimeout(timer);
+        timer = setTimeout(Resize_TabPortlet, delta);
+    }, false);
+
+    function TabPortlet_MenuWidthCheck() {
+        var tabPortletElements = document.querySelectorAll('[name="tabPortlet_UL"]');
+        for (var i = 0; i < tabPortletElements.length; i++) {
+            if (tabPortletElements[i].getElementsByTagName("LI").length > 0) {
+                var totalTabmenuWidth = 0;
+                for (var j = 0; j < tabPortletElements[i].getElementsByTagName("LI").length; j++) {
+                    tabPortletElements[i].getElementsByTagName("LI")[j].setAttribute("_menuwidth", tabPortletElements[i].getElementsByTagName("LI")[j].offsetWidth);
+                    totalTabmenuWidth += tabPortletElements[i].getElementsByTagName("LI")[j].offsetWidth;
+                }
+
+                tabPortletElements[i].style.width = (totalTabmenuWidth + 3) + "px"; // 3px여유 추가
+                tabPortletElements[i].setAttribute("_totaltabmenuwidth", totalTabmenuWidth);
+            }
+        }
+    }
+
+    var PORTLET_MINWIDTH = 315;
+    function Resize_TabPortlet() {
+        var tabPortletElements = document.querySelectorAll('[name="tabPortlet"]');
+        for (var i = 0; i < tabPortletElements.length; i++) {
+            if (tabPortletElements[i].querySelectorAll('[name="tabPortlet_MOVEICON"]').length > 0) {
+                if (typeof (tabPortletElements[i].querySelectorAll('[name="tabPortlet_MOVEICON"]')[0]) === "object") {
+                    if (tabPortletElements[i].offsetWidth < PORTLET_MINWIDTH) {
+                        tabPortletElements[i].querySelectorAll('[name="tabPortlet_MOVEICON"]')[0].style.display = "none";
+                    }
+                    else {
+                        tabPortletElements[i].querySelectorAll('[name="tabPortlet_MOVEICON"]')[0].style.display = "";
+                    }
+                }
+            }
+
+            if (tabPortletElements[i].querySelectorAll('[name="tabPortlet_UL"]').length > 0) {
+                if (typeof (tabPortletElements[i].querySelectorAll('[name="tabPortlet_UL"]')[0]) === "object") {
+                    if (tabPortletElements[i].offsetWidth < PORTLET_MINWIDTH) {
+                        tabPortletElements[i].querySelectorAll('[name="tabPortlet_UL"]')[0].style.display = "none";
+                    }
+                    else {
+                        tabPortletElements[i].querySelectorAll('[name="tabPortlet_UL"]')[0].style.display = "";
+                    }
+                }
+            }
+
+            if (tabPortletElements[i].querySelectorAll('[name="tabPortlet_SELECT"]').length > 0) {
+                if (typeof (tabPortletElements[i].querySelectorAll('[name="tabPortlet_SELECT"]')[0]) === "object") {
+                    if (tabPortletElements[i].offsetWidth < PORTLET_MINWIDTH) {
+                        tabPortletElements[i].querySelectorAll('[name="tabPortlet_SELECT"]')[0].style.display = "";
+                    }
+                    else {
+                        tabPortletElements[i].querySelectorAll('[name="tabPortlet_SELECT"]')[0].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+    
+    window.addEventListener('resize', section_rh_Resize, false);
+    function section_rh_Resize() {
+        // Edge 동작 오류로 추가 ===============================================================================
+        var iMainHeight = 0;
+        if (window.parent != null) {
+            if (window.parent.document.documentElement.getElementsByTagName("main").length > 0) {
+                iMainHeight = window.parent.document.documentElement.getElementsByTagName("main")[0].clientHeight;
+            }
+        }
+        // ==============================================================================================================
+
+        var section_rhElements = document.getElementsByClassName("section_rh");
+        if (section_rhElements.length > 0) {
+            section_rhElements[0].style.height = null;
+            if (document.documentElement.scrollHeight < iMainHeight) {
+                section_rhElements[0].style.height = iMainHeight + "px";
+            }
+            else {
+                section_rhElements[0].style.height = document.documentElement.scrollHeight + "px";
+            }
+        }
+
+        
+
+        if (document.documentElement.clientWidth < 1024) {
+            $('.section_rh').fadeOut();
+        }
+        else {
+            $('.section_rh').fadeIn();
+        }
+
+        var section_lhElements = document.getElementsByClassName("section_lh");
+        if (section_lhElements.length > 0) {
+            section_lhElements[0].style.height = null;
+            if (document.documentElement.scrollHeight < iMainHeight) {
+                section_lhElements[0].style.height = iMainHeight + "px";
+            }
+            else {
+                section_lhElements[0].style.height = document.documentElement.scrollHeight + "px";
+            }
+        }
+    }
+
+    var TAB_TIMER = 0;
+    function tabLeft(DT_ID) {
+        var delay = Math.abs(TAB_TIMER - $.now());
+        if (delay > 300) {
+            TAB_TIMER = $.now();
+            
+            var UL_ID = DT_ID + "_UL";
+            var dtWidth = document.getElementById(DT_ID).offsetWidth;
+            var ulWidth = 0;
+            if (trim(document.getElementById(UL_ID).getAttribute("_totaltabmenuwidth")) != "" && !isNaN(trim(document.getElementById(UL_ID).getAttribute("_totaltabmenuwidth")))) {
+                ulWidth = parseInt(trim(document.getElementById(UL_ID).getAttribute("_totaltabmenuwidth")));
+            }
+
+            if (0 < (-document.getElementById(UL_ID).offsetLeft)) { // 왼쪽에 가려진 메뉴가 있다면 실행
+                if (dtWidth + document.getElementById(UL_ID).offsetLeft > 0) {
+                    // 가려진 메뉴가 현재 화면 넓이보다 작을경우 left를 0으로 고정.
+                    $("#" + UL_ID).stop(true, true).animate({ 'left': 0 });
+                }
+                else {
+                    // left에 숨겨진 메뉴 목록 체크
+                    var leftWidthcheck_Temp = 0;    // 숨겨진 목록의 넓이 확인
+                    var leftWidthcheck_SeqNum = 0;  // 숨겨진 목록의 갯수
+                    for (var i = 0; i < document.getElementById(UL_ID).getElementsByTagName("LI").length; i++) {
+                        if ((-document.getElementById(UL_ID).offsetLeft) >= leftWidthcheck_Temp + parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"))) {
+                            leftWidthcheck_Temp += parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"));
+                            leftWidthcheck_SeqNum = i;
+                        }
+                        else {
+                            break;
+                        }
+                    }
+
+                    var leftWidthcheck = 0;
+                    leftWidthcheck_Temp = 0;
+                    var isDisplay = true;
+                    for (var i = leftWidthcheck_SeqNum; i > -1; i--) {
+                        if (isDisplay && dtWidth > leftWidthcheck_Temp + parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"))) {
+                            leftWidthcheck_Temp += parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"));
+                        }
+                        else {
+                            leftWidthcheck += parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"));
+                            isDisplay = false;
+                        }
+                    }
+
+                    $("#" + UL_ID).stop(true, true).animate({ 'left': '-' + leftWidthcheck });
+                }
+            }
+        }
+    }
+
+    function tabRight(DT_ID) {
+        var delay = Math.abs(TAB_TIMER - $.now());
+        if (delay > 300) {
+            TAB_TIMER = $.now();
+            
+            var UL_ID = DT_ID + "_UL";
+            var dtWidth = document.getElementById(DT_ID).offsetWidth;
+            var ulWidth = 0;
+            if (trim(document.getElementById(UL_ID).getAttribute("_totaltabmenuwidth")) != "" && !isNaN(trim(document.getElementById(UL_ID).getAttribute("_totaltabmenuwidth")))) {
+                ulWidth = parseInt(trim(document.getElementById(UL_ID).getAttribute("_totaltabmenuwidth")));
+            }
+
+            if (dtWidth < ulWidth) {
+                var leftWidth = dtWidth + (-document.getElementById(UL_ID).offsetLeft);
+                if (leftWidth < ulWidth) {
+                    var leftWidthcheck = 0;
+                    for (var i = 0; i < document.getElementById(UL_ID).getElementsByTagName("LI").length; i++) {
+                        if (leftWidth > leftWidthcheck + parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"))) {
+                            leftWidthcheck += parseInt(document.getElementById(UL_ID).getElementsByTagName("LI")[i].getAttribute("_menuwidth"));
+                        }
+                        else {
+                            break;
+                        }
+                    }
+
+                    $("#" + UL_ID).stop(true, true).animate({ 'left': '-' + leftWidthcheck });
+                }
+            }
+        }
+    }
+
+    function Board_itemClick(BoardID, ItemID) {
+        ShowAdjacent = "";
+        var URL = "/myoffice/ezBoardSTD/BoardItemView.aspx?ShowAdjacent=" + ShowAdjacent + "&ItemID=" + ItemID + "&BoardID=" + BoardID + "&location=GENERAL"
+        DivPopUpShow_function(800, 900, URL);
+    }
+
+    function Board_Photo_itemClick(BoardID, ItemID, CoreValue) {
+        ShowAdjacent = "";
+        //var URL = "/myoffice/ezBoardSTD/BoardItemView_Photo.aspx?ShowAdjacent=" + ShowAdjacent + "&ItemID=" + ItemID + "&BoardID=" + BoardID + "&location=GENERAL"
+        var URL = "";
+        if (CoreValue == "Y") {
+            URL = "/myoffice/ezBoardSTD/CoreValue/BoardItemView_Photo.aspx?ShowAdjacent=" + ShowAdjacent + "&ItemID=" + ItemID + "&BoardID=" + BoardID + "&location=GENERAL"
+        }
+        else {
+            URL = "/myoffice/ezBoardSTD/BoardItemView_Photo.aspx?ShowAdjacent=" + ShowAdjacent + "&ItemID=" + ItemID + "&BoardID=" + BoardID + "&location=GENERAL";
+        }
+        DivPopUpShow_function(800, 900, URL);
+    }
+
+    function DivPopUpShow_function(defaultWidth, defaultHeight, openLocation) {
+        var portalWidth = (window.innerWidth || document.body.clientWidth);
+        var portalHeight = (window.innerHeight || document.body.clientHeight) - 49;
+        if (portalWidth <= defaultWidth) {
+            defaultWidth = portalWidth - 20;
+        }
+        if (portalHeight <= defaultHeight) {
+            defaultHeight = portalHeight - 20;
+        }
+        DivPopUpShow(defaultWidth, defaultHeight, openLocation);        
+    }
+
+    var selecttarget_dialogArguments = new Array();
+    function Board_Portlet_Configuration(pBoardType, pBoardTabID, pPortletType) {
+        selecttarget_dialogArguments[0] = "";
+        selecttarget_dialogArguments[1] = Board_Portlet_Reload;
+        DivPopUpShow_function(700, 710, "/myoffice/ezPortal/Portlet/configuration/Board_Portlet_Config.aspx?BoardID=&ParentBoardID=top" + "&BoardType=" + pBoardType + "&BoardTabID=" + pBoardTabID + "&PortletType=" + pPortletType);
+    }
+
+    function Board_Portlet_Configuration(pBoardType, pBoardTabID, pPortletType, pUsePams) {    
+        selecttarget_dialogArguments[0] = "";
+        selecttarget_dialogArguments[1] = Board_Portlet_Reload;
+        DivPopUpShow_function(700, 710, "/myoffice/ezPortal/Portlet/configuration/Board_Portlet_Config.aspx?BoardID=&ParentBoardID=top" + "&BoardType=" + pBoardType + "&BoardTabID=" + pBoardTabID + "&PortletType=" + pPortletType + "&ispams=" + pUsePams);
+    }
+
+    var reload_xmlhttp;
+    function Board_Portlet_Reload(pBoardType, pBoardTabID, pPortletType) {
+        DivPopUpHidden();
+        reload_xmlhttp = createXMLHttpRequest();
+        reload_xmlhttp.open("POST", "/myoffice/ezPortal/Portlet/aspx/ReloadBoard_Portlet.aspx?BoardType=" + pBoardType + "&BoardTabID=" + pBoardTabID + "&PortletType=" + pPortletType, true);
+        reload_xmlhttp.onreadystatechange = function () { Board_Portlet_Reload_Complete(pBoardTabID, pPortletType) };
+        reload_xmlhttp.send();
+    }
+
+    function Board_Portlet_Reload_Complete(pBoardTabID, pPortletType) {
+        if (reload_xmlhttp == null || reload_xmlhttp.readyState != 4) return;
+        if (reload_xmlhttp.statusText == "OK" || reload_xmlhttp.status == 200) {
+            var returnValue = loadXMLString(reload_xmlhttp.responseText);
+            if (typeof (document.getElementById(pPortletType + "_Tab")) === "object" && document.getElementById(pPortletType + "_Tab") != null) {
+                document.getElementById(pPortletType + "_Tab").innerHTML = "";
+                document.getElementById(pPortletType + "_Tab").innerHTML = getNodeText(returnValue.getElementsByTagName("TAB")[0]);
+                if (getNodeText(returnValue.getElementsByTagName("FIRSTBOARDID")[0]) === "pams;") {
+                    //document.getElementById(pPortletType + "_fmeStock").style.display = "";
+                    document.getElementById(pPortletType + "_List").style.display = "none";
+                }
+                else {
+                    //document.getElementById(pPortletType + "_fmeStock").style.display = "none";
+                    document.getElementById(pPortletType + "_List").style.display = "";
+                    document.getElementById(pPortletType + "_List").innerHTML = "";
+                    document.getElementById(pPortletType + "_List").innerHTML = getNodeText(returnValue.getElementsByTagName("LIST")[0]);
+                }
+            }else if (pPortletType == "BoardPhoto_Portlet") {
+                document.getElementById("BoardPhoto_Portlet_List").innerHTML = "";
+                document.getElementById("BoardPhoto_Portlet_List").innerHTML = getNodeText(returnValue.getElementsByTagName("LIST")[0]);
+                BoardPhoto_Portlet_BoardID = getNodeText(returnValue.getElementsByTagName("FIRSTBOARDID")[0]);
+            }
+            if (pBoardTabID != "")
+                selToggleList_Multi(document.getElementById(pBoardTabID + "_UL"));
+        }
+        else {
+            Alert_Message("ERROR", null, "");
+            return;
+        }
+        reload_xmlhttp = null;
+        
+        TabPortlet_MenuWidthCheck();
+    }
+
+    function PreView_Close() {
+        DivPopUpHidden();
+    }
+
+    // js, css 파일 include중복 제거
+    if (typeof jscssfile_removecheck == 'function') {
+        jscssfile_removecheck();
+    }
+</script>
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all fontsize"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><select class="ui-datepicker-month" data-handler="selectMonth" data-event="change"><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6" selected="selected">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select><select class="ui-datepicker-year" data-handler="selectYear" data-event="change"><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021" selected="selected">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option></select></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">2</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">3</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">8</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">9</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">10</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">16</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">17</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">23</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">24</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">28</a></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">30</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="6" data-year="2021"><a class="ui-state-default" href="http://ekp.kaoni.com/myoffice/ezPortal/Layout/PortalLayout_Basic.aspx#">31</a></td></tr></tbody></table></div></body></html>

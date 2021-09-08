@@ -1,0 +1,886 @@
+﻿/* 멀티뷰 활용 소스 */
+
+
+// _WindowTop : 시스템의 Top 프레임을 의미함. (실제 Top 프레임이 아닐수도 있음)
+// 멀티뷰 관련 함수들은 _WindowTop 안에 들어가게 되므로 window.top 대신 _WindowTop 을 사용할 것!!!!
+if (!_WindowTop) {
+    var _WindowTop = window;
+}
+
+// top menu 정보 저장
+var arrTopMenu = [];
+
+
+// callback = function(mainWindow){}
+_WindowTop.MultiView_MainWindow = function (windowName, callback) {
+    return _WindowTop.MultiView_Manager.MainWindow(windowName, callback);
+};
+
+// callback = function(subWindow){}
+_WindowTop.MultiView_SubWindow = function (windowName, callback) {
+    return _WindowTop.MultiView_Manager.SubWindow(windowName, callback);
+};
+
+_WindowTop.MultiView_Close = function (windowName, isRefresh) {
+    _WindowTop.MultiView_Manager.ClosePage(windowName, isRefresh);
+};
+
+_WindowTop.MultiView_Open = function (windowName, title, url, path) {
+
+    //var url = url + ((url.indexOf("?") >= 0) ? "&" : "?") + "cache=" + (new Date()).getTime();
+
+    if (windowName)
+        _WindowTop.MultiView_Manager.NewSub(windowName, title, url, path);
+    else {
+        // 멀티뷰 상태인 경우
+        if (CheckMultiviewStatus() == true) {
+
+            // 확인창 callback
+            var OKCallback = function (flag) {
+                if (flag) {
+                    // 확인 버튼
+                    DivPopUpHidden();
+                    parent.DivPopUpHidden();
+
+                    InitNewPage(title, url, path);
+                }
+                else {
+                    // 취소 버튼
+                    DivPopUpHidden();
+                    parent.DivPopUpHidden();
+                }
+            };
+
+            // 멀티뷰를 닫을지 여부 확인
+            Confirm_Alert_Message(MultiView_Close_Confirm, OKCallback, "");
+        }
+        else {
+            InitNewPage(title, url, path);
+        }
+    }
+
+    InitDropdownMenu();
+};
+
+_WindowTop.MultiView_MultiOpen = function (title, url, path) {
+
+    if (_WindowTop.MultiView_Manager.TaskCount < 5) {
+        //var url = url + ((url.indexOf("?") >= 0) ? "&" : "?") + "cache=" + (new Date()).getTime();
+
+        _WindowTop.MultiView_Manager.NewPage(title, url, path);
+    }
+    else {
+        Alert_Message(MultiView_MultiOpen_Alert, null, "");
+    }
+
+    InitDropdownMenu();
+};
+
+// 멀티뷰 메인페이지 화면의 breadcrumb 제목을 변경
+_WindowTop.MultiView_UpdateMainPageTitle = function (windowName, newTitle, newPath) {
+    _WindowTop.MultiView_Manager.UpdateMainPageTitle(windowName, newTitle, newPath);
+};
+
+// 싱글뷰 실행 시 모두 초기화 후 실행
+function InitNewPage(title, url, path) {
+    _WindowTop.MultiView_Manager.Init("#MultiView_Container");
+    _WindowTop.MultiView_Manager.NewPage(title, url, path);
+};
+
+
+// title: 멀티뷰 breadcrumb 제목
+// url: 호출 url
+// path: 멀티뷰 breadcrumb에 표시할 경로 (값이 있는 경우 path + "/" + title로 표시)
+function SingleNavSelect(title, url, path)
+{
+    if (url !== "") {
+        if (_WindowTop.MultiView_Open) {
+            _WindowTop.MultiView_Open(false, title, url, path);
+        }
+    }
+    else {
+        Alert_Message(MultiView_NotLink_Alert, null, "");
+    }
+}
+
+
+// title: 멀티뷰 breadcrumb 제목
+// url: 호출 url
+// path: 멀티뷰 breadcrumb에 표시할 경로 (값이 있는 경우 path + "/" + title로 표시)
+function MultiNavSelect(title, url, path) {
+    if (_WindowTop.MultiView_MultiOpen)
+        _WindowTop.MultiView_MultiOpen(title, url, path);
+}
+
+// 상단메뉴의 Dropdown 메뉴 초기화
+function InitDropdownMenu()
+{
+    // 탑메뉴의 Dropdown 메뉴 닫기
+    $(".dropdown").removeClass("open");
+
+    // 멀티뷰 메뉴가 활성화 되어 있는 경우 닫기 처리
+    //if ($('#MultiView_Menu').hasClass("open"))
+    //    $("#MultiView_Button").click();
+
+    if (_WindowTop.MultiView_Manager)
+        _WindowTop.MultiView_Manager.HideDropPanel();
+}
+
+// 멀티뷰 상태인지 여부 확인
+function CheckMultiviewStatus() {
+    return bMultiviewStatus;
+}
+
+// 모바일에서 접속했는지 여부 체크
+// true: 모바일
+function IsMobileDevice() {
+    var filter = "win16|win32|win64|mac|macintel";
+
+    if (navigator.platform) {
+        if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+// 모바일에서 PC화면으로 접속하는 경우 멀티뷰 iframe에서 스크롤을 사용할 수 있도록 화면 조정
+function SetMobileScreen() {
+    if (IsMobileDevice() == true) {
+
+        // 멀티뷰 용도의 iframe 검색
+        $("#MultiView_Container iframe").each(function (index) {
+
+            var iframeview = $(this);
+
+            if (iframeview.is(":visible") == true || iframeview.css("visibility") == "visible") {
+                // iframe 높이 계산
+                var  iframeviewheight = iframeview.height();
+
+                // breadcrumb 높이 계산
+                var breadcrumbheight = 0;
+                var breadcrumb = iframeview.closest(".breadcrumbContainer");
+                if (breadcrumb && breadcrumb.length > 0) {
+                    breadcrumbheight = breadcrumb.height();
+                }
+
+                // iframe의 컨테이너 div
+                var container = iframeview.closest(".Page");
+                if (container && container.length > 0) {
+                    var innerheight = iframeviewheight + breadcrumbheight;   // iframe 높이 + breadcrumb 높이
+                    var pageheight = container.height();	// 컨테이너 div 높이
+
+                    container.css("float", "none");                         // float는 무조건 제거해야 iframe에서 스크롤이 동작한다.
+                    container.css("overflow-y", "auto");                    // iframe에 스크롤이 생기도록 설정
+                    container.css("-webkit-overflow-scrolling", "touch");	// iOS에서 iframe에서 스크롤이 생기도록 css 조정
+                    container.css("height", (innerheight - 5) + "px");	    // 스크롤이 강제 생성되도록 컨테이너 div 높이 재 조정
+
+                    //alert(container.css("-webkit-overflow-scrolling") + ", " + innerheight + ", " + pageheight + ", " + "조정: " + container.height());
+
+                }
+            }
+        });
+    }
+}
+
+var winMultiMinWidth = 1280;	    // 멀티뷰를 사용할 수 있는 최소 width
+var bMultiviewSupportMenu = false;  // 현재 호출한 메뉴가 멀티뷰 지원 메뉴인지 여부
+var bMultiviewStatus = false;	    // 멀티뷰 상태인지 여부 (true: 멀티뷰, false: 싱글뷰)
+// $(window).resize 이벤트 발생시 또는 멀티뷰 이벤트 발생시 호출
+// bHideDropdown: 상단 dropdown 메뉴 숨김 처리 여부
+function ResponsiveLeftRightView(bHideDropdown)
+{
+    // 드롭다운 숨김 처리 여부
+    var bHide = true;   // 기본값 (true: 숨김)
+    if (typeof (bHideDropdown) != "undefined" && (bHideDropdown === false || bHideDropdown === true))
+        bHide = bHideDropdown;
+
+    if (bHide == true)
+        InitDropdownMenu();
+
+    var Multiviewlength = 0;
+    $(".droppable.Pages").each(function(index) {
+        if ($(this).is(":visible") == true) Multiviewlength = Multiviewlength + 1;
+    });
+
+    var topheight = "45px";		// top 영역 높이 기본값
+    var topandbreadcrumb = "78px";	// top과 breadcrumb 영역을 합친 높이
+    var topminwidth = 700;	// 왼쪽 로고영역과 오른쪽 유틸메뉴 영역 숨김 처리하는 기준 너비
+
+    var topframe = $("#top");
+    var breadcrumb = $(".breadcrumbContainer");
+    var topleft = $("header>.contentlayout>.contentlayout_left");   // 로고가 위치한 왼쪽 영역
+    var topright = $("header>.contentlayout>.contentlayout_right");   // 유틸메뉴 등이 위치한 오른쪽 영역
+    var topcenter = $("header>.contentlayout>.contentlayout_none");   // 메인메뉴가 위치한 중앙 영역
+    if (topframe && breadcrumb && topframe.length > 0 && breadcrumb.length > 0)
+    {
+        var topframeheight = topframe.height();
+        var breadcrumbheight = 0;
+        // Drag변경등의 경우 높이가 0으로 되어 있는 경우가 있어 추가 처리.
+        for (var i = 0; i < breadcrumb.length; i++) {
+            if (breadcrumb[i].style.display === "" && breadcrumb[i].clientHeight !== 0) {
+                breadcrumbheight = breadcrumb[i].clientHeight;
+                break;
+            }
+        }
+
+        // top 영역의 높이 재 설정
+        if (topframeheight > 45) {
+            topheight = topframeheight + "px";
+            topandbreadcrumb = (topframeheight + breadcrumbheight) + "px";
+        }
+    }
+    
+    // 메인 메뉴 영역의 width 조정
+    if (topframe && topleft && topright && topcenter && topframe.length > 0 && topleft.length > 0 && topright.length > 0 && topcenter.length > 0)
+    {
+        // 너비가 특정 너비 미만인 경우 상단 왼쪽, 오른쪽 영역 숨김 처리
+        var topframewidth = topframe.width();
+        //if (topframewidth < topminwidth)
+        //{
+        //    //topleft.hide();
+        //    //topright.hide();
+        //}
+        //else
+        //{
+        //    //topleft.show();
+        //    //topright.show();
+        //}
+
+
+        var toprightwidth = topright.width();
+        if (topright.is(":visible") == false)
+        {
+            // 오른쪽 영역이 숨김 상태인 경우 0으로 변경
+            toprightwidth = 0;
+        }
+
+        var topleftwidth = topleft.width();
+
+        // 메인메뉴 영역의 너비를 조정
+        // clear 속성이 설정된 경우 해제
+        topcenter.css({ "width": "calc(100vw - " + (toprightwidth + topleftwidth).toString() + "px" + ")", "clear": "none", "left": topleftwidth + "px" });
+    }
+    
+    var main = $("main");			// top 영역을 제외한 본문 영역 전체
+    if (main)
+    {
+        main.css({"height": "calc(100% - " + topheight + ")"});
+    }
+
+    // 싱글뷰인 경우 화면에 breadcrumb 숨기기, 뷰 높이 조정
+    if (Multiviewlength <= 1) {
+        $(".breadcrumbContainer").hide();
+        $("#MultiView_Container #Content iframe").css({"height": "calc(100vh - " + topheight + ")", "padding": "0"});
+        //$("#MultiView_Container #Content iframe").css({ "padding": "0" });
+        bMultiviewStatus = false;
+    }
+    else
+    {
+        $(".breadcrumbContainer").show();
+        $("#MultiView_Container #Content iframe").css({"height": "calc(100vh - " + topandbreadcrumb + ")", "padding": "0 5px 0 5px"});
+        //$("#MultiView_Container #Content iframe").css({ "padding": "0 5px 0 5px" });
+        bMultiviewStatus = true;
+    }
+
+    // 멀티뷰 버튼 반응 처리 (환경에 따라 보이기 숨기기 처리)
+    multiviewButtonShowHide(true);
+
+    // 모바일에서 PC화면 접속 시 화면 조정 (모든 화면 조정이 끝난 후 마지막에 실행되도록 한다.)
+    SetMobileScreen();
+}
+
+$ContentDiv(window).resize(function () {
+    // 화면 resize될 때 dropdown을 숨김 처리하지 않는다.
+    ResponsiveLeftRightView(false);
+});
+
+// 멀티뷰 서브메뉴로 사용할 html 생성
+function MakeMultiviewSubMenu()
+{
+    // arrTopMenu 배열에서 ismulti = "1" 인 값을 멀티뷰 서브메뉴에 추가
+    var multiviewsub = $("#MultiView_Menu ul:first");
+    if (multiviewsub)
+    {
+        var nodeHtml = "";
+        for (var i = 0; i < arrTopMenu.length; i++)
+        {
+            var url = arrTopMenu[i].url;
+            var menuname = arrTopMenu[i].name;
+            var ismulti = arrTopMenu[i].ismulti;
+
+            if (ismulti == "1")
+            {
+                var anode = $("<a />");
+                anode.attr("href", url);
+                anode.attr("target", "_multi");
+                anode.attr("title", "");
+                anode.text(menuname);
+
+                var linode = $("<li />").append(anode);
+
+                nodeHtml = nodeHtml + linode[0].outerHTML;
+            }
+        }
+
+        if (nodeHtml)
+        {
+            multiviewsub.append(nodeHtml);
+        }
+    }
+}
+
+// 표준모듈 top 메뉴 onclick 이벤트 재 정의 
+function SetTopMenuEvent()
+{
+    // 화면 조정
+    ResponsiveLeftRightView();
+
+    // 메인메뉴 onclick 이벤트 재 정의
+    $("li[name='topmenu_li']").each(function () {
+        MenuHooking(this, "1");
+    });
+
+    // 서브메뉴 onclick 이벤트 재 정의 
+    $("li[name='submenu_li']").each(function () {
+        MenuHooking(this, "2");
+    });
+
+    // 유틸메뉴 onclick 이벤트 재 정의 
+    $("#my_informationUL li").each(function () {
+        MenuHooking(this, "3");
+    });
+
+    // 로고 이미지 onclick 이벤트 재 정의
+    $(".logo img").each(function () {
+        MenuHooking(this, "4");
+    });
+}
+
+// 메뉴 onclick 이벤트 재정의
+// type: 1: 메인메뉴, 2: 서브메뉴, 3: 유틸메뉴
+function MenuHooking(obj, type)
+{
+    var str = $(obj).attr("onclick");
+    var findstr = "OpenWindow(";
+    if (str && str.indexOf(findstr) >= 0) {
+        var params = str.split(findstr)[1].split(',');    // onclick 속성에서 OpenWindow( 를 찾아 인자값을 배열로 저장 
+
+        // top 메뉴 태그의 id속성과 url 을 배열에 저장 
+        if (params.length >= 4) {
+            var target = params[2].trim().toLowerCase().replace(/["']/g, "");   // target frame, 특수문자 ", ' 제거 ("url" 또는 'url'로 반환하기 때문) 
+            var option = params[3].trim().replace(/["')]/g, "");             // 오픈창 옵션, ", ', ) 제거 
+
+            // target frame이 비어 있는 경우 오픈창이므로 제외, Layer, top인 경우 제외 
+            if (target != "" && target != "layer" && target != "top" && target != "popup") {
+                var url = params[1].trim().toLowerCase().replace(/["']/g, "");    // url의 특수문자 ", ' 제거 ("url" 또는 'url'로 반환하기 때문) 
+
+                // 메뉴 노드에 Id가 없는 경우 url을 Id로 설정 
+                var objId = "";
+                if (!$(obj).attr("id")) {
+                    $(obj).attr("id", url);
+                    objId = url;
+                }
+                else
+                {
+                    objId = $(obj).attr("id");
+                }
+
+                var objTagName = $(obj).prop("tagName").toLowerCase();
+
+                // 멀티뷰 사용 여부 
+                var ismulti = "0";
+                if (type == "1" || type == "2") // 메인메뉴
+                {
+                    if (objTagName == "li")
+                        ismulti = $(obj).attr("_usemulti");
+                    else
+                        ismulti = $(obj).parent().attr("_usemulti");    // 이미지 메뉴인 경우 parent li 태그의 _ismulti 속성을 사용
+
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////
+                    // 임시 설정 (메인 메뉴는 무조건 멀티뷰에 포함되도록 설정)
+                    //ismulti = "1";
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////
+                }
+
+                // 메뉴명 설정: 노드 text로 1차 설정 / 없으면 title 속성으로 설정 / 없으면 _bctitle 속성으로 설정 
+                var menuname = $.trim($(obj).text()).split("\n")[0];
+                if (!menuname) menuname = $(obj).attr("title");
+                if (!menuname) {
+                    // 이미지 메뉴인 경우 parent li 태그의 _bctitle 속성을 메뉴명으로 사용 
+                    if (objTagName != "li") {
+                        menuname = $(obj).parent().attr("_bctitle");
+                    }
+                }
+
+                // 로고이미지 (메뉴명이 정의되지 않은 경우 예외 처리)
+                if (type == "4") {
+                    if (!menuname)
+                        menuname = "Home";
+                }
+
+                // 초기화면 a 태그 링크의 메뉴명 설정 
+                var init = $("#InitMenu");
+                if (init && init.text() == "" && menuname && url) {
+                    if (url.indexOf(init.attr("href").toLowerCase()) >= 0) {
+                        init.text(menuname);
+                    }
+                }
+
+                // 중복체크
+                if (!GetMenuItem(objId) && trim(url) != "")
+                {
+                    arrTopMenu.push({
+                        "id": objId,
+                        "url": url,
+                        "name": menuname,
+                        "ismulti": ismulti,
+                        "type": type
+                    });
+                }
+
+                // onclick 함수 변경 
+                $(obj).attr('onclick', "OpenWindowMultiView(this, event)");
+            }
+        }
+    }
+}
+
+var openWindowMultiView_Obj = null;
+// 대메뉴, 유틸메뉴, 서브메뉴 클릭 시 처리
+function OpenWindowMultiView(obj, e)
+{
+    // 작성창이 있을 경우 confirm 창 표시
+    var iframeArray = document.getElementsByTagName("iframe");
+    var tWriteFlag = false;
+    for (var i = 0; i < iframeArray.length; i++) {
+        try {
+            if (iframeArray[i].getAttribute("src") != null && iframeArray[i].getAttribute("src").toUpperCase().indexOf("/EZPORTAL/LAYOUT/PORTALLAYOUT_BASIC.ASPX") > -1) {
+                var iframePortalSubArray = iframeArray[i].contentWindow.document.documentElement.getElementsByTagName("iframe");
+                for (var j = 0; j < iframePortalSubArray.length; j++) {
+                    if (iframePortalSubArray[j].id.toUpperCase() === "MAIN_IFRAMELAYER" && iframePortalSubArray[j].contentWindow.Write_Flag) {
+                        tWriteFlag = true;
+                        break;
+                    }
+                }
+            }
+            else if (iframeArray[i].contentWindow.Write_Flag) {
+                tWriteFlag = true;
+                break;
+            }
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    if (tWriteFlag) {
+        openWindowMultiView_Obj = obj;
+        Confirm_Alert_Message(PageMoveStr, OpenWindowMultiView_afterConfirm, "");
+        return;
+    }
+
+    if (obj) {
+        var menu = GetMenuItem(obj.id);
+        if (menu) {
+            var name = menu.name;
+            var ismulti = menu.ismulti;
+
+            if (menu.type == "2") // 서브메뉴
+            {
+                var result = GetMainMenuItem(menu.url);
+                if (result) {
+                    name = result.name;
+
+                    // 메인메뉴와 동일한 경로를 사용하는 바로가기인 경우 메인의 ismulti 속성을 사용
+                    // 예) 전자결재(메인) - 결재할 문서(서브)
+                    ismulti = result.ismulti;
+                }
+            }
+
+            // 멀티뷰 사용여부에 따라 멀티뷰 show/hide 처리
+            multiviewShowHide(ismulti);
+
+            // Single View로 호출
+            SingleNavSelect(name, menu.url, "");
+        }
+
+        // 상위태그에 이벤트 실행 방지
+        if (window.event) {
+            (event.stopPropagation) ? event.stopPropagation() : event.cancelBubble = true;
+        }
+        else {
+            e.stopPropagation();
+        }
+    }
+}
+
+function OpenWindowMultiView_afterConfirm(isConfirm) {
+    if (isConfirm) {
+        DivPopUpHidden();
+
+        var openWindowMultiView_Obj_temp = openWindowMultiView_Obj;
+        openWindowMultiView_Obj = null;
+
+        if (document.getElementById("horizonMenu").style.display === "") {
+            toggleList_Sub_Multi("horizonMenu", openWindowMultiView_Obj_temp, "verticalMenu_UL");
+        }
+        else {
+            toggleList_Sub_Multi("verticalMenu_UL", openWindowMultiView_Obj_temp, "horizonMenu");
+        }
+
+        var menu = GetMenuItem(openWindowMultiView_Obj_temp.id);
+        openWindowMultiView_Obj_temp = null;
+        openWindowMultiView_Obj = null;
+
+        if (menu) {
+            var name = menu.name;
+            var ismulti = menu.ismulti;
+
+            if (menu.type == "2") // 서브메뉴
+            {
+                var result = GetMainMenuItem(menu.url);
+                if (result) {
+                    name = result.name;
+
+                    // 메인메뉴와 동일한 경로를 사용하는 바로가기인 경우 메인의 ismulti 속성을 사용
+                    // 예) 전자결재(메인) - 결재할 문서(서브)
+                    ismulti = result.ismulti;
+                }
+            }
+
+            // 멀티뷰 사용여부에 따라 멀티뷰 show/hide 처리
+            multiviewShowHide(ismulti);
+
+            // Single View로 호출
+            SingleNavSelect(name, menu.url, "");
+        }
+    }
+    else {
+        openWindowMultiView_Obj = null;
+        DivPopUpHidden();
+    }
+}
+
+// 메인화면 등 멀티뷰로 호출된 자식창에서 메일 등으로 바로가기 위해 사용
+// url: 이동할 url
+// appTitle: 멀티뷰 헤더 Title (상단메뉴 영역에 정의된 메뉴인 경우 빈값)
+// bMultiview: false(기본값): 싱글뷰로 이동, true: 화면이 멀티뷰로 전환
+function OpenWindowFromChild(url, appTitle, bMultiview)
+{
+    if (url)
+    {
+        // 멀티뷰 헤더 Title
+        var title = "";
+        if (typeof (appTitle) != "undefined")
+            title = appTitle;
+
+        // 멀티뷰 오픈 여부
+        var bMulti = false;
+        if (typeof (bMultiview) != "undefined" && (bMultiview === false || bMultiview === true))
+            bMulti = bMultiview;
+
+        // 상단메뉴에 정의된 메뉴인지 여부 체크
+        var ismulti = "0";
+        var result = GetMainMenuItem(url);
+        if (result) {
+            name = result.name;
+
+            // 메인메뉴와 동일한 경로를 사용하는 바로가기인 경우 메인의 ismulti 속성을 사용
+            // 예) 전자결재(메인) - 결재할 문서(서브)
+            ismulti = result.ismulti;
+
+            if (title == "")
+            {
+                if (name != "")
+                    title = name;   // Title이 정의되지 않은 경우 상단메뉴 영역에 정의된 Title 사용
+            }
+        }   // if (result) {
+
+        // 멀티뷰 사용여부에 따라 멀티뷰 show/hide 처리
+        multiviewShowHide(ismulti);
+
+        if (bMultiview == true) {
+            // 멀티뷰로 호출
+            MultiNavSelect(title, url, "");
+        }
+        else
+        {
+            // 싱글뷰로 호출
+            SingleNavSelect(title, url, "");
+        }
+    }
+}
+
+// 멀티뷰 사용여부에 따라 멀티뷰 show/hide 처리
+// ismulti: 1(사용), 0(사용안함)
+function multiviewShowHide(ismulti)
+{
+    if (ismulti == "1") {
+        bMultiviewSupportMenu = true;
+        multiviewButtonShowHide(true);
+    }
+    else {
+        bMultiviewSupportMenu = false;
+        multiviewButtonShowHide(false);
+    }
+}
+
+// 멀티뷰 버튼 show/hide 처리
+// true: 보이기, false: 감추기
+function multiviewButtonShowHide(bShow)
+{
+    var show = bShow;
+
+    // 화면 너비에 따른 멀티뷰 버튼 예외 처리
+    // 현재 화면 너비
+    var winWidth = $(window).width();
+
+    // 화면 너비가 멀티뷰 지원 최소 너비보다 작을 때, 모바일 기기를 통한 접속인 경우 숨김 처리
+    if (winMultiMinWidth > winWidth || IsMobileDevice() == true) {
+        // 멀티뷰 메뉴 숨김 처리
+        show = false;
+    }
+    else {
+        // 멀티뷰를 사용할 수 있는 너비인 경우
+        // 멀티뷰를 사용할 수 없는 메뉴인 경우 숨김 처리
+        if (bMultiviewSupportMenu == false) {
+            show = false;
+        }
+    }
+
+    if (show == true)
+    {
+        $("#MultiView_Menu").css({ "visibility": "visible" });
+    }
+    else
+    {
+        $("#MultiView_Menu").css({ "visibility": "hidden" });
+    }
+}
+
+// arrTopMenu에서 해당되는 배열 반환
+// url이 포함된 메뉴 정보를 가져온다.
+// 서브메뉴인 경우 메인메뉴의 정보를 가져온다.
+function GetMainMenuItem(menuurl)
+{
+    var result;
+    if (menuurl) {
+        var arrValues = $.grep(arrTopMenu, function (v) {
+            var arrayUrl = v.url.split("?")[0].toString().toLowerCase();      // 배열에 저장된 메뉴 Url (Url의 정확한 비교를 위해 ? 뒤의 인자를 제거)
+            var paramUrl = menuurl.split("?")[0].toString().toLowerCase();    // 인자값으로 전달된 Url (Url의 정확한 비교를 위해 ? 뒤의 인자를 제거)
+
+            // Url이 일치하는 값 리턴
+            return paramUrl.indexOf(arrayUrl) >= 0;
+        });
+
+        if (arrValues && arrValues.length > 0) {
+            result = arrValues[0];
+        }
+    }
+
+    return result;
+}
+
+// arrTopMenu에서 해당되는 배열 반환
+function GetMenuItem(id)
+{
+    var result = null;
+
+    var arrValues = $.grep(arrTopMenu, function (v) {   // v: 현재 precessing 개체
+        return v.id == id;
+    });
+
+    if (arrValues && arrValues.length > 0) {
+        result = arrValues[0];
+    }
+
+    return result;
+}
+
+
+$(document).ready(function ()
+{
+    /*
+        A simple jQuery function that can add listeners on attribute change.
+        http://meetselva.github.io/attrchange/
+
+        About License:
+        Copyright (C) 2013-2014 Selvakumar Arumugam
+        You may use attrchange plugin under the terms of the MIT Licese.
+        https://github.com/meetselva/attrchange/blob/master/MIT-License.txt
+    */
+    function isDOMAttrModifiedSupported() {
+        var p = document.createElement('p');
+        var flag = false;
+
+        if (p.addEventListener) {
+            p.addEventListener('DOMAttrModified', function () {
+                flag = true
+            }, false);
+        } else if (p.attachEvent) {
+            p.attachEvent('onDOMAttrModified', function () {
+                flag = true
+            });
+        } else { return false; }
+        p.setAttribute('id', 'target');
+        return flag;
+    }
+
+    function checkAttributes(chkAttr, e) {
+        if (chkAttr) {
+            var attributes = this.data('attr-old-value');
+
+            if (e.attributeName.indexOf('style') >= 0) {
+                if (!attributes['style'])
+                    attributes['style'] = {}; //initialize
+                var keys = e.attributeName.split('.');
+                e.attributeName = keys[0];
+                e.oldValue = attributes['style'][keys[1]]; //old value
+                e.newValue = keys[1] + ':'
+                        + this.prop("style")[$.camelCase(keys[1])]; //new value
+                attributes['style'][keys[1]] = e.newValue;
+            } else {
+                e.oldValue = attributes[e.attributeName];
+                e.newValue = this.attr(e.attributeName);
+                attributes[e.attributeName] = e.newValue;
+            }
+
+            this.data('attr-old-value', attributes); //update the old value object
+        }
+    }
+
+    //initialize Mutation Observer
+    var MutationObserver = window.MutationObserver
+            || window.WebKitMutationObserver;
+
+    $.fn.attrchange = function (a, b) {
+        if (typeof a == 'object') {//core
+            var cfg = {
+                trackValues: false,
+                callback: $.noop
+            };
+            //backward compatibility
+            if (typeof a === "function") { cfg.callback = a; } else { $.extend(cfg, a); }
+
+            if (cfg.trackValues) { //get attributes old value
+                this.each(function (i, el) {
+                    var attributes = {};
+                    for (var attr, i = 0, attrs = el.attributes, l = attrs.length; i < l; i++) {
+                        attr = attrs.item(i);
+                        attributes[attr.nodeName] = attr.value;
+                    }
+                    $(this).data('attr-old-value', attributes);
+                });
+            }
+
+            if (MutationObserver) { //Modern Browsers supporting MutationObserver
+                var mOptions = {
+                    subtree: false,
+                    attributes: true,
+                    attributeOldValue: cfg.trackValues
+                };
+                var observer = new MutationObserver(function (mutations) {
+                    mutations.forEach(function (e) {
+                        var _this = e.target;
+                        //get new value if trackValues is true
+                        if (cfg.trackValues) {
+                            e.newValue = $(_this).attr(e.attributeName);
+                        }
+                        if ($(_this).data('attrchange-status') === 'connected') { //execute if connected
+                            cfg.callback.call(_this, e);
+                        }
+                    });
+                });
+
+                return this.data('attrchange-method', 'Mutation Observer').data('attrchange-status', 'connected')
+                    .data('attrchange-obs', observer).each(function () {
+                        observer.observe(this, mOptions);
+                    });
+            } else if (isDOMAttrModifiedSupported()) { //Opera
+                //Good old Mutation Events
+                return this.data('attrchange-method', 'DOMAttrModified').data('attrchange-status', 'connected').on('DOMAttrModified', function (event) {
+                    if (event.originalEvent) { event = event.originalEvent; }//jQuery normalization is not required
+                    event.attributeName = event.attrName; //property names to be consistent with MutationObserver
+                    event.oldValue = event.prevValue; //property names to be consistent with MutationObserver
+                    if ($(this).data('attrchange-status') === 'connected') { //disconnected logically
+                        cfg.callback.call(this, event);
+                    }
+                });
+            } else if ('onpropertychange' in document.body) { //works only in IE
+                return this.data('attrchange-method', 'propertychange').data('attrchange-status', 'connected').on('propertychange', function (e) {
+                    e.attributeName = window.event.propertyName;
+                    //to set the attr old value
+                    checkAttributes.call($(this), cfg.trackValues, e);
+                    if ($(this).data('attrchange-status') === 'connected') { //disconnected logically
+                        cfg.callback.call(this, e);
+                    }
+                });
+            }
+            return this;
+        } else if (typeof a == 'string' && $.fn.attrchange.hasOwnProperty('extensions') &&
+            $.fn.attrchange['extensions'].hasOwnProperty(a)) { //extensions/options
+            return $.fn.attrchange['extensions'][a].call(this, b);
+        }
+    };
+
+    // 멀티뷰 drop down 메뉴로 사용할 html 생성
+    MakeMultiviewSubMenu();
+
+    // 멀티뷰 drop down 메뉴 bootstrap submenu 설정
+    $('[data-submenu]').submenupicker();
+
+    // 멀티뷰, 유틸메뉴 서브 메뉴 창이 활성화된 경우 사용자의 액션에 의해 속성이 변경된 경우 감지하여 처리
+    //$('#MultiView_Menu, #my_information_Menu, #my_link').attrchange({
+    $('.dropdown').attrchange({
+        trackValues: true,
+        callback: function (event) {
+            if ((event.attributeName == "class") || (event.attributeName == "aria-expanded")) {
+                if (_WindowTop.MultiView_Manager) {
+                    if ($(this).hasClass("open"))
+                        _WindowTop.MultiView_Manager.ShowDropPanel();
+                    else
+                        _WindowTop.MultiView_Manager.HideDropPanel();
+                }
+            }
+        }
+    });
+
+    // 싱글뷰 메뉴 초기화 (1개 화면으로 전환)
+    $(document).on('click', "a[target='_single']", function (e) {
+        SingleNavSelect(this.text, this.href, this.title);
+        return false;
+    });
+
+    // 멀티뷰 click 이벤트 처리
+    $(document).on('click', "a[target='_multi']", function (e) {
+        MultiNavSelect(this.text, this.href, this.title);
+        return false;
+    });
+
+    // 메인페이지 (초기 페이지)
+    var initMenu = $("#InitMenu");
+    if (initMenu && initMenu.attr("href"))
+    {
+        var result = GetMainMenuItem(initMenu.attr("href"));
+
+        if (result)
+        {
+            // 멀티뷰 사용여부에 따라 멀티뷰 show/hide 처리
+            multiviewShowHide(result.ismulti);
+        }
+
+        // 초기페이지 호출
+        initMenu.click();
+    }
+    else
+    {
+        SingleNavSelect("", "about:blank", "");
+    }
+
+    // 유틸메뉴 등의 drop dwon 메뉴가 숨김 처리 되어 있는 경우 초기화
+    $(".dropdown-menu").css("display", "");
+});
+

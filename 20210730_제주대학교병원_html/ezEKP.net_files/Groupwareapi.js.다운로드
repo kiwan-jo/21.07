@@ -1,0 +1,2019 @@
+﻿//////////////////////////////////////////////
+// Groupwareapi.js 참조 방법
+
+// [협업이 그룹웨어와 동일한 웹사이트에 설치되는 경우]
+// 그룹웨어에서 제공하는 MakeFileVersionPath 메소드를 호출하여 사용
+// <script type="text/javascript" src="<%= MakeFileVersionPath("/myoffice/ezWorkspace/Scripts/Groupwareapi.js")%>"></script>
+
+// [협업이 별도의 웹사이트에 설치되는 경우 - 국민대 환경]
+// ver 인자값으로 업데이트 일자를 선언하여 js 파일이 사용자 PC에 다시 캐쉬되도록 처리
+// <script type="text/javascript" src="http://colabo.kookmin.ac.kr:8880/myoffice/ezWorkspace/Scripts/Groupwareapi.js?ver=20170825(업데이트 일자)"></script>
+
+
+// 사이트에 따라 달리질 수 있음 (그룹웨어 webpart aspx 페이지에 javascript 변수 선언)
+// GW 경로: Home_myoffice_SubModule\ezPortal\Portlet\Main_Portlet.aspx
+
+// [필수]
+// var g_UserID = "GW 사용자Id";     // GW 사용자 Id
+// var g_bGroupwareUIType = true;    // 그룹웨어 UI 타입 => true: UIUX, false: Normal(예전 GW 화면)
+// var g_bRayful = false;            // Rayful 연동 사용 여부, 메인화면 뉴스피드 웹파트에서 필수 선언 (true: 사용, false: 사용안함(기본값))
+
+// [옵션]
+// var g_UserLang = "<%= userinfo.lang %>";  // 그룹웨어 사용자 언어 설정 값 (1, 2, 3, 4)
+// var g_UserTimeZone = "<%= userinfo.Offset %>";  // 그룹웨어 사용자 표준시간대 설정 값
+// var g_bMobileExtra = false;       // 모바일 외부 서버 여부 (내/외부 네트워크 분리 환경에서만 설정) (true: 외부서버, false: 해당 없음)
+// var g_ParentHref = false;         // location.href를 parent 윈도우의 경로를 이동시킬지 여부 (true: parent 윈도우를 통해 이동)
+// var g_bTitle = false;             // 웹파트 목록에 title 속성 표시 여부
+// var g_bVisible = false;           // 문서탭 선택 시 원문에 포함된 첨부파일 포함 여부 (true: 문서관리 문서만 표시, false: 첨부파일 포함)
+// var WorkspaceUrl = "협업Url";     // 협업이 그룹웨어와 별도의 Url로 서비스 되는 경우에만 설정
+// var g_bUXUITabType = true;        // 그룹웨어 타입이 신규 UIUX 작업 이후이며(g_bGroupwareUIType = true), Tab(PostType) 형식 웹 파트 사용 시 설정 (true: 탭 사용, false(기본): 탭 사용 안함)
+// var g_bEzWorkspaceJava = true;    // 협업이 자바 버전인 경우 true (웹 응용프로그램 경로가 다르다.)
+//////////////////////////////////////////////
+
+var selgroupId = "0";
+var selposttypeId = "1";
+
+// 그룹웨어에서 사용된 jQuery.noConflict()로 인해 예약어인 $문자로 JQuery를 사용할 수 없는 상태에 대응
+var $j = jQuery;
+
+// 그룹웨어는 1.7 버전의 jquery를 사용하므로 document.ready까지 정확히 호출한다.
+// 그룹웨어 에서 페이지 로드 시 호출 예제
+$j(document).ready(function () {
+    GetSpaceListData();
+    // UI/UX 작업 이후 표준 웹파트
+    if (bGroupwareUIType() == true) {
+        if (bTitleUse() == true)
+            // title tooltip init
+            $j(document).tooltip({
+                track: true
+            });
+    }
+    else { // UI/UX 작업 이전 웹파트
+        if (bTitleUse() == true)
+            // title tooltip init
+            $j(document).tooltip({
+                track: true
+            });
+    }
+});
+
+// GW 사용자 Id
+// 그룹웨어 webpart aspx 페이지에 javascript 변수 선언: var g_UserID = "GW 사용자Id";
+function GetUserId() {
+    return g_UserID;
+}
+
+// 그룹웨어 사용자 언어 설정 값 (1, 2, 3, 4)
+function GetGwUserLang() {
+    var result = "";
+
+    if (typeof (g_UserLang) != "undefined")
+        result = g_UserLang;
+
+    return result;
+}
+
+// 그룹웨어 사용자 표준시간대 설정 값
+function GetGwUserTimeZone() {
+    var result = "";
+
+    if (typeof (g_UserTimeZone) != "undefined")
+        result = g_UserTimeZone;
+
+    return result;
+}
+
+// 협업 연동 웹파트가 iframe에 삽입된 경우 고려
+// location.href를 parent 윈도우의 경로를 이동시킬지 여부 (true: parent 윈도우를 통해 이동)
+// 그룹웨어 webpart aspx 페이지에 javascript 변수 선언: var g_ParentHref = true;
+function bParentHref() {
+    var result = false;
+
+    if (typeof (g_ParentHref) != "undefined" && (g_ParentHref === false || g_ParentHref === true))
+        result = g_ParentHref;
+
+    return result;
+}
+
+function bTitleUse() {
+    var result = false;
+    if (typeof (g_bTitle) != "undefined" && (g_bTitle === false || g_bTitle === true))
+        result = g_bTitle;
+
+    return result;
+}
+
+function bRayfulUse() {
+    var result = true;  // 국민대에 먼저 적용되어 기본값을 true로 선언
+
+    if (typeof (g_bRayful) != "undefined" && (g_bRayful === false || g_bRayful === true))
+        result = g_bRayful;
+
+    return result;
+}
+
+function bVisibleUse() {
+    var result = false;
+
+    if (typeof (g_bVisible) != "undefined" && (g_bVisible === false || g_bVisible === true))
+        result = g_bVisible;
+
+    return result;
+}
+
+function bGroupwareUIType() {
+    var result = false;
+
+    if (typeof (g_bGroupwareUIType) != "undefined" && (g_bGroupwareUIType === false || g_bGroupwareUIType === true))
+        result = g_bGroupwareUIType;
+
+    return result;
+}
+
+// Tab(PostType) 형식 웹 파트 사용 시 그룹웨어 페이지에 var g_bUXUITabType = true; 선언 필요.[기본 false]
+function bUXUITabType() {
+    var result = false;
+
+    if (typeof (g_bUXUITabType) != "undefined" && (g_bUXUITabType === false || g_bUXUITabType === true))
+        result = g_bUXUITabType;
+
+    return result;
+}
+
+// 협업이 자바 버전인 경우 true
+function bEzWorkspaceJava() {
+    var result = false;
+
+    if (typeof (g_bEzWorkspaceJava) != "undefined" && (g_bEzWorkspaceJava === false || g_bEzWorkspaceJava === true))
+        result = g_bEzWorkspaceJava;
+
+    return result;
+}
+
+function SetDivPopUpCloseButton() {
+    // UI/UX 작업 이후 표준 웹파트
+    if (bGroupwareUIType() == true) {
+        var $closeButton = $j('#Main_iFrameLayer').contents().find('body').find('#btnLayoutMainParentClose');
+        $closeButton.attr("onclick", "parent.DivPopUpHidden();");
+        $closeButton.addClass('on');
+        $closeButton.show();
+    }
+    else { // UI/UX 작업 이전 웹파트
+    }
+}
+
+function GetWorkspaceUrl() {
+    var result = "";
+
+    if (typeof (WorkspaceUrl) != "undefined")
+        result = WorkspaceUrl;
+
+    return result;
+}
+
+// 협업 웹응용프로그램 경로
+function GetWorkspaceAppPath() {
+    var result = "/myoffice/ezWorkspace";   // 닷넷
+    if (bEzWorkspaceJava() == true)
+        result = "/ezWorkspace";    // 자바
+
+    // 모바일 외부서버에서 접속 시 내부 서버를 통해 데이터를 처리하도록 Mobile 컨트롤러 경로를 붙여준다.
+    if (typeof (g_bMobileExtra) != "undefined" && g_bMobileExtra === true)
+        result = result + "/Mobile";
+
+    return result;
+}
+
+// 협업 사용자 언어
+function GetUserLang(bMobile) {
+    var result = g_UserInfo_Lang;
+
+    if (typeof (bMobile) == "undefined" || bMobile == false)
+        result = g_UserInfo_Lang;
+    else
+        result = g_UserInfo_MobileLang;
+    return result;
+}
+
+// 웹파트 목록 건수
+function GetFeedListCount()
+{
+    var result = 5;
+
+    if (typeof (feedListCount) != "undefined" && feedListCount)
+        result = feedListCount;
+
+    return result;
+}
+
+// 사용자 언어 정보
+var g_UserInfo_Lang = "";
+var g_UserInfo_MobileLang = "";
+function GetUserInfoLang() {
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/personInfo/get/lang",
+        data: { 'userAccountId': GetUserId(), 'userLang': GetGwUserLang(), 'userTimeZone': GetGwUserTimeZone() }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "userInfoCallback",  // 서버에는 callback 인자로 전달 (수정할 필요 없음)
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            if (results != undefined && results != "") {
+                g_UserInfo_Lang = results[0];
+                g_UserInfo_MobileLang = results[1];
+            }
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            //alert('GetNewsFeedData Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+
+//////////////////////////////////////////////////////////////////////////
+// 협업 웹파트 스페이스 영역 옵션 정보
+//////////////////////////////////////////////////////////////////////////
+/*!
+[타입별 호환 사이트]
+select: 금호석유화학, 데모서버
+    -> description: bGroupwareUIType() = true시 기본값으로 설정됨
+ 
+ul: 국민대, 국민대(2020), 가온누리, JW그룹, ABL
+    -> description: bGroupwareUIType() = flase시 기본값으로 설정됨 
+  
+[옵션별 호환 사이트]
+0: 현재 옵션화된 사이트 없음
+ */
+function GetWebpartSpaceTypeAndOption(dom) {
+    var $space = $j(dom);
+    var spaceuitype = "select" // string
+    var spaceuioption = 0; // int
+    var bDefault = true;
+
+    //  dom에서 data-spaceuitype 속성이 있는 경우 
+    if (typeof $space.data('spaceuitype') != "undefined") {
+        spaceuitype = $space.data('spaceuitype'); // data-spaceuioption 속성의 값을 사용
+        bDefault = false;
+    }
+    //  dom에서 data-spaceuioption 속성이 있는 경우 
+    if (typeof $space.data('spaceuioption') != "undefined") {
+        spaceuioption = parseInt($space.data('spaceuioption')); // data-spaceuioption 속성의 값을 사용
+        bDefault = false;
+    } // 추후 select, ul내에서 공통으로 호환이 어려운 html의 반환이 필요한 경우 옵션화 설정.
+
+    // 변경된 속성이 없는 경우 기본값 사용 (기존 사이트 호환 목적)
+    if (bDefault) {
+        if (bGroupwareUIType() != true) { spaceuitype = "ul" }
+    }
+    return { type: spaceuitype, option: spaceuioption };
+}
+
+//////////////////////////////////////////////////////////////////////////
+// 협업 웹파트 게시물 목록 영역 옵션 정보
+//////////////////////////////////////////////////////////////////////////
+/*! 
+[타입별 호환 사이트]
+tap: 국민대, 국민대(2020), 가온누리, JW그룹, 데모서버, ABL
+    -> description: bGroupwareUIType() = flase시 기본값으로 설정됨
+    -> description: bGroupwareUIType() = true과 bUXUITabType()이 true시 기본값으로 설정됨
+all: 탭 구분이 필요하지 않은 웹파트 적용 사이트 일체
+    -> 
+
+[옵션별 호환 사이트] 
+0: 국민대(원프레임), 쌍용양회(iframe), 가온누리(JAVA)
+    -> description: bGroupwareUIType() = false시 기본값으로 설정됨
+
+1: 금호석유화학, 한독모터스, ABL
+    -> description: bGroupwareUIType() = true시 기본값으로 설정됨
+    -> filename: Collaboration_Portlet.aspx
+
+2: 데모서버 
+    -> description: bGroupwareUIType() = true과 bUXUITabType()이 true시 기본값으로 설정됨 
+    -> filename: Collaboration_Portlet2.aspx
+
+3: JW그룹, 국민대(2020)
+    -> description: dom에서 data-listuioption 속성의 값을 추출하여 옵션으로 설정됨
+    -> filename: Collaboration_Tap_Portlet.aspx
+ */
+function GetWebpartPostListOption(dom) {
+    var $postlist = $j(dom);
+    var listuitype = "all"; // string
+    var listuioption = 1; // int
+    var bDefault = true;
+
+    //  dom에서 data-spaceuitype 속성이 있는 경우 
+    if (typeof $postlist.data('listuitype') != "undefined") {
+        listuitype = $postlist.data('listuitype'); // data-listuitype 속성의 값을 사용
+        bDefault = false;
+    }
+    //  dom에서 data-spaceuioption 속성이 있는 경우 
+    if (typeof $postlist.data('listuioption') != "undefined") {
+        listuioption = parseInt($postlist.data('listuioption')); // data-listuioption 속성의 값을 사용
+        bDefault = false;
+    }
+
+    // 변경된 속성이 없는 경우 기본값 사용 (기존 사이트 호환 목적)
+    if (bDefault) {
+        if (bGroupwareUIType() != true) { listuitype = "tap", listuioption = 0 }
+        else if (bGroupwareUIType() == true && bUXUITabType() == true) { listuitype = "tap", listuioption = 2 }
+    }
+    return { type: listuitype, option: listuioption };
+}
+
+// 협업시스템 바로가기 Url (메시지, 할일, 일정, 문서, 이슈)
+// bOriginalUrl = true인 경우 조건을 무시하고 url을 반환
+function GetRedirectUrl(PostId, postTypeId, bOriginalUrl) {
+    var url = GetWorkspaceUrl() + GetWorkspaceAppPath();
+    if (bEzWorkspaceJava() == false)
+        url = url + "/Account/SSO?returnUrl=/myoffice/ezWorkspace/Home/PostRedirect";    // 닷넷
+    else
+        url = url + "/Account/SSO?returnUrl=/ezWorkspace/Home/PostRedirect";    // 자바
+
+    if (postTypeId == "4") {
+        // 문서인 경우 원문보기를 먼저 체크하도록 별도 처리
+        url = url + "?fileId=" + PostId + "%26historyback=2";
+    }
+    else {
+        url = url + "?PostId=" + PostId + "%26historyback=2";
+    }
+
+    if (bOriginalUrl == true)
+        return url;
+
+    // UI/UX 작업 이후 표준 웹파트
+    if (bGroupwareUIType() == true) {
+        if (typeof (GoToApplicationUrl) === "function")
+            GoToApplicationUrl(url, '', false);
+        else
+            return location.href = url;
+    }
+    else { // UI/UX 작업 이전 웹파트
+        // WorkspaceUrl
+        if (bParentHref() == true) {
+            try {
+                if (window.parent && window.parent.DirectSetTab) {
+                    //쌍용양회 포탈 페이지에서 url 값을 리턴하여 이동하도록 처리.
+                    window.parent.DirectSetTab("ezWorkspace", url);
+                }
+                else {
+                    return window.parent.location.href = url;
+                }
+            } catch (e) {
+                return window.parent.location.href = url;
+            }
+        }
+        else
+            return location.href = url;
+    }
+}
+
+// 구글일정 바로가기 Url (일정)
+function GetRedirectGoogleUrl(dom) {
+    var htmlLink = $j(dom).attr('_htmlLink');
+    return window.open(htmlLink);
+}
+
+// 스크립트 실행되지 않도록 <, > 변환
+function replaceString(value) {
+    var regexp1 = new RegExp('<', 'g');
+    var regexp2 = new RegExp('>', 'g');
+    return value.replace(regexp1, "&lt;").replace(regexp2, "&gt;");
+}
+
+// Space 정보를 가져온다.
+function GetSpaceListData() {
+    if (!document.getElementById('divSpaceListResults'))
+        return;
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/space/spacelist",
+        data: { 'userAccountId': GetUserId(), 'userLang': GetGwUserLang() }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "spacecallbackMethod",  // 서버에는 callback 인자로 전달 (수정할 필요 없음)
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            var $divSpaceListResults = $j('#divSpaceListResults');
+            // 협업 웹파트 스페이스 영역 옵션 정보
+            var wp_setting = GetWebpartSpaceTypeAndOption($divSpaceListResults);
+
+            if (wp_setting.type == "select") {  // option 형식의 웹파트
+                if (wp_setting.option == 0) { // 표준 옵션
+                    // ME
+                    var lists = '<option value="0">ME</option>';
+
+                    // 소속 스페이스
+                    if (results != undefined && results != "") {
+                        for (var i = 0; i < results.length; i++) {
+                            // GroupId, 스페이스명
+                            lists += '<option value="' + results[i]._id + '">' + replaceString(results[i]._name) + '</option>';
+                        }
+                    }
+                    //스페이스 선택 변경시
+                    SetSpaceChange();
+                }
+                else if (wp_setting.option == 1) { return false; }
+                else { return false; }
+            }
+            else if (wp_setting.type == "ul") { // ul 형식의 웹파트
+                if (wp_setting.option == 0) { // 표준 옵션
+                    // ME
+                    var lists = '<li id="li_0" onclick="GetNewsFeedData(0,1)" class="on"><span style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" class="icon_me">ME</span></li>';
+
+                    // 소속 스페이스
+                    if (results != undefined && results != "") {
+                        for (var i = 0; i < results.length; i++) {
+                            // GroupId, 스페이스명
+                            lists += '<li id="li_' + results[i]._id + '" onclick="GetNewsFeedData(' + results[i]._id + ',1)"><span style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" class="icon_team">' + replaceString(results[i]._name) + '</span></li>';
+                        }
+                    }
+                }
+                else if (wp_setting.option == 1) { return false; }
+                else { return false; }
+            }
+            else { return false; }
+
+            // 처리 결과 확인
+            $divSpaceListResults.html(lists);
+
+            // 기본 스페이스: ME
+            var defaultGroupId = 0;
+
+            // KTH 예외 처리: 기본 스페이스 변경
+            if (typeof (GetPortletDefaultSpaceKTH) === "function")
+                defaultGroupId = GetPortletDefaultSpaceKTH(defaultGroupId);
+
+            // KTH 예외 처리: 기본탭 재 설정
+            if (typeof (GetWorkspaceChangeTabHashKTH) === "function")
+                GetWorkspaceChangeTabHashKTH();
+
+            // 기본 ME의 뉴스피드 호출
+            GetNewsFeedData(defaultGroupId, '1');
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            //alert('GetSpaceListFailed Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+
+// 뉴스피드 웹파트에서 탭 클릭 시 selposttypeId 변수 설정
+function SetPostTypeIdByTab() {
+    try {
+        var newsTab = document.getElementById("newsTab");   // 뉴스피드
+        var taskTab = document.getElementById("taskTab");   // 할일
+        var schedulerTab = document.getElementById("schedulerTab"); // 일정
+        var documentTab = document.getElementById("documentTab");   // 문서
+        var issueTab = document.getElementById("issueTab"); // 이슈
+        var pollTab = document.getElementById("pollTab"); // 설문
+
+        if (newsTab != null) {
+            if (newsTab.className == "on") {
+                // 뉴스피드는 메시지 뿐만 아니라 모든 타입을 같이 보여줘야 하므로 빈값을 설정한는 것이 맞다.
+                selposttypeId = "";
+                //selposttypeId = "1";
+            }
+        }
+
+        if (taskTab != null) {
+            if (taskTab.className == "on")
+                selposttypeId = "2";
+        }
+
+        if (schedulerTab != null) {
+            if (schedulerTab.className == "on")
+                selposttypeId = "3";
+        }
+
+        if (documentTab != null) {
+            if (documentTab.className == "on")
+                selposttypeId = "4";
+        }
+
+        if (issueTab != null) {
+            if (issueTab.className == "on")
+                selposttypeId = "5";
+        }
+
+        if (pollTab != null) {
+            if (pollTab.className == "on")
+                selposttypeId = "6";
+        }
+
+        // KTH 예외 처리: 추가된 탭 고려하여 selposttypeId 정의
+        if (typeof (SetPostTypeIdByTabKTH) === "function")
+            SetPostTypeIdByTabKTH();
+
+    } catch (e) { }
+}
+
+// 뉴스피드 리스트 가져오는 샘플
+// groupId가 0인 경우 ME
+function GetNewsFeedData(groupId, postTypeId) {
+    if (!document.getElementById('divNewsfeedResults'))
+        return;
+    selgroupId = groupId;
+    selposttypeId = postTypeId;
+
+    var $divNewsfeedResults = $j('#divNewsfeedResults');
+    // 협업 웹파트 게시물 목록 영역 옵션 정보
+    var wp_setting = GetWebpartPostListOption($divNewsfeedResults);
+
+    // 탭(PostType) 형식 웹파트일 경우
+    if (wp_setting.type == "tap")
+        SetPostTypeIdByTab();
+    else if (wp_setting.type == "all") // 탭이 없는 웹파트인 경우 전체 유형 쿼리
+        selposttypeId = "";     // 전체인 경우 빈값으로 전달
+
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/post/newsfeed",
+        data: { 'userAccountId': GetUserId(), 'groupId': selgroupId, 'postTypeId': selposttypeId, 'listcount': GetFeedListCount(), 'isVisible': bVisibleUse(), 'userLang': GetGwUserLang(), 'userTimeZone': GetGwUserTimeZone() },
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "newfeedcallbackMethod",  // 서버에는 callback 인자로 전달 (수정할 필요 없음)
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            //리스트 초기화
+            $divNewsfeedResults.html("");
+
+            // 탭 영역의 class on 초기화 처리
+            if (wp_setting.type == "tap") {
+                if (wp_setting.option == 0 || wp_setting.option == 3) { // 국민대, 가온누리, JW그룹 탭 포틀릿 형식
+                    //li class on 초기화
+                    $j("#divSpaceListResults li").removeClass("on");
+                    try {
+                        document.getElementById("li_" + selgroupId).className = "on";
+                    } catch (e) { }
+                }
+                else if (wp_setting.option == 1) {
+                }
+                else if (wp_setting.option == 2) { // 데모서버 탭 포틀릿 형식(셀렉트박스와 탭의 혼용 UI형태)
+                    //li class on 초기화
+                    $j("#ws_tabPortlet_Tab_UL li").removeClass("on");
+                    try {
+                        document.getElementById("ws_tabPortlet_TabITEM_" + selposttypeId).className = "on";
+                    } catch (e) { }
+                }
+                else { return false; }
+            }
+
+            if (results != undefined && results != "") { // 데이터가 있는 경우
+                var $frag = $j('<div />');
+                var newsfeedLen = results.length;
+                for (var i = 0; i < newsfeedLen; i++) {
+                    var lists = "";
+                    var title = "";
+                    // 타이틀 처리
+                    if (bTitleUse() == true)
+                        if ($j.trim(results[i].Contents).length > 0)
+                            title = " title='" + replaceString(results[i].Contents) + "'";
+
+                    //그룹명이 없을 경우
+                    if (results[i].GroupName == "")
+                        results[i].GroupName = "ME";
+
+                    if (wp_setting.option == 0) { // UI/UX 작업 이전 버전, JAVA 버전의 기본형태 목록
+                        var titlelink = '<span' + title + ' class="txt" style="text-overflow:ellipsis; overflow:hidden;">' + replaceString(results[i].Title) + '</span></li>';
+
+                        // PostId, 제목, Space명, 사용자명, 본문요약
+                        lists = lists + '<li onclick="GetRedirectUrl(' + results[i].PostId + ', ' + results[i].PostTypeId + ')"><span class="date" style="text-overflow:ellipsis; overflow:hidden;">' + replaceString(results[i].GroupName) + '</span>' +
+                                        '<span class="name" style="text-overflow:ellipsis; overflow:hidden;">' + results[i].UserName + '</span>' + titlelink;
+                    }
+                    else if (wp_setting.option == 1 || wp_setting.option == 2) { // GetPostTypeIdClassName으로 컬러가 함께 표현되는 목록
+                        // new 아이콘 처리
+                        var dtWirtePlus = new Date(results[i].UpdateDt.toString().substring(0, 10));
+                        dtWirtePlus = dtWirtePlus.setDate(dtWirtePlus.getDate() + 1);
+                        var dtNow = new Date();
+
+                        // PostId, 제목, 사용자명, 작성일시
+                        var titlelink = '';
+                        if (dtWirtePlus > dtNow)
+                            titlelink = '<span class="floatLeft listview_i_new" style="margin-top: 10px;"></span><span' + title + ' class="floatNone">&nbsp;' + replaceString(results[i].Title) + '</span></li>';
+                        else
+                            titlelink = '<span' + title + ' class="floatNone">' + replaceString(results[i].Title) + '</span></li>';
+                        lists = lists + '<li onclick="GetRedirectUrl(' + results[i].PostId + ', ' + results[i].PostTypeId + ')">';
+                        lists = lists + '<span class="floatLeft collaboration_' + GetPostTypeIdClassName(results[i].PostTypeId) + '"></span>';
+                        lists = lists + '<span class="floatRight date">' + results[i].UpdateDt.toString().substring(0, 10) + '</span>';
+                        lists = lists + '<span class="floatRight writedate" style="overflow:hidden;">' + results[i].UserName + '</span>';
+                        lists = lists + titlelink;
+                    }
+                    else if (wp_setting.option == 3) { // 텍스트로만 표현되는 목록
+                        // 게시물 바로가기, 도트아이콘, 사용자명, 스페이스명, 포스트명
+                        var $temp_newsfeed_list = $j('<li />').attr('onclick', 'GetRedirectUrl(' + results[i].PostId + ', ' + results[i].PostTypeId + ')');
+                        var temp_newsfeed_listdot = '<span class="main_img main_icon_listdot floatLeft" />';
+                        var temp_newsfeed_writername = '<span class="floatRight writername">' + results[i].UserName + '</span>';
+                        var temp_newsfeed_groupname = '<span class="floatRight writedate" >' + replaceString(results[i].GroupName) + '</span>';
+                        var temp_newsfeed_posttitle = '<span' + title + '  class="floatNone">' + replaceString(results[i].Title) + '</span>';
+                        $temp_newsfeed_list.html(temp_newsfeed_listdot + temp_newsfeed_writername + temp_newsfeed_groupname + temp_newsfeed_posttitle);
+                        lists = $j('<div />').html($temp_newsfeed_list).html();
+                    }
+                    else { return false; }
+
+                    $frag.append(lists);
+                }
+                $divNewsfeedResults.append($frag.html());
+            }
+            else { // 데이터가 없는 경우
+                // UI/UX 작업 이후 표준 웹파트
+                if (bGroupwareUIType() == true) {
+                    // No data.
+                    lists = '<div class="nodataBox"><p class="icon_nodata"></p><p class="text_nodata">No data.</p></div>';
+                    $divNewsfeedResults.append(lists);
+                }
+                else {
+                    // UI/UX 작업 이전 웹파트
+
+                }
+            }
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            //alert('GetNewsFeedData Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+
+// 금일의 ME 일정 정보 가져오는 샘플
+// 일정의 경우 건수를 제한하기 보다는 금일의 일정 전체를 가져와서 보여주는 것이 맞다고 생각됨
+// canvasUIOption => 0: 일정 리스트, 1: 일정 갯수(협업만), 2: GW+협업 일정 갯수
+// isParent => true: Parent Page, false: This Page
+// frameId => isParent: true 사용시 특정 iframe 위치를 지정하는 경우
+function ScheduleData(id, selectedDate, canvasUIOption, isParent, frameId) {
+    // 갯수만 가져오는 경우 사용자 언어 정보가 필요하지 않음
+    if (canvasUIOption == "0" || canvasUIOption == 0)
+        GetUserInfoLang();
+
+    var pDate = new moment().format('YYYY-MM-DD');
+    var schedulecallbackMethod = "schedulecallbackMethod";
+    // 거의 동시에 일정 리스트와 갯수를 함께 호출하는 경우 콜백 충돌 방지 처리
+    if (canvasUIOption != undefined)
+        schedulecallbackMethod = schedulecallbackMethod + canvasUIOption;
+
+    if (selectedDate)
+        pDate = selectedDate;
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/post/schedulelist",
+        data: { 'userAccountId': GetUserId(), 'selectedDate': pDate, 'userLang': GetGwUserLang(), 'userTimeZone': GetGwUserTimeZone() }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: schedulecallbackMethod,  // 서버에는 callback 인자로 전달 (수정할 필요 없음)
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            // 성공 시 처리
+            ScheduleScript.SetEvents(results, id, pDate, canvasUIOption, isParent, frameId);
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            //alert('ScheduleData Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+
+/*
+// [2018-07-10] 협업 새소식 카운트
+[param]
+    id : 타겟 아이디 (필수)
+    canvasUIOption => 0: PC 메인, 1: 모바일 메인 (옵션)
+*/
+function GetWorkspaceUserActLogCount(id, canvasUIOption) {
+    if (!document.getElementById(id))
+        return;
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/userActLog/get/count",
+        data: { 'userAccountId': GetUserId() }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "userActLogCntcallbackMethod",  // 서버에는 callback 인자로 전달 (수정할 필요 없음)
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            if (results) {
+                // 성공 시 처리
+                // UI/UX 작업 이후 표준 웹파트
+                if (bGroupwareUIType() == true) {
+                    if (canvasUIOption == 0 || canvasUIOption == null || canvasUIOption == undefined) {
+                        $j("#" + id).find("span.count_num").text(results[0]);
+                    }
+                    else if (canvasUIOption == 1) {
+                        if (parseInt(results[0]) > 0)
+                            $j("#" + id).text(results[0]).show();
+                    }
+                }
+                else { // UI/UX 작업 이전 웹파트
+                    if (canvasUIOption == 0 || canvasUIOption == null || canvasUIOption == undefined) {
+                    }
+                    else if (canvasUIOption == 1) {
+                        $j("#" + id).text(results[0]);
+                    }
+                }
+            }
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            //alert('GetMiniCalendarData Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+
+/*
+// [2018-07-03] 그룹웨어 일정 통합 연동 사용시 협업 일정 Web Api 호출
+[param]
+    startDate : 일정 범위 시작일 (필수)
+    endDate: 일정 범위 종료일 (필수)      
+    dataArr : 연계된 그룹웨어 일정 데이터의 배열 (필수)
+    dataIndex : 연계된 그룹웨어 일정 데이터의 배열 인덱스 (필수)
+    bMobile : 모바일 그룹웨어 유무 (옵션)
+*/
+function GetIntegratedCalendarView(startDate, endDate, dataArr, dataIndex, bMobile) {
+    if (typeof (bMobile) == "undefined") {
+        if (!document.getElementById("Calendar"))
+            return;
+    }
+    else {
+        if (!document.getElementById("CalendarMini"))
+            return;
+    }
+
+    // 모바일 그룹웨어에서 사용자 언어 정보 필요
+    if (typeof (bMobile) != "undefined" && bMobile == true)
+        GetUserInfoLang();
+
+    startDate = GetDateFormatConvert(startDate);
+    endDate = GetDateFormatConvert(endDate);
+
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/post/schedulerange",
+        data: { 'userAccountId': GetUserId(), 'startDate': startDate, 'endDate': endDate, 'userLang': GetGwUserLang(), 'userTimeZone': GetGwUserTimeZone() }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "integratedCalendarViewCallbackMethod",  // 서버에는 callback 인자로 전달
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            // 성공 시 처리
+            return ScheduleScript.SetIntegratedEvents(results, startDate, endDate, dataArr, dataIndex, bMobile);
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            return dataArr;
+            //alert('GetIntegratedCalendarView Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+/*
+// [2019-09-16] 그룹웨어 일정 통합 연동 사용시 협업 일정 Web Api 호출, 데이터 전용 (닷넷GW "/schedule_main.aspx -> fc_getCalendarData_after" 경로 등에서 호출)
+[param]
+    startDate : 일정 범위 시작일 (필수)
+    endDate: 일정 범위 종료일 (필수)
+    callback_func: 콜백 함수 (필수)
+*/
+function GetIntegratedCalendarView_DataOnly(startDate, endDate, callback_func) {
+    startDate = GetDateFormatConvert(startDate);
+    endDate = GetDateFormatConvert(endDate);
+
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/post/schedulerange",
+        data: { 'userAccountId': GetUserId(), 'startDate': startDate, 'endDate': endDate }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "integratedCalendarViewCallbackMethod",  // 서버에는 callback 인자로 전달
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            // 성공 시 처리
+            if (results != undefined && results != "") {
+                ScheduleScript.startDate = new moment(startDate).hours(0).minutes(0).seconds(0).milliseconds(0).format('YYYY-MM-DD HH:mm:ss');
+                ScheduleScript.endDate = new moment(endDate).hours(23).minutes(59).seconds(59).milliseconds(59).format('YYYY-MM-DD HH:mm:ss');
+
+                ScheduleScript.lists = [];
+                for (var i = 0; i < results.length; i++) {
+                    var value = results[i];
+                    var eventRepeatDateType = value.ItemRepeatDateType;
+                    var eventRepeatCount = parseInt(value.ItemRepeatCount);
+
+                    if (value.ItemDateType == 3) { // 반복설정된 일정
+                        var repeatDate = moment(value.ItemStartDate);
+                        var repeatCount = eventRepeatCount;
+                        var repeatDateType = eventRepeatDateType;
+                        if (repeatDate.format("YYYY-MM-DD HH:mm:ss") >= ScheduleScript.startDate && repeatDate.format("YYYY-MM-DD HH:mm:ss") <= ScheduleScript.endDate) {
+                            var obj = new Object;
+                            obj.ItemContents = value.ItemContents;
+                            obj.ItemDateType = repeatDateType;
+                            obj.ItemEndDate = value.ItemEndDate;
+                            obj.ItemGroupId = value.ItemGroupId;
+                            obj.ItemGroupName = value.ItemGroupName;
+                            obj.ItemUserId = value.ItemUserId;
+                            obj.ItemId = value.ItemId;
+                            obj.ItemImportance = value.ItemImportance;
+                            obj.ItemLocation = value.ItemLocation;
+                            obj.ItemPostId = value.ItemPostId;
+                            obj.ItemPostTitle = replaceString(value.ItemPostTitle);
+                            obj.ItemRepetition = value.ItemRepetition;
+                            obj.ItemStartDate = repeatDate.format("YYYY-MM-DD HH:mm");
+                            obj.ItemRepeatCount = repeatCount;
+                            obj.ItemUpdateDate = value.ItemUpdateDate;
+                            ScheduleScript.lists.push(obj);
+                        }
+                    }
+                    else {
+                        ScheduleScript.lists.push(value);
+                    }
+                }
+            }
+            return callback_func(ScheduleScript.lists);
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            return callback_func("ERROR");
+        }
+    });
+}
+
+/*
+// [2018-06-19] IE 호환성 오류가 발생되는 날짜 형식 문자열(ex: 2018-7-7)을 YYYY-MM-DD 포맷으로 재구성
+[param]
+    dt : 날짜 (필수)
+*/
+function GetDateFormatConvert(dt) {
+    var currentDate = new Date(dt.replace(/-/gi, "/"));
+
+    // year
+    var yyyy = '' + currentDate.getFullYear();
+
+    // month
+    var mm = ('0' + (currentDate.getMonth() + 1));  // prepend 0 // +1 is because Jan is 0
+    mm = mm.substr(mm.length - 2);                  // take last 2 chars
+
+    // day
+    var dd = ('0' + currentDate.getDate());         // prepend 0
+    dd = dd.substr(dd.length - 2);                  // take last 2 chars
+
+    return yyyy + "-" + mm + "-" + dd;
+}
+
+/*
+// [2018-06-25] 일정 범위에 협업 일정이 있는 경우 미니 캘린터 스타일 처리
+[param]
+    startDate : 일정 범위 시작일 (필수)
+    endDate: 일정 범위 종료일 (필수)      
+    style : underline, bold, underline&bold (옵션)
+*/
+function GetMiniCalendarData(startDate, endDate, style) {
+    if (!document.getElementById("CalendarMini"))
+        return;
+
+    startDate = GetDateFormatConvert(startDate);
+    endDate = GetDateFormatConvert(endDate);
+
+    $j.ajax({
+        type: "GET",    // JsonP는 Get방식만 지원
+        url: GetWorkspaceUrl() + GetWorkspaceAppPath() + "/api/GroupwareApi/post/schedulerange",
+        data: { 'userAccountId': GetUserId(), 'startDate': startDate, 'endDate': endDate }, // 전송할 인자값(그룹웨어 사용자 id), 여러개인 경우: {'param1':'1','param2':'2'}
+        contentType: "application/json; charset=utf-8",
+        dataType: "jsonp",
+        jsonpCallback: "minicalendarcallbackMethod",  // 서버에는 callback 인자로 전달 (수정할 필요 없음)
+        timeout: 10000,                  // 시간이 초과하면 에러로 처리된다.
+        success: function (results) {
+            // 성공 시 처리
+            ScheduleScript.SetMiniCalendar(results, startDate, endDate, style);
+        },
+        error: function (XHR, textStatus, errorThrown) {
+            // 실패 시 처리 (메인화면에서 사용 금지)
+            //alert('GetMiniCalendarData Error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
+
+/*
+// [2018-06-19] 그룹웨어 멀티뷰 서브 화면으로 협업 일정 호출 시
+[param]
+    id : scheduleid (필수)
+    date: 일정 날짜 (필수)      
+    repeatCount : 반복 횟수 (옵션)
+*/
+function GoToWorkspaceSchedule_Multiview_Sub(id, date, repeatCount) {
+    if (typeof (_WindowTop.MultiView_Open) === "function") {
+        if (typeof (PreView_Close) != "undefined") // GW일정 보기가 로드되어 있다면 화면을 닫기 처리한다.
+            PreView_Close();
+
+        var url = GetRedirectScheduleDetailUrl(id, date, repeatCount, "1");
+        _WindowTop.MultiView_Open(window.name, "", url);
+    }
+}
+
+/*
+// [2018-06-18] 그룹웨어 레이어 화면으로 협업 일정 호출 시
+[param]
+    id : scheduleid (필수)
+    date: 일정 날짜 (필수)      
+    repeatCount : 반복 횟수 (옵션)
+*/
+function GoToWorkspaceSchedule_DivPopUpShow(id, date, repeatCount) {
+    if (typeof (DivPopUpShow_function) === "function") {
+
+        var url = GetRedirectScheduleDetailUrl(id, date, repeatCount, "2");
+        // 레이어 팝업을 협업 최소 사이즈(1000px) 이하로 지정
+        DivPopUpShow_function(999, 800, url);
+    }
+}
+
+/*
+// [2018-07-03] 협업시스템 일정 상세 바로가기 Url
+[param]
+    id : scheduleId (필수)
+    date: 일정 날짜 (필수)      
+    repeatCount : 반복 횟수 (옵션)
+    callTypeId : 호출 페이지 타입 (옵션)
+        /// callTypeId => 0: 팝업(window.open)
+        /// callTypeId => 1: 그룹웨어(ezEKP v10.0) 멀티뷰(Sub) (기본)
+        /// callTypeId => 2: 그룹웨어(ezEKP v10.0) 레이어(DivPopUpShow_function)
+        /// callTypeId => 3: 그룹웨어(ezEKP v10.0) 레이어(DivPopUpShow)
+        /// callTypeId => 10: 자바 그룹웨어 팝업(window.open)
+    bMobile : 모바일 그룹웨어 유무 (옵션)
+*/
+function GetRedirectScheduleDetailUrl(id, date, repeatCount, callTypeId, bMobile) {
+    if (typeof (id) == "undefined" || typeof (date) == "undefined")
+        return;
+    var url = GetWorkspaceUrl() + GetWorkspaceAppPath() + ((typeof (bMobile) == "undefined" || bMobile == false) ? "/Account/SSO" : "/Account/MobileSSO");
+    var returnUrl = "?returnUrl=" + GetWorkspaceAppPath() + "/Scheduler/Main/Detail?scheduleId=" + id;
+
+    //// ME 스페이스
+    //returnUrl = returnUrl + "%26GroupId=0";
+
+    // 반복 일정의 횟수
+    if (typeof (repeatCount) != "undefined")
+        if (isNumber(repeatCount) && parseInt(repeatCount) >= 1)
+            returnUrl = returnUrl + "%26repeatdate=" + moment(date).format("YYYY-MM-DD") + "%26repeatcount=" + repeatCount;
+
+    // 사이트 레이아웃 없이 단독으로 페이지만 호출되었는지 여부의 식별 값
+    returnUrl = returnUrl + "%26singleCall=true";
+
+    // 호출 페이지 타입
+    if (typeof (callTypeId) != "undefined")
+        returnUrl = returnUrl + "%26callTypeId=" + callTypeId;
+
+    return url + returnUrl;
+}
+
+/*
+// [2018-06-18] 숫자/문자 여부
+[return]
+    true : 숫자
+    false : 문자
+*/
+function isNumber(s) {
+    s += ''; // 문자열로 변환
+    s = s.replace(/^\s*|\s*$/g, ''); // 좌우 공백 제거
+    if (s == '' || isNaN(s)) return false;
+    return true;
+}
+
+//뉴스피드, 할일, 문서, 이슈 등 탭 클릭 시
+function workspaceChangeTab(tabname) {
+    workspaceselTab(tabname);
+
+    SetPostTypeIdByTab();
+    GetNewsFeedData(selgroupId, selposttypeId);
+}
+
+// 선택된 Tab의 className 설정 (on)
+function workspaceselTab(id) {
+
+    var newsTab = document.getElementById("newsTab");
+    if (newsTab != null)
+        newsTab.className = "";
+
+    var taskTab = document.getElementById("taskTab");
+    if (taskTab != null)
+        taskTab.className = "";
+
+    var schedulerTab = document.getElementById("schedulerTab");
+    if (schedulerTab != null)
+        schedulerTab.className = "";
+
+    var documentTab = document.getElementById("documentTab");
+    if (documentTab != null)
+        documentTab.className = "";
+
+    var issueTab = document.getElementById("issueTab");
+    if (issueTab != null)
+        issueTab.className = "";
+
+    var pollTab = document.getElementById("pollTab");
+    if (pollTab != null)
+        pollTab.className = "";
+
+    // KTH 예외 처리: 탭 클릭 시 추가된 탭에 대한 초기화 처리
+    if (typeof (workspaceselTabKTH) === "function")
+        workspaceselTabKTH();
+
+    var selTab = document.getElementById(id);
+    if (selTab) {
+        selTab.className = "on";
+
+        // KTH 예외 처리: 탭 클릭 시 로컬 스토리지에 tabId 저장
+        if (typeof (SetWorkspaceChangeTabHashKTH) === "function")
+            SetWorkspaceChangeTabHashKTH(id);
+    }
+}
+
+//더보기 클릭 시 스페이스의 특정 기능으로 바로가기
+function workspacemore() {
+    var url = GetWorkspaceUrl() + GetWorkspaceAppPath();
+    if (bEzWorkspaceJava() == false)
+        url = url + "/Account/SSO?returnUrl=/myoffice/ezWorkspace/Home/PostRedirect";    // 닷넷
+    else
+        url = url + "/Account/SSO?returnUrl=/ezWorkspace/Home/PostRedirect";    // 자바
+
+    SetPostTypeIdByTab();
+
+    // 이동 대상 기능 설정
+    var postTypeId = selposttypeId;
+    // 문서인 경우 Rayful 연동인지 확인
+    if (postTypeId == "4") {
+        postTypeId = GetDocumentPostTypeId();
+    }
+
+    // KTH 예외 처리: + 버튼 클릭하여 바로가기 이동 시 예외 처리
+    if (typeof (workspacemoreKTH) === "function")
+        postTypeId = workspacemoreKTH(postTypeId);
+
+    url = url + "?GroupId=" + selgroupId + "%26postTypeId=" + postTypeId;
+
+    // UI/UX 작업 이후 표준 웹파트
+    if (bGroupwareUIType() == true) {
+        if (typeof (GoToApplicationUrl) === "function")
+            GoToApplicationUrl(url, '', false);
+        else
+            location.href = url;
+    }
+    else {
+        // UI/UX 작업 이전 웹파트
+        // WorkspaceUrl
+        if (bParentHref() == true) {
+            try {
+                if (window.parent && window.parent.DirectSetTab) {
+                    //쌍용양회 포탈 페이지에서 url 값을 리턴하여 이동하도록 처리.
+                    window.parent.DirectSetTab("ezWorkspace", url);
+                }
+                else {
+                    window.parent.location.href = url;
+                }
+
+            } catch (e) {
+                window.parent.location.href = url;
+            }
+        }
+        else
+            location.href = url;
+    }
+}
+
+// 협업 문서관리 바로가기 시 Rayful 사용여부에 따라 분기하여 반환
+function GetDocumentPostTypeId() {
+    var result = "4";       // 협업 문서 Type
+    if (bRayfulUse() == true) {
+        result = "101";     // Rayful 사용 시 바로가기 분기
+    }
+
+    return result;
+}
+
+// 그룹웨어UI에서 PostType별 사용하는 Class명을 반환 (뉴스피드 웹파트 목록 디자인)
+function GetPostTypeIdClassName(postTypeId) {
+    var result = "newsfeed";       // 협업 포스트 Type
+    if (postTypeId == "1")
+        result = "newsfeed";
+    else if (postTypeId == "2")
+        result = "worktodo";
+    else if (postTypeId == "3")
+        result = "schedule";
+    else if (postTypeId == "4")
+        result = "document";
+    else if (postTypeId == "5")
+        result = "issue";
+    else if (postTypeId == "6")
+        result = "poll";
+    else
+        result = result;
+
+    return result;
+}
+
+//스페이스 선택 변경시
+function SetSpaceChange() {
+    if (!document.getElementById('divSpaceListResults'))
+        return;
+    $j("#divSpaceListResults").change(function () { if ($j(this).val() != null) GetNewsFeedData($j(this).val(), ''); }).change();
+}
+
+// 일정Api의 Data를 html으로 변환하는 스크립트 (moment.js 필수)
+var ScheduleScript = {
+    firstDay: 0,
+    lists: [],
+    startDate: new moment().hours(0).minutes(0).seconds(0).milliseconds(0).format('YYYY-MM-DD HH:mm:ss'),
+    endDate: new moment().hours(23).minutes(59).seconds(59).milliseconds(59).format('YYYY-MM-DD HH:mm:ss'),
+    // 일정 이벤트 리스트를 html영역에 바인딩 합니다.
+    SetEvents: function (results, id, selectedDate, canvasUIOption, isParent, frameId) {
+        if (selectedDate) {
+            ScheduleScript.startDate = new moment(selectedDate).hours(0).minutes(0).seconds(0).milliseconds(0).format('YYYY-MM-DD HH:mm:ss');
+            ScheduleScript.endDate = new moment(selectedDate).hours(23).minutes(59).seconds(59).milliseconds(59).format('YYYY-MM-DD HH:mm:ss');
+        }
+        var $schedule_wp = $j('#' + id);
+        var scheduleListHtml = '<ul class="schedule_list" style="overflow-y: auto;height:165px; margin-right:0; padding-right:10px;"></ul>'
+        if (results != undefined && results != "") {
+            ScheduleScript.lists = [];
+            for (var i = 0; i < results.length; i++) {
+                var value = results[i];
+                var eventRepeatDateType = value.ItemRepeatDateType;
+                var eventRepeatCount = parseInt(value.ItemRepeatCount);
+
+                if (value.ItemDateType == 3) { // 반복설정된 일정
+                    var repeatDate = moment(value.ItemStartDate);
+                    var repeatCount = eventRepeatCount;
+                    var repeatDateType = eventRepeatDateType;
+                    if (repeatDate.format("YYYY-MM-DD HH:mm:ss") >= ScheduleScript.startDate && repeatDate.format("YYYY-MM-DD HH:mm:ss") <= ScheduleScript.endDate) {
+                        var repeatEndDate = "";
+                        if (repeatDateType == 2 && moment(repeatDate).format('HH:mm') != "00:00")
+                            repeatEndDate = moment(repeatDate).add(1, "days").format('YYYY-MM-DD') + " " + moment(value.ItemEndDate).format('HH:mm:ss');
+                        else
+                            repeatEndDate = moment(repeatDate).format('YYYY-MM-DD') + " " + moment(value.ItemEndDate).format('HH:mm:ss');
+                        var obj = new Object;
+                        obj.ItemContents = value.ItemContents;
+                        obj.ItemDateType = repeatDateType;
+                        obj.ItemEndDate = repeatEndDate;
+                        obj.ItemGroupId = value.ItemGroupId;
+                        obj.ItemGroupName = value.ItemGroupName;
+                        obj.ItemUserId = value.ItemUserId;
+                        obj.ItemId = value.ItemId;
+                        obj.ItemImportance = value.ItemImportance;
+                        obj.ItemLocation = value.ItemLocation;
+                        obj.ItemPostId = value.ItemPostId;
+                        obj.ItemPostTitle = replaceString(value.ItemPostTitle);
+                        obj.ItemRepetition = value.ItemRepetition;
+                        obj.ItemStartDate = repeatDate.format("YYYY-MM-DD HH:mm");
+                        obj.ItemRepeatCount = repeatCount;
+                        obj.ItemUpdateDate = value.ItemUpdateDate;
+                        ScheduleScript.lists.push(obj);
+                    };
+                }
+                else {
+                    ScheduleScript.lists.push(value);
+                }
+            }
+            if (canvasUIOption == 0 || canvasUIOption == null || canvasUIOption == undefined) { //일정 리스트
+                // UI/UX 작업 이후 표준 웹파트
+                if (bGroupwareUIType() == true) {
+                    var $toDayCount_wp = $j('#dd_toDay_count');
+                    //일정 웹파트 목록의 .empty() 처리는 Main_Portlet에서 협업일정 호출전에 하도록 구성
+                    //$schedule_wp.empty(); // 목록
+                    //$toDayCount_wp.empty(); // 카운트
+                    if (ScheduleScript.lists.length > 0) {
+                        var $frag = $j(document.createDocumentFragment());
+                        //var $frag = $j('<div />');
+                        $j(ScheduleScript.lists).each(function (idx, data) {
+                            var $scheduleli = $j('<li/>');
+                            var $scheduleliIcon = $j('<span/>').addClass("main_img main_icon_listdot01");
+                            $scheduleli.append($scheduleliIcon);
+                            var pMode = $j('#scheduleChangeSelect').val();
+                            var allDayText = "하루종일";
+                            if (g_UserInfo_Lang != "" && g_UserInfo_Lang != "ko")
+                                allDayText = "All day long";
+                            var scheduleDateText = data.ItemDateType == 1 ? "[" + moment(data.ItemStartDate).format("HH:mm") + " ~ " + moment(data.ItemEndDate).format("HH:mm") + "] " : "[" + allDayText + "] ";
+                            // 모든일정인 경우 "[협업] " 말머리를 추가
+                            if (pMode == "ALL") {
+                                //협업 용어는 일정 웹파트 협업일정 셀렉트박스의 data-title속성에 넣어 그룹웨어의 용어를 그대로 활용한다.
+                                var scheduleTypeText = "[" + $j('#scheduleChangeSelect option[value="COLLABORATION"]').data().title + "] ";
+                                $scheduleli.append(scheduleDateText + scheduleTypeText + replaceString(data.ItemPostTitle));
+                            }
+                            else
+                                $scheduleli.append(scheduleDateText + replaceString(data.ItemPostTitle));
+                            //var url = GetRedirectUrl(data.ItemPostId, 3, true);
+                            var url = GetRedirectScheduleDetailUrl(data.ItemId, moment(data.ItemStartDate).format("YYYY-MM-DD"), data.ItemRepeatCount, "2");
+                            $scheduleli.click(function () {
+                                // 레이어 팝업을 협업 최소 사이즈(1000px) 이하로 지정
+                                // 최소 사이즈보다 작을 경우 왼쪽 메뉴가 숨기기 처리된다.
+                                DivPopUpShow_function(999, 800, url);
+                            });
+                            //$scheduleli.attr('click', 'DivPopUpShow_function(999, 800, "' + url + '");');
+                            $frag.append($scheduleli);
+                        });
+
+                        // 모든 일정에서 ul.schedule_list을 이미 만든 경우
+                        if ($schedule_wp.find('ul').hasClass('schedule_list') == true) {
+                            $schedule_wp.find('ul').append($frag);
+                            //$schedule_wp.find('ul').append($frag.html());
+                        }
+                        else { // 모든 일정에서 만들어진 목록이 없거나 협업일정만 단독으로 호출한 경우                             
+                            var $scheduleul = $j('<ul/>').addClass("schedule_list");
+                            $schedule_wp.append($scheduleul.append($frag));
+                            //$schedule_wp.append($scheduleul.append($frag.html()));
+                        }
+                        var gwDayCount = ScheduleScript.lists.length + parseInt($toDayCount_wp.text() == "" ? 0 : $toDayCount_wp.text());
+                        var gwDayCountHtml = "<span class=\"main_img main_icon_schedule_time\"></span>" + gwDayCount;
+                        $toDayCount_wp.html(gwDayCountHtml);
+                    }
+                    else {
+                        if ($toDayCount_wp.text() == "")
+                            Append_NoData(id);
+                    }
+                }
+                else { // UI/UX 작업 이전 웹파트
+                    if (isParent == null || isParent == undefined || isParent == false) {
+                        $schedule_wp.empty();
+                        $schedule_wp.html(scheduleListHtml);
+                    }
+                    else {
+                        if (frameId == null || frameId == undefined) {
+                            parent.$schedule_wp.empty();
+                            parent.$schedule_wp.html(scheduleListHtml);
+                        }
+                        else {
+                            $j('#' + id, parent.frames[frameId].document).empty();
+                            $j('#' + id, parent.frames[frameId].document).html(scheduleListHtml);
+                        }
+                    }
+                    $j(ScheduleScript.lists).each(function (idx, data) {
+                        var allDayText = "종일";
+                        if (g_UserInfo_Lang != "" && g_UserInfo_Lang != "ko")
+                            allDayText = "All day";
+                        var tmpl = '<li onclick="GetRedirectUrl(' + data.ItemPostId + ');">';
+                        tmpl += '<span class="title">' + replaceString(data.ItemPostTitle) + '</span>';
+                        if (data.ItemDateType == "1")
+                            tmpl += '<span class="time">' + moment(data.ItemStartDate).format("LT") + '</span>';
+                        else
+                            tmpl += '<span class="time">' + '(' + allDayText + ')' + '</span>';
+                        tmpl += '<span class="space">' + data.ItemGroupName + '</span>';
+                        tmpl += '</li>';
+                        if (isParent == null || isParent == undefined || isParent == false) {
+                            $j('#' + id + ' > ul').append(tmpl);
+                            $j('#' + id + ' > ul > li').each(function () {
+                                var titleText = '';
+                                $j(this).children('span').each(function () {
+                                    titleText += $j(this).text() + " ";
+                                });
+
+                                if (bTitleUse() == true)
+                                    $j(this).attr('title', titleText);
+                            });
+                        }
+                        else {
+                            if (frameId == null || frameId == undefined) {
+                                parent.$j('#' + id + ' > ul').append(tmpl);
+                                parent.$j('#' + id + ' > ul > li').each(function () {
+                                    var titleText = '';
+                                    $j(this).children('span').each(function () {
+                                        titleText += $j(this).text() + " ";
+                                    });
+
+                                    if (bTitleUse() == true)
+                                        $j(this).attr('title', titleText);
+                                });
+                            }
+                            else {
+                                $j('#' + id + ' > ul', parent.frames[frameId].document).append(tmpl);
+                                $j('#' + id + ' > ul', parent.frames[frameId].document).each(function () {
+                                    var titleText = '';
+                                    $j(this).children('span').each(function () {
+                                        titleText += $j(this).text() + " ";
+                                    });
+
+                                    if (bTitleUse() == true)
+                                        $j(this).attr('title', titleText);
+                                });
+                            }
+                        }
+                    });
+                    if (googleisSignedIn == true)
+                        GoogleCalendar.GetEvents('primary', id, isParent);
+                }
+            }
+            else if (canvasUIOption == 1) { //일정 갯수(협업만)
+                if (isParent == null || isParent == undefined || isParent == false) {
+                    $schedule_wp.text(ScheduleScript.lists.length);
+                    if (parseInt($schedule_wp.text()) > 0)
+                        $schedule_wp.show();
+                }
+                else {
+                    if (frameId == null || frameId == undefined) {
+                        parent.$schedule_wp.text(ScheduleScript.lists.length);
+                    }
+                    else {
+                        $j('#' + id, parent.frames[frameId].document).text(ScheduleScript.lists.length);
+                    }
+                }
+            }
+            else if (canvasUIOption == 2) { //GW+협업 일정 갯수
+                if (isParent == null || isParent == undefined || isParent == false) {
+                    $schedule_wp.text(parseInt($schedule_wp.text()) + ScheduleScript.lists.length);
+                    if (parseInt($schedule_wp.text()) > 0)
+                        $schedule_wp.show();
+                }
+                else {
+                    if (frameId == null || frameId == undefined) {
+                        parent.$schedule_wp.text(parseInt(parent.$schedule_wp.text()) + ScheduleScript.lists.length);
+                    }
+                    else {
+                        $j('#' + id, parent.frames[frameId].document).text(parseInt($j('#' + id, parent.frames[frameId].document).text()) + ScheduleScript.lists.length);
+                    }
+                }
+            }
+        }
+        else {
+            if (canvasUIOption == 0 || canvasUIOption == null || canvasUIOption == undefined) { //일정 리스트
+                // UI/UX 작업 이후 표준 웹파트
+                if (bGroupwareUIType() == true) {
+                    if ($schedule_wp.find('ul').hasClass('schedule_list') == false)
+                        Append_NoData(id);
+                }
+                else { // UI/UX 작업 이전 웹파트
+                    if (isParent == null || isParent == undefined || isParent == false) {
+                        $schedule_wp.html(scheduleListHtml);
+                    }
+                    else {
+                        if (frameId == null || frameId == undefined) {
+                            parent.$schedule_wp.html(scheduleListHtml);
+                        }
+                        else {
+                            $j('#' + id, parent.frames[frameId].document).html(scheduleListHtml);
+                        }
+                    }
+                    if (googleisSignedIn == true)
+                        GoogleCalendar.GetEvents('primary', id, isParent);
+                }
+            }
+            else if (canvasUIOption == 1) { //일정 갯수(협업만)
+                if (isParent == null || isParent == undefined || isParent == false) {
+                    $schedule_wp.text(0);
+                }
+                else {
+                    if (frameId == null || frameId == undefined) {
+                        parent.$schedule_wp.text(0);
+                    }
+                    else {
+                        $j('#' + id, parent.frames[frameId].document).text(0);
+                    }
+                }
+            }
+            else if (canvasUIOption == 2) { //GW+협업 일정 갯수
+                if (isParent == null || isParent == undefined || isParent == false) {
+                    if (parseInt($schedule_wp.text()) > 0)
+                        $schedule_wp.show();
+                }
+                else {
+                    if (frameId == null || frameId == undefined) {
+                    }
+                    else {
+                    }
+                }
+            }
+        }
+    },
+    // 통합일정: 일정 이벤트 리스트를 그룹웨어 형식으로 변환 후 달력 영역에 바인딩 합니다.
+    SetIntegratedEvents: function (results, startDate, endDate, dataArr, dataIndex, bMobile) {
+        if (startDate && endDate) {
+            ScheduleScript.startDate = new moment(startDate).hours(0).minutes(0).seconds(0).milliseconds(0).format('YYYY-MM-DD HH:mm:ss');
+            ScheduleScript.endDate = new moment(endDate).hours(23).minutes(59).seconds(59).milliseconds(59).format('YYYY-MM-DD HH:mm:ss');
+        }
+        ScheduleScript.lists = [];
+        var IntegratedMobile = (typeof (bMobile) == "undefined" || bMobile == false) ? false : true;
+        for (var i = 0; i < results.length; i++) {
+            var value = results[i];
+            var eventRepeatDateType = value.ItemRepeatDateType;
+            var eventRepeatCount = parseInt(value.ItemRepeatCount);
+
+            if (value.ItemDateType == 3) { // 반복설정된 일정
+                var repeatDate = moment(value.ItemStartDate);
+                var repeatCount = eventRepeatCount;
+                var repeatDateType = eventRepeatDateType;
+
+                if (repeatDate.format("YYYY-MM-DD HH:mm:ss") >= ScheduleScript.startDate && repeatDate.format("YYYY-MM-DD HH:mm:ss") <= ScheduleScript.endDate) {
+                    var repeatEndDate = "";
+                    if (repeatDateType == 2 && moment(repeatDate).format('HH:mm') != "00:00")
+                        repeatEndDate = moment(repeatDate).add(1, "days").format('YYYY-MM-DD') + " " + moment(value.ItemEndDate).format('HH:mm:ss');
+                    else
+                        repeatEndDate = moment(repeatDate).format('YYYY-MM-DD') + " " + moment(value.ItemEndDate).format('HH:mm:ss');
+                    var obj = new Object;
+                    obj.ItemContents = value.ItemContents;
+                    obj.ItemDateType = repeatDateType;
+                    obj.ItemEndDate = repeatEndDate;
+                    obj.ItemGroupId = value.ItemGroupId;
+                    obj.ItemGroupName = value.ItemGroupName;
+                    obj.ItemUserId = value.ItemUserId;
+                    obj.ItemUserAccountId = value.ItemUserAccountId;
+                    obj.ItemId = value.ItemId;
+                    obj.ItemImportance = value.ItemImportance;
+                    obj.ItemLocation = value.ItemLocation;
+                    obj.ItemPostId = value.ItemPostId;
+                    obj.ItemPostTitle = ReplaceXML(value.ItemPostTitle);
+                    obj.ItemRepetition = value.ItemRepetition;
+                    obj.ItemStartDate = repeatDate.format("YYYY-MM-DD HH:mm:ss");
+                    obj.ItemRepeatCount = repeatCount;
+                    obj.ItemUpdateDate = value.ItemUpdateDate;
+                    ScheduleScript.lists.push(obj);
+                };
+            }
+            else {
+                ScheduleScript.lists.push(value);
+            }
+        }
+        if (IntegratedMobile) { //모바일
+            var $frag = $j('<div />');
+            // 리소스 다국어 처리 
+            var IntegratedCalLang = GetUserLang(true) == "" ? "ko" : GetUserLang(true);
+            var IntegratedCalResouse = {
+                Subject: IntegratedCalLang == "ko" ? "&nbsp;제목 : " : "&nbsp;Subject : ",
+                Kind: IntegratedCalLang == "ko" ? "종류 : 협업" : "Kind : Collaboration",
+                Period: IntegratedCalLang == "ko" ? "기간 : " : "Period : ",
+                SearchResult: IntegratedCalLang == "ko" ? "검색 결과 : " : "Search Result : ",
+                NoResult: IntegratedCalLang == "ko" ? "검색 결과가 없습니다." : "No Result",
+                Items: IntegratedCalLang == "ko" ? "건 " : "Items ",
+                AllDay: IntegratedCalLang == "ko" ? "하루종일" : "All day long",
+            }
+        }
+        if (ScheduleScript.lists.length > 0) {
+            $j(ScheduleScript.lists).each(function (idx, Iteminfo) {
+                if (!IntegratedMobile) { // PC버전
+                    if (typeCal == 2) { // month
+                        var _Dtstart = Iteminfo.ItemStartDate;
+                        var _Dtend = Iteminfo.ItemEndDate;
+                        var DataSDT = new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10), parseInt(_Dtstart.substring(11, 13), 10), parseInt(_Dtstart.substring(14, 16), 10));
+                        var DataEDT = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10), parseInt(_Dtend.substring(11, 13), 10), parseInt(_Dtend.substring(14, 16), 10));
+                        OrgDataSDT = new Date(DataSDT);
+                        OrgDataEDT = new Date(DataEDT);
+
+                        if (_Dtstart.substring(0, 10) != _Dtend.substring(0, 10)) {
+                            var betweenDay = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10)) - new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10));
+                            var day = 1000 * 60 * 60 * 24;
+                            betweenDay = parseInt(betweenDay / day, 10);
+                            for (var j = 0; j <= betweenDay; j++) {
+                                dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                CalMonthDataBind(dataArr[dataIndex]);
+                                DataSDT.setDate(DataSDT.getDate() + 1);
+                                dataIndex += 1;
+                            }
+                        } else {
+                            dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                            CalMonthDataBind(dataArr[dataIndex]);
+                            dataIndex += 1;
+                        }
+                        DataSDT = null;
+                        DataEDT = null;
+                    }
+                    else if (typeCal == 1) { // week
+                        var _Dtstart = Iteminfo.ItemStartDate;
+                        var _Dtend = Iteminfo.ItemEndDate;
+                        var DataSDT = new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10), parseInt(_Dtstart.substring(11, 13), 10), parseInt(_Dtstart.substring(14, 16), 10));
+                        var DataEDT = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10), parseInt(_Dtend.substring(11, 13), 10), parseInt(_Dtend.substring(14, 16), 10));
+
+                        sStartDate = sStartDate.split("-")[0] + "-" + leadingZeros(sStartDate.split("-")[1], 2) + "-" + leadingZeros(sStartDate.split("-")[2], 2)
+                        sEndDate = sEndDate.split("-")[0] + "-" + leadingZeros(sEndDate.split("-")[1], 2) + "-" + leadingZeros(sEndDate.split("-")[2], 2)
+                        OrgDataSDT = new Date(DataSDT);
+                        OrgDataEDT = new Date(DataEDT);
+                        if (Iteminfo.ItemDateType != 2) {
+                            if (_Dtstart.substring(0, 10) != _Dtend.substring(0, 10)) {
+
+                                var betweenDay = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10)) - new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10));
+                                var day = 1000 * 60 * 60 * 24;
+                                betweenDay = parseInt(betweenDay / day, 10);
+                                for (var j = 0; j <= betweenDay; j++) {
+                                    if (j == 0) {
+                                        DataEDT.setHours(23);
+                                        DataEDT.setMinutes(59);
+                                    }
+                                    else if (j < betweenDay) {
+                                        DataSDT.setHours(0);
+                                        DataSDT.setMinutes(0);
+                                        DataEDT.setHours(23);
+                                        DataEDT.setMinutes(59);
+                                    }
+                                    else {
+                                        DataSDT.setHours(0);
+                                        DataSDT.setMinutes(0);
+                                        DataEDT = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10), parseInt(_Dtend.substring(11, 13), 10), parseInt(_Dtend.substring(14, 16), 10));
+                                    }
+                                    dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                    aheadDataCell(dataArr[dataIndex], dataIndex)
+                                    CalWeekDataBind(dataArr[dataIndex], dataIndex);
+                                    DataSDT.setDate(DataSDT.getDate() + 1);
+                                    dataIndex += 1;
+                                }
+                            } else {
+                                dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                aheadDataCell(dataArr[dataIndex], dataIndex)
+                                CalWeekDataBind(dataArr[dataIndex], dataIndex);
+                                dataIndex += 1;
+                            }
+                        }
+                        else {
+                            if (_Dtstart.substring(0, 10) != _Dtend.substring(0, 10)) {
+                                var betweenDay = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10)) - new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10));
+                                var day = 1000 * 60 * 60 * 24;
+                                betweenDay = parseInt(betweenDay / day, 10);
+                            } else
+                                betweenDay = 0;
+
+                            for (var j = 0; j <= betweenDay; j++) {
+                                dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                CalWeekAllDataBind(dataArr[dataIndex], dataIndex);
+                                DataSDT.setDate(DataSDT.getDate() + 1);
+                                dataIndex += 1;
+                            }
+                        }
+                        DataSDT = null;
+                        DataEDT = null;
+                    }
+                    else if (typeCal == 0) { // day
+                        var _Dtstart = Iteminfo.ItemStartDate;
+                        var _Dtend = Iteminfo.ItemEndDate;
+                        var DataSDT = new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10), parseInt(_Dtstart.substring(11, 13), 10), parseInt(_Dtstart.substring(14, 16), 10));
+                        var DataEDT = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10), parseInt(_Dtend.substring(11, 13), 10), parseInt(_Dtend.substring(14, 16), 10));
+                        OrgDataSDT = new Date(DataSDT);
+                        OrgDataEDT = new Date(DataEDT);
+                        if (Iteminfo.ItemDateType != 2) {
+                            if (_Dtstart.substring(0, 10) != _Dtend.substring(0, 10)) {
+
+                                var betweenDay = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10)) - new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10));
+                                var day = 1000 * 60 * 60 * 24;
+                                betweenDay = parseInt(betweenDay / day, 10);
+                                for (var j = 0; j <= betweenDay; j++) {
+                                    var toDay = sDate.getFullYear() + "-" + leadingZeros((sDate.getMonth() + 1), 2) + "-" + leadingZeros(sDate.getDate(), 2)
+                                    var DataDay = DataSDT.getFullYear() + "-" + leadingZeros((DataSDT.getMonth() + 1), 2) + "-" + leadingZeros(DataSDT.getDate(), 2)
+                                    if (toDay == DataDay) {
+                                        if (betweenDay >= 1) {
+                                            if (j == 0) {
+                                                DataEDT.setHours(23);
+                                                DataEDT.setMinutes(59);
+                                            }
+                                            else if (j < betweenDay) {
+                                                DataSDT.setHours(0);
+                                                DataSDT.setMinutes(0);
+                                                DataEDT.setHours(23);
+                                                DataEDT.setMinutes(59);
+                                            }
+                                            else {
+                                                DataSDT.setHours(0);
+                                                DataSDT.setMinutes(0);
+                                                DataEDT = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10), parseInt(_Dtend.substring(11, 13), 10), parseInt(_Dtend.substring(14, 16), 10));
+                                            }
+                                        }
+                                        dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                        aheadDataCell(dataArr[dataIndex], dataIndex);
+                                        CalDayDataBind(dataArr[dataIndex], dataIndex);
+
+                                        dataIndex += 1;
+                                    }
+                                    DataSDT.setDate(DataSDT.getDate() + 1);
+                                }
+                            } else {
+                                dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                aheadDataCell(dataArr[dataIndex], dataIndex);
+                                CalDayDataBind(dataArr[dataIndex], dataIndex);
+                                dataIndex += 1;
+                            }
+                        }
+                        else {
+                            if (_Dtstart.substring(0, 10) != _Dtend.substring(0, 10)) {
+                                var betweenDay = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10)) - new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10));
+                                var day = 1000 * 60 * 60 * 24;
+                                betweenDay = parseInt(betweenDay / day, 10);
+                            } else
+                                betweenDay = 0;
+
+                            for (var j = 0; j <= betweenDay; j++) {
+                                dataArr[dataIndex] = ScheduleScript.GetIntegratedEventTemp(Iteminfo, DataSDT, DataEDT);
+                                CalDayAllDataBind(dataArr[dataIndex], dataIndex);
+                                DataSDT.setDate(DataSDT.getDate() + 1);
+                                dataIndex += 1;
+                            }
+
+                        }
+                        DataSDT = null;
+                        DataEDT = null;
+                    }
+                }
+                else { // 모바일 버전
+                    if (!document.getElementById("calendarList"))
+                        return;
+                    var rtnUrl = "location.href='" + GetRedirectScheduleDetailUrl(Iteminfo.ItemId, moment(Iteminfo.ItemStartDate).format('YYYY-MM-DD'), Iteminfo.ItemRepeatCount, undefined, true) + "'";
+                    var rtnStartDate = Iteminfo.ItemDateType == "1" ? moment(Iteminfo.ItemStartDate).format('YYYY-MM-DD HH:mm') : moment(Iteminfo.ItemStartDate).format('YYYY-MM-DD[(' + IntegratedCalResouse.AllDay + '])');
+                    var rtnEndDate = Iteminfo.ItemDateType == "1" ? moment(Iteminfo.ItemEndDate).format('YYYY-MM-DD HH:mm') : moment(Iteminfo.ItemEndDate).format('YYYY-MM-DD[(' + IntegratedCalResouse.AllDay + '])');
+                    var rtnDate = rtnStartDate != rtnEndDate ? rtnStartDate + " ~ " + rtnEndDate : rtnStartDate;
+                    var rtnDiv = $j("<div onclick=" + rtnUrl + " />").css("cursor", "pointer");
+                    var rtnDivSubject = $j("<dt />").css("font-weight", "bold").html(IntegratedCalResouse.Subject + replaceString(Iteminfo.ItemPostTitle));
+                    var rtnDivKind = $j("<dd />").addClass("noline dd01").html("<span class='kind'>" + IntegratedCalResouse.Kind + "</dt>");
+                    var rtnDivPeriod = $j("<dd />").addClass("dd01").html("<span class='date01'>" + IntegratedCalResouse.Period + rtnDate + "</dt>");
+                    rtnDiv.append(rtnDivSubject);
+                    rtnDiv.append(rtnDivKind);
+                    rtnDiv.append(rtnDivPeriod);
+                    $frag.append(rtnDiv);
+                }
+            });
+        }
+        if (!IntegratedMobile) { // PC버전
+            if (typeCal == 1 || typeCal == 0) { // week, day
+                for (var i = 0; i < dataArr.length; i++) {
+                    if (dataArr[i].DateType != "2")
+                        CalDataSize(dataArr[i], i, dataArr);
+                }
+
+                for (var i = 0; i < dataArr.length; i++) {
+                    if (dataArr[i].DateType != "2")
+                        CalDataWidth(dataArr[i], i, dataArr);
+                }
+            }
+        }
+        else { //모바일 버전
+            if (_type == "Collaboration") //협업일정만 호출시 목록 영역 초기화
+                $j("#calendarList").html("");
+
+            var calDataTarget = $j("#calendarList > dl");
+            var calListLen = $j("#calendarList > dl > div").length;
+            if (calListLen == 0) { //바인딩된 그룹웨어 일정이 없는 경우
+                if (ScheduleScript.lists.length > 0) {
+                    var calDl = $j("<dl />").addClass('list');
+                    calDl.html($frag.html());
+                    $j("#calendarList").html(calDl);
+                    $j("#calendarList").append(IntegratedCalResouse.SearchResult + "<span class='point'><span id='LabelCount' class='point'>" + ScheduleScript.lists.length + "</span></span>" + IntegratedCalResouse.Items);
+                }
+                else { //No Data: 검색 결과가 없습니다.
+                    var calDl = $j("<dl />").addClass('nodata_style');
+                    calDl.html(IntegratedCalResouse.SearchResult + "<span class='point'><span id='LabelCount' class='point'>0</span></span>" + IntegratedCalResouse.Items + IntegratedCalResouse.NoResult);
+                    $j("#calendarList").html(calDl);
+                }
+            }
+            else { //바인딩된 그룹웨어 일정이 있는 경우
+                var labelCount = parseInt($j("#LabelCount").text());
+                calDataTarget = $j("#calendarList > dl > div:nth-child(" + calListLen + ")");
+                calDataTarget.after($frag.html());
+                $j("#LabelCount").text(calListLen + ScheduleScript.lists.length);
+            }
+        }
+
+        ScheduleScript.lists = [];
+        dataArr = null;
+
+        try {
+            if (typeof (toggleDataProc) === "function")
+                toggleDataProc();
+        } catch (e) { }
+    },
+    // 통합일정: 일정 이벤트 리스트를 그룹웨어 형식으로 변환 합니다.
+    GetIntegratedEventTemp: function (obj, DataSDT, DataEDT) {
+        var startHour = parseInt(DataSDT.getHours(), 10);
+        var endHour = parseInt(DataEDT.getHours(), 10);
+        var startMin = parseInt(DataSDT.getMinutes(), 10);
+        var endMin = parseInt(DataEDT.getMinutes(), 10);
+
+        if (startMin < 30)
+            startMin = 0
+        else
+            startMin = 30
+
+        if (endMin < 30)
+            endMin = 0
+        else
+            endMin = 30
+
+        var oHour = (endHour - startHour) * 2;
+        var oMin = (endMin - startMin);
+        if (oMin == -30)
+            oMin = -1
+        else if (oMin == 30)
+            oMin = 1
+
+        var timeCnt = oHour + oMin
+
+        if (typeCal != 2 && timeCnt <= 0) {
+            timeCnt = 1;
+            DataEDT.setHours(24);
+            DataEDT.setMinutes(00);
+        }
+
+        if (typeCal == 2)
+            var trID = DataSDT.getFullYear() + "-" + leadingZeros(parseInt(DataSDT.getMonth() + 1, 10), 2) + "-" + leadingZeros(DataSDT.getDate(), 2);
+        else
+            var trID = DataSDT.getFullYear() + "-" + leadingZeros((DataSDT.getMonth() + 1), 2) + "-" + leadingZeros(DataSDT.getDate(), 2) + "_" + startHour + ":" + startMin.toString().substring(0, 1);
+
+        pDataArr = new sDataTemp();
+        pDataArr.trID = trID;
+        pDataArr.ScheduleID = "collaboration:" + obj.ItemId;
+        pDataArr.ScheduleChangeKey = "" + obj.ItemId;
+        pDataArr.ParentID = "collaboration:" + obj.ItemPostId;
+        pDataArr.OwnerID = obj.ItemUserAccountId;
+        pDataArr.CreatorID = obj.ItemUserAccountId;
+        pDataArr.ModifierID = obj.ItemUserAccountId;
+        pDataArr.ScheduleType = "13";
+        pDataArr.Importance = parseInt(obj.ItemImportance) + 1;
+        pDataArr.IsReadOnly = "N";
+        pDataArr.DateType = obj.ItemDateType;
+        pDataArr.Subject = obj.ItemPostTitle;
+        pDataArr.StartDate = mfGetUTFIsoDate(DataSDT.getFullYear(), DataSDT.getMonth(), DataSDT.getDate(), DataSDT.getHours(), DataSDT.getMinutes());
+        pDataArr.EndDate = mfGetUTFIsoDate(DataEDT.getFullYear(), DataEDT.getMonth(), DataEDT.getDate(), DataEDT.getHours(), DataEDT.getMinutes());
+        pDataArr.RepeatCount = obj.ItemRepeatCount;
+        pDataArr.Location = obj.ItemLocation;
+        pDataArr.dtstartUTC = mfGetUTFIsoDate(DataSDT.getFullYear(), DataSDT.getMonth(), DataSDT.getDate(), DataSDT.getHours(), DataSDT.getMinutes());
+        pDataArr.dtendUTC = mfGetUTFIsoDate(DataEDT.getFullYear(), DataEDT.getMonth(), DataEDT.getDate(), DataEDT.getHours(), DataEDT.getMinutes());
+        pDataArr.dtstartHour = DataSDT.getHours();
+        pDataArr.dtstartMinute = DataSDT.getMinutes();
+        pDataArr.dtendHour = DataEDT.getHours();
+        pDataArr.dtendMinute = DataEDT.getMinutes();
+        //pDataArr.dtstartDisplay = mfFormatTime((OrgDataSDT.getHours() * 60) + OrgDataSDT.getMinutes());
+        //pDataArr.dtendDisplay = mfFormatTime((OrgDataEDT.getHours() * 60) + OrgDataEDT.getMinutes());
+        pDataArr.dtstartDisplay = nDateFormat(OrgDataSDT.getHours()) + ":" + nDateFormat(OrgDataSDT.getMinutes());
+        pDataArr.dtendDisplay = nDateFormat(OrgDataEDT.getHours()) + ":" + nDateFormat(OrgDataEDT.getMinutes());
+
+        pDataArr.OrgStartDate = mfGetUTFIsoDate(OrgDataSDT.getFullYear(), OrgDataSDT.getMonth(), OrgDataSDT.getDate(), OrgDataSDT.getHours(), OrgDataSDT.getMinutes());
+        pDataArr.OrgEndDate = mfGetUTFIsoDate(OrgDataEDT.getFullYear(), OrgDataEDT.getMonth(), OrgDataEDT.getDate(), OrgDataEDT.getHours(), OrgDataEDT.getMinutes());
+
+        pDataArr.timeCount = timeCnt;
+        pDataArr.o_start = DataSDT;
+        pDataArr.o_end = DataEDT;
+        pDataArr.endDiv = DataSDT.getFullYear() + "-" + leadingZeros((DataSDT.getMonth() + 1), 2) + "-" + leadingZeros(DataSDT.getDate(), 2) + "_" + endHour + ":" + endMin.toString().substring(0, 1);
+
+        return pDataArr;
+    },
+    // 미니달력: 일정 이벤트 리스트 범위에서 해당일에 이벤트가 있는 경우 스타일 처리
+    SetMiniCalendar: function (results, startDate, endDate, type) {
+        if (startDate && endDate) {
+            ScheduleScript.startDate = new moment(startDate).hours(0).minutes(0).seconds(0).milliseconds(0).format('YYYY-MM-DD HH:mm:ss');
+            ScheduleScript.endDate = new moment(endDate).hours(23).minutes(59).seconds(59).milliseconds(59).format('YYYY-MM-DD HH:mm:ss');
+        }
+        if (results != undefined && results != "") {
+            ScheduleScript.lists = [];
+            for (var i = 0; i < results.length; i++) {
+                var value = results[i];
+                var eventRepeatDateType = value.ItemRepeatDateType;
+                var eventRepeatCount = parseInt(value.ItemRepeatCount);
+
+                if (value.ItemDateType == 3) { // 반복설정된 일정
+                    var repeatDate = moment(value.ItemStartDate);
+                    var repeatCount = eventRepeatCount;
+                    var repeatDateType = eventRepeatDateType;
+                    if (repeatDate.format("YYYY-MM-DD HH:mm:ss") >= ScheduleScript.startDate && repeatDate.format("YYYY-MM-DD HH:mm:ss") <= ScheduleScript.endDate) {
+                        var obj = new Object;
+                        obj.ItemContents = value.ItemContents;
+                        obj.ItemDateType = repeatDateType;
+                        obj.ItemEndDate = value.ItemEndDate;
+                        obj.ItemGroupId = value.ItemGroupId;
+                        obj.ItemGroupName = value.ItemGroupName;
+                        obj.ItemUserId = value.ItemUserId;
+                        obj.ItemId = value.ItemId;
+                        obj.ItemImportance = value.ItemImportance;
+                        obj.ItemLocation = value.ItemLocation;
+                        obj.ItemPostId = value.ItemPostId;
+                        obj.ItemPostTitle = replaceString(value.ItemPostTitle);
+                        obj.ItemRepetition = value.ItemRepetition;
+                        obj.ItemStartDate = repeatDate.format("YYYY-MM-DD HH:mm");
+                        obj.ItemRepeatCount = repeatCount;
+                        obj.ItemUpdateDate = value.ItemUpdateDate;
+                        ScheduleScript.lists.push(obj);
+                    };
+                }
+                else {
+                    ScheduleScript.lists.push(value);
+                }
+            }
+            // UI/UX 작업 이후 표준 웹파트
+            if (bGroupwareUIType() == true) {
+                if (ScheduleScript.lists.length > 0) {
+                    $j(ScheduleScript.lists).each(function (idx, val) {
+                        var eventDataStart = moment(val.ItemStartDate).format("YYYY-MM-DD");
+                        var eventDataEnd = moment(val.ItemEndDate).format("YYYY-MM-DD");
+                        var $tdminiday = $j(moment(val.ItemStartDate).format("[#TDMINI_]YYYY-MM-DD[_Day]"));
+                        if (val.ItemRepetition == "" || val.ItemRepetition == "0") {
+                            if (eventDataStart == eventDataEnd) { // 일정 시작일과 종료일이 같은날 끝나는 당일 일정 이벤트 
+                                ScheduleScript.SetMiniCalendarStyle($tdminiday, type);
+                            }
+                            else { // 일정 시작일과 종료일이 다른 연속 일정 이벤트
+                                var daysdiff = new moment(eventDataEnd).diff(moment(eventDataStart), "days") + 1;
+                                var continuedEventDataStart;
+                                for (var i = 0; i < daysdiff; i++) {
+                                    $tdminiday = $j(moment(eventDataStart).add(i, 'days').format("[#TDMINI_]YYYY-MM-DD[_Day]"));
+                                    ScheduleScript.SetMiniCalendarStyle($tdminiday, type);
+                                }
+                            }
+                        }
+                        else {
+                            ScheduleScript.SetMiniCalendarStyle($tdminiday, type);
+                        }
+                    });
+                }
+            }
+            else { // UI/UX 작업 이전 웹파트
+            }
+        }
+    },
+    // 미니달력: 스타일 처리 패턴
+    SetMiniCalendarStyle: function (dom, type) {
+        if (type == "" || type == undefined || type == "underline")
+            dom.css("text-decoration", "underline");
+        else if (type == "bold")
+            dom.css("font-weight", "bold");
+        else if (type == "underline&bold" || type == "bold&underline") {
+            dom.css("text-decoration", "underline").css("font-weight", "bold");
+        }
+    },
+}
+
+// 구글 연동 로그인 유무
+var googleisSignedIn = false;
+// 구글 연동 이벤트 바인딩 진행 유무
+var googleisEventBind = false;
+// Client Id: Google APIs 연동이 아니면 비워둔다.
+var _googleApisClientId = "843189109362-f2qs4kjrb8upoekcf3492lnbf9i7sjvr.apps.googleusercontent.com";
+var googleEvents = [];
+
+// Google Calendar api.v3 시작
+var GoogleCalendar = {
+    startDate: new moment().hours(0).minutes(0).seconds(0).milliseconds(0).format('YYYY-MM-DD HH:mm:ss'),
+    endDate: new moment().hours(23).minutes(59).seconds(59).milliseconds(59).format('YYYY-MM-DD HH:mm:ss'),
+    // On load, called to load the auth2 library and API client library.
+    HandleClientLoad: function () {
+        GetScriptIfNotLoaded("https://apis.google.com/js/api.js");
+        if (_googleApisClientId) {
+            GoogleCalendar.SetButton();
+            gapi.load('client:auth2', GoogleCalendar.InitClient);
+        }
+    },
+    // Initializes the API client library and sets up sign-in state listeners.
+    InitClient: function () {
+        var discoveryDocs = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+        var scope = "https://www.googleapis.com/auth/calendar.readonly";
+        gapi.client.init({
+            discoveryDocs: discoveryDocs,
+            clientId: _googleApisClientId,
+            scope: scope
+        }).then(function () {
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(GoogleCalendar.UpdateSigninStatus);
+            // Handle the initial sign-in state.
+            GoogleCalendar.UpdateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    },
+    // Called when the signed in status changes, to update the UI
+    // appropriately. After a sign-in, the API is called.
+    UpdateSigninStatus: function (isSignedIn) {
+        var agent = navigator.userAgent.toLowerCase();
+        if ((navigator.appName == 'Netscape' && agent.indexOf('trident') != -1) || (agent.indexOf("msie") != -1)) {
+            // ie일 경우
+            $j('#authorize-button, #signout-button').hide();
+        } else {
+            // ie가 아닐 경우
+            if (isSignedIn) {
+                googleisSignedIn = isSignedIn;
+                $j('#authorize-button').hide();
+                $j('#signout-button').show();
+            } else {
+                $j('#authorize-button').show();
+                $j('#signout-button').hide();
+            }
+        }
+    },
+    // gapi Sign in the user upon button click.
+    HandleAuthClick: function (event) {
+        gapi.auth2.getAuthInstance().signIn();
+    },
+    // gapi Sign out the user upon button click.
+    HandleSignoutClick: function (event) {
+        gapi.auth2.getAuthInstance().signOut();
+    },
+    // 구글권한 로그인 버튼의 스타일을 정의합니다. Page내 <dd id="authorize-button" style="display:none;"></dd><dd id="signout-button" style="display:none;"></dd> 필요.
+    SetButton: function () {
+        var googleText = "구글";
+        var authorizeBtnText = "클릭하여 구글 일정 권한을 승인합니다.";
+        var signoutBtnText = "클릭하여 구글 일정 권한을 로그아웃합니다.";
+        if (g_UserInfo_Lang != "" && g_UserInfo_Lang != "ko") {
+            googleText = "Google";
+            authorizeBtnText = "Click here to approve Google Calendar permissions.";
+            signoutBtnText = "Click here to sign out of Google Calendar permissions.";
+        }
+        $j('#authorize-button, #signout-button').text(googleText);
+        $j('#authorize-button, #signout-button').css({ 'width': '30px', 'height': '30px', 'line-height': '30px', 'text-align': 'center', 'font-size': '12px', 'margin': '6px', 'float': 'left', 'border-radius': '50%', 'cursor': 'pointer' });
+        $j('#authorize-button').css({ 'background': '#eee', 'color': '#ccc' });
+        $j('#signout-button').css({ 'background': '#46abfc', 'color': '#fff' });
+        $j('#authorize-button').attr('onclick', 'GoogleCalendar.HandleAuthClick()');
+        $j('#signout-button').attr('onclick', 'GoogleCalendar.HandleSignoutClick()');
+        $j('#authorize-button').attr('title', authorizeBtnText);
+        $j('#signout-button').attr('title', signoutBtnText);
+    },
+    // 구글 일정 이벤트 조회를 처리합니다.
+    GetEvents: function (calendarId, id, isParent) {
+        if (_googleApisClientId && googleisSignedIn == true) { // Google Api의 CLIENT_ID 설정, _googleApisPageUsing이 true 일때               
+            googleEvents = [];
+            gapi.client.load('calendar', 'v3', function () {
+                var request = gapi.client.calendar.events.list({
+                    calendarId: calendarId,
+                    timeMin: moment(GoogleCalendar.startDate).utc().format(),
+                    timeMax: moment(GoogleCalendar.endDate).utc().format(),
+                    showDeleted: false,
+                    singleEvents: true,
+                    maxResults: '100',
+                    orderBy: 'startTime',
+                    timeZone: 'UTC',
+                    minAccessRole: 'owner'
+                });
+                request.execute(function (resp) {
+                    for (var i = 0; i < resp.items.length; i++) { // loop through events and write them out to a list
+                        var event = resp.items[i];
+                        googleEvents.push(event);
+                    }
+                    if ($j(googleEvents).length > 0) {
+                        GetUserInfoLang();
+                        GoogleCalendar.SetEvents(id, isParent);
+                    }
+                });
+            });
+        }
+    },
+    // 구글 일정 이벤트 바인딩을 처리합니다.
+    SetEvents: function (id, isParent) {
+        if (googleisEventBind == false) {
+            var allDayText = "종일";
+            var googleText = "구글";
+            var untitledText = "제목 없음";
+            if (g_UserInfo_Lang != "" && g_UserInfo_Lang != "ko") {
+                allDayText = "All-day";
+                googleText = "Google";
+                untitledText = "untitled";
+            }
+            googleisEventBind = true;
+            if (isParent == null || isParent == undefined || isParent == false) {
+                var listlength = $j('#' + id + ' > ul > li').length;
+                $j(googleEvents).each(function (idx, item) {
+                    if (listlength == 0) {
+                        $schedule_wp.html('<ul class="schedule_list" style="overflow-y: auto;height:165px; margin-right:0; padding-right:10px;"></ul>');
+                    }
+                    var title = item.summary;
+                    if (title == null) { title = untitledText; }
+                    else { title = replaceString(title); }
+                    var tmpl = '<li onclick="GetRedirectGoogleUrl(this);" _htmlLink="' + item.htmlLink + '">';
+                    tmpl += '<span class="title">' + title + '</span>';
+                    if (!item.start.dateTime)
+                        tmpl += '<span class="time">' + moment(item.start.date).format("LT") + '</span>';
+                    else
+                        tmpl += '<span class="time">' + '(' + allDayText + ')' + '</span>';
+                    tmpl += '<span class="space">' + googleText + '(' + item.creator.displayName + ')</span>';
+                    tmpl += '</li>';
+                    $j('#' + id + ' > ul').append(tmpl);
+                    $j('#' + id + ' > ul > li').each(function () {
+                        var titleText = "";
+                        $j(this).children('span').each(function () {
+                            titleText += $j(this).text() + " ";
+                        });
+
+                        if (bTitleUse() == true)
+                            $j(this).attr('title', titleText);
+                    });
+                });
+            }
+            else {
+                var listlength = $j('#' + id + ' > ul > li').length;
+                $j(googleEvents).each(function (idx, item) {
+                    if (listlength == 0) {
+                        parent.$schedule_wp.html('<ul class="schedule_list" style="overflow-y: auto;height:165px; margin-right:0; padding-right:10px;"></ul>');
+                    }
+                    var title = item.summary;
+                    if (title == null) { title = untitledText; }
+                    else { title = replaceString(title); }
+                    var tmpl = '<li onclick="GetRedirectGoogleUrl(this);" _htmlLink="' + item.htmlLink + '">';
+                    tmpl += '<span class="title">' + title + '</span>';
+                    if (!item.start.dateTime)
+                        tmpl += '<span class="time">' + moment(item.start.date).format("LT") + '</span>';
+                    else
+                        tmpl += '<span class="time">' + '(' + allDayText + ')' + '</span>';
+                    tmpl += '<span class="space">' + googleText + '(' + item.creator.displayName + ')</span>';
+                    tmpl += '</li>';
+                    parent.$j('#' + id + ' > ul').append(tmpl);
+                    parent.$j('#' + id + ' > ul > li').each(function () {
+                        var titleText = "";
+                        $j(this).children('span').each(function () {
+                            titleText += $j(this).text() + " ";
+                        });
+
+                        if (bTitleUse() == true)
+                            $j(this).attr('title', titleText);
+                    });
+                });
+            }
+            googleisEventBind = false;
+        }
+    }
+}
+
+// Location/ScriptName.js의 로드 유무를 체크합니다. (비로드시 로드 처리)
+function GetScriptIfNotLoaded(scriptLocationAndName) {
+    var len = $j('script[src*="' + scriptLocationAndName + '"]').length;
+    //script already loaded!
+    if (len > 0)
+        return;
+
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = scriptLocationAndName;
+    head.appendChild(script);
+}

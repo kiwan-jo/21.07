@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)http://ekp.kaoni.com/myoffice/ezPersonal/Notification_Realtime/Notification_Main.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" href="./default.css" type="text/css">
+    
+    <link rel="stylesheet" href="./skin01.css" type="text/css">
+    
+    <title></title>
+</head>
+<body>
+    <div class="content_notification">
+        <div id="content_notification_list">
+            <!-- 포인트 -->
+            <dl class="notification_title">
+                
+                <dt title="새로고침" onclick="notiRefresh_onclick();"><span class="icon16 refresh_white"></span></dt>
+                <dt title="환경설정" onclick="notiConfig_onclick();"><span class="icon16 setting_white"></span></dt>
+                <dd title="닫기" onclick="notiClose_onclick()"><span class="icon16 backhistory_white"></span></dd>
+            </dl>
+            <!-- 검색 -->
+            <div class="contentlist_search">
+                <ul class="contentlayout">
+                    <li class="contentlayout_right" onclick="searchNotiFilter()"><a class="imgbtn_search"><span class="icon16 filter"></span></a></li>
+                    <li class="contentlayout_right" onclick="searchNoti_onclick();"><a class="imgbtn_search"><span class="icon16 listsearch"></span></a></li>
+                    <li class="contentlayout_none">
+                        <input id="searchNotiContent" class="searchBox width100percent" type="text" name="keyword" style="ime-mode: active;" onkeyup="searchNotiInput_onkeyup(event);" onselectstart="event.cancelBubble=true;event.returnValue=true" onmousedown="keyword_Clear();" maxlength="100">
+                    </li>
+                </ul>
+            </div>
+            <!-- //검색 -->
+            <!-- 검색필터 -->
+            <div class="contentlist_search_filter" style="display: none;">
+                <ul class="contentlayout">
+                    <li class="contentlayout_left">
+                        <ul class="contentlist_search_filter_checklist">
+                            <li><input id="filter_unread" type="checkbox" name="filtercheck" _maintype="n" value="unread" checked="checked"><label for="filter_unread">읽지않음</label></li>
+                            <li><input id="filter_read" type="checkbox" name="filtercheck" _maintype="n" value="read" checked="checked"><label for="filter_read">읽음</label></li>
+                            <li style="border-top:#d1d1d1 1px solid;margin:5px 20px 5px 0px"></li>
+                            <li><input id="filter_favorite" type="checkbox" name="filtercheck" _maintype="n" value="favorite" checked="checked"><label for="filter_favorite">중요</label></li>
+                            <li><input id="filter_unfavorite" type="checkbox" name="filtercheck" _maintype="n" value="unfavorite" checked="checked"><label for="filter_unfavorite">중요아님</label></li>
+                        </ul>
+                    </li>
+                    <li class="contentlayout_left">
+                        <ul class="contentlist_search_filter_checklist">
+                            <li><input id="filter_totalcheck" type="checkbox" name="filtercheck" _maintype="y" value="total" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_totalcheck" style="font-weight:bold;font-size:larger">전체</label></li>
+                            <li><input id="filter_mail" type="checkbox" name="filtercheck" _maintype="y" value="mail" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_mail">메일</label></li>
+                            <li><input id="filter_approval" type="checkbox" name="filtercheck" _maintype="y" value="approval" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_approval">결재</label></li>
+                            <li><input id="filter_board" type="checkbox" name="filtercheck" _maintype="y" value="board" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_board">게시</label></li>
+                            <li><input id="filter_infoshare" type="checkbox" name="filtercheck" _maintype="y" value="info_share" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_infoshare">내부정보공유</label></li>
+                            <li><input id="filter_rulemanage" type="checkbox" name="filtercheck" _maintype="y" value="rule_manage" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_rulemanage">규정관리</label></li>
+                            <li><input id="filter_schedule" type="checkbox" name="filtercheck" _maintype="y" value="schedule" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_schedule">일정</label></li>
+                        </ul>
+                    </li>
+                    <li class="contentlayout_none">
+                        <ul class="contentlist_search_filter_checklist">
+                            <li><input id="filter_resource" type="checkbox" name="filtercheck" _maintype="y" value="resource" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_resource">자원</label></li>
+                            <li><input id="filter_question" type="checkbox" name="filtercheck" _maintype="y" value="question" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_question">설문</label></li>
+                            <li><input id="filter_collaboration" type="checkbox" name="filtercheck" _maintype="y" value="collaboration" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_collaboration">소통</label></li>
+                            <li><input id="filter_notification" type="checkbox" name="filtercheck" _maintype="y" value="notification" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_notification">공지</label></li>
+                            <li><input id="filter_othersystem" type="checkbox" name="filtercheck" _maintype="y" value="othersystem" checked="checked" onchange="totalfilterCheck(this)"><label for="filter_othersystem">기타</label></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="btnposition">
+                    <ul class="btnpositionUL">
+                        <li onclick="filterAllSelect_onclick()"><span class="imgbtn"><span>설정초기화</span></span></li>
+                        <li style="display:none" onclick="filterAllUnselect_onclick()"><span class="imgbtn"><span>전체해제</span></span></li>
+                        <li onclick="filterApply_onclick()"><span class="imgbtn"><span>확인</span></span></li>
+                        <li onclick="filterCancel_onclick()"><span class="imgbtn"><span>취소</span></span></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- //검색필터 -->
+            <!-- 검색list -->
+            <div class="contentlist_search_filter_list">
+                <ul class="contentlayout">
+                    <li class="contentlayout_left">
+                        전체 <span id="notiTotalCount" class="point2">18</span>
+                        /&nbsp;읽지않음&nbsp;<span id="notiUnreadCount" class="point2">6</span>
+                    </li>
+                    <li id="filterContent" class="contentlayout_none" title="읽지않음,읽음,중요,중요아님,메일,결재,게시,내부정보공유,규정관리,일정" style="text-align:right;padding-right:20px;"><span>읽지않음</span>
+<span>읽음</span>
+<span>중요</span>
+<span>중요아님</span>
+<span>메일</span>
+<span>결재</span>
+<span>게시</span>
+<span>내부정보공유</span>
+<span>규정관리</span>
+<span>일정</span>
+</li>
+                </ul>
+            </div>
+            <!-- //검색list -->
+            <!-- 알림list -->
+            <div class="notification_list" style="height: 520px; overflow-y: auto">
+                <ul id="notiList" class="notification_listUL"><li><ul class="contentlayout" _notiseq="201979" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;4c0bc60a418f4863b7bddcdb79139af3@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">안녕하세요 최종 공개일정입니다</span><span class="notification_list_name">사원일  2021-06-11 13:55:01</span></li></ul></li><li><ul class="contentlayout" _notiseq="201900" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;45fe29d939294c87aad862cb421898a7@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">회신: 휴먼계정 알림 메일ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span><span class="notification_list_name">최지후  2021-06-07 16:35:01</span></li></ul></li><li><ul class="contentlayout" _notiseq="201887" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;d011bc40e9c14e27b9f1062af5255393@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">휴먼계정 알림 메일</span><span class="notification_list_name">최지후  2021-06-04 14:50:01</span></li></ul></li><li><ul class="contentlayout" _notiseq="201829" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;bdd9a139d9ff4447a2bc1393abd37575@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">회신: xxx</span><span class="notification_list_name">최지후  2021-06-04 11:25:03</span></li></ul></li><li><ul class="contentlayout" _notiseq="201791" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;63b7ef9977c847d591d33ef617e4bf2f@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">xxx</span><span class="notification_list_name">최지후  2021-06-03 17:05:01</span></li></ul></li><li><ul class="contentlayout" _notiseq="201790" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;e7c20a87737540f4b9e1bb33f6f1fef9@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">ㅛㅛ</span><span class="notification_list_name">최지후  2021-06-03 15:50:01</span></li></ul></li><li><ul class="contentlayout unread" _notiseq="201789" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;cd31b68d88cd4e94bf09c7b167b8bc9d@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="n"><li class="contentlayout_left"><span class="icon_notification notification_mail"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">ggg</span><span class="notification_list_name">최지후  2021-06-03 15:50:01</span></li></ul></li><li><ul class="contentlayout unread" _notiseq="201788" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;a54774435a6f47b1938c8475de037412@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="n"><li class="contentlayout_left"><span class="icon_notification notification_mail"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">u6u46u</span><span class="notification_list_name">최지후  2021-06-03 15:50:01</span></li></ul></li><li><ul class="contentlayout" _notiseq="201786" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;aebbea3698be4e52a5ca122d8cf71544@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">ㄹ</span><span class="notification_list_name">최지후  2021-06-03 15:40:01</span></li></ul></li><li><ul class="contentlayout" _notiseq="199957" _viewtype="layer" _viewwidth="750" _viewheight="800" _linkurl="/myoffice/ezEmail/mail_read.aspx?URL=&lt;ce06d3a383a9449dbb1735b39ae6cecb@ekp.kaoni.com&gt;&amp;NOTISSO=1" _isread="y"><li class="contentlayout_left"><span class="icon_notification"><span class="icon_menu top_icon_mail"></span></span></li><li class="contentlayout_right"><span class="icon16 backhistory_mini"></span></li><li class="contentlayout_right"><span class="icon16_listview view_flag"></span></li><li class="contentlayout_none"><span class="notification_list_title">회신: 포탈 UX/UI 관련 타사 화면 포토폴리오 요청 드립니다.</span><span class="notification_list_name">최지후  2021-02-24 13:15:02</span></li></ul></li></ul>
+            </div>
+            <!-- //알림list -->
+            <!-- 알림페이징 -->
+            <div class="notification_page">
+                <ul class="contentlayout">
+                    <li class="contentlayout_left" onclick="readAllCheck()"><span class="imgbtn"><span>모두읽음</span></span></li>
+                    <li class="contentlayout_left" onclick="deleteAll()"><span class="imgbtn"><span>모두삭제</span></span></li>
+                    <li class="contentlayout_right">
+                        <span class="icon16 notification_arrow_left" onclick="moveNotiPage(&#39;down&#39;)"></span>
+                        <span class="icon16 notification_arrow_right" onclick="moveNotiPage(&#39;up&#39;)"></span>
+                        <span class="notification_page_num">
+                            <span id="pagingDefault">
+                                <span id="notiCurrentPage" style="font-weight: bold">1</span>
+                                <span>/</span>
+                                <span id="notiTotalPage">2</span>
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <!-- //알림페이징 -->
+            <div id="notiListProgress" style="position: relative; width: 100%; height: 639px; top: -640px; left: 0px; background-color: rgb(210, 210, 210); opacity: 0.4; z-index: 100; display: none;">
+                <div style="top: 300px; left: 80px" id="MailProgress"></div>
+            </div>
+        </div>
+
+        
+    </div>
+
+
+    <div id="notiDisconnect" style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; background-color: #101010; opacity: 0.8; z-index: 10000; display: none; text-align: center; vertical-align: middle;">
+        <div style="position: relative; top: 240px; color: white;">
+            <div>알림 접속에 문제가 발생했습니다.</div>
+            <span style="cursor: pointer;" onclick="javascript:window.location.reload(true);">[새로고침]</span>
+            <span style="cursor: pointer;" onclick="notiClose_onclick()">[닫기]</span>
+        </div>
+    </div>
+    <!-- 안읽음 메일,결재,게시판,일정,자원,소통,타시스템 컬러 원형 -->
+    <!-- <span class="notification_mail"></span> 메일 -->
+    <!-- <span class="notification_approval"></span> 결재 -->
+    <!-- <span class="notification_board"></span> 게시판 -->
+    <!-- <span class="notification_schedule"></span> 일정 -->
+    <!-- <span class="notification_resource"></span> 자원 -->
+    <!-- <span class="notification_collaboration"></span> 소통 -->
+    <!-- <span class="notification_othersystem"></span> 타시스템 -->
+
+    <!-- icon 메일,결재,게시판,일정,자원,소통,타시스템 -->
+    <!-- <span class="icon_menu top_icon_mail"></span> 메일 -->
+    <!-- <span class="icon_menu top_icon_approval"></span> 결재 -->
+    <!-- <span class="icon_menu top_icon_board"></span> 게시판 -->
+    <!-- <span class="icon_menu top_icon_schedule"></span> 일정 -->
+    <!-- <span class="icon_menu top_icon_resource"></span> 자원 -->
+    <!-- <span class="icon_menu top_icon_collaboration"></span> 소통 -->
+    <!-- <span class="icon_menu top_icon_othersystem"></span> 타시스템 -->
+    <script type="text/javascript" src="./XmlHttpRequest.js.다운로드"></script>
+    <script type="text/javascript" src="./jquery-1.9.1.min.js.다운로드"></script>
+    <script type="text/javascript" src="./jquery.signalR-2.2.3.min.js.다운로드"></script>
+    <script type="text/javascript" src="./Notification_Main.js.다운로드"></script>
+    <script src="./hubs"></script>
+    <script>var $ContentDiv = jQuery.noConflict();</script>
+    <script type="text/javascript">
+        var MakeNotiList_Interval = null;
+        var jsonNotiBadge_TempStr = "";
+        var notifications = $ContentDiv.connection.notificationHub;
+        if (typeof notifications === "undefined") {
+            document.getElementById("notiDisconnect").style.display = "";
+        }
+        else {
+            document.getElementById("notiListProgress").style.display = "";
+
+            notifications.client.recieveNotification = function (jsonRtn, unreadCnt) {
+                //console.log(jsonRtn + " : " + unreadCnt);
+                if (jsonNotiBadge_TempStr !== jsonRtn) {
+                    var BadgeCnt = filterInt(unreadCnt);
+
+                    // 뱃지 카운트 변경
+                    if (!isNaN(BadgeCnt)) {
+                        if (typeof ChangeRealTimeNoteBadgeCount === "function") {
+                            ChangeRealTimeNoteBadgeCount(BadgeCnt);
+                        } else if (typeof parent.ChangeRealTimeNoteBadgeCount === "function") {
+                            parent.ChangeRealTimeNoteBadgeCount(BadgeCnt);
+                        } else if (typeof opener.ChangeRealTimeNoteBadgeCount === "function") {
+                            opener.ChangeRealTimeNoteBadgeCount(BadgeCnt);
+                        }
+                    }
+                    
+                    MakeNotiList();
+                    jsonNotiBadge_TempStr = jsonRtn;
+                }
+            };
+
+            $ContentDiv.connection.hub.url = "http://ekp.kaoni.com:8080/signalr";
+            $ContentDiv.connection.hub.qs = { 'id': 'c001' };
+            jQuery.support.cors = true;
+            $ContentDiv.connection.hub.start().done(function () {
+                // 두번째 인수는 모바일이면 true, 웹이면 false전달
+                // 모바일은 설문 항목 제외
+                notifications.server.sendNotifications('c001', false); 
+            }).fail(function (e) {
+                //Alert_Message(e, null, "");
+            });
+
+            $ContentDiv.connection.hub.disconnected(function () {
+                setTimeout(function () {
+                    $ContentDiv.connection.hub.start().done(function () {
+                        // 두번째 인수는 모바일이면 true, 웹이면 false전달
+                        // 모바일은 설문 항목 제외
+                        notifications.server.sendNotifications('c001', false);
+                    }).fail(function (e) {
+                        //alert(e);
+                        //Alert_Message(e, null, "");
+                    });
+                }, 5000); // Restart connection after 5 seconds.
+            });
+        }
+
+        window.onload = function () {            
+            // 빈값이면 모두다, 읽은것만이면 y, 안읽은 것만이면 n
+            switch ("") {
+                case "N":
+                    document.getElementById("filter_unread").checked = true;
+                    document.getElementById("filter_read").checked = false;
+                    break;
+                case "Y":
+                    document.getElementById("filter_unread").checked = false;
+                    document.getElementById("filter_read").checked = true;
+                    break;
+                default:
+                    document.getElementById("filter_unread").checked = true;
+                    document.getElementById("filter_read").checked = true;
+                    break;
+            }
+            
+            // 빈값이면 모두다, 중요만이면 y, 중요아님만이면 n
+            switch ("") {
+                case "N":
+                    document.getElementById("filter_favorite").checked = false;
+                    document.getElementById("filter_unfavorite").checked = true;
+                    break;
+                case "Y":
+                    document.getElementById("filter_favorite").checked = true;
+                    document.getElementById("filter_unfavorite").checked = false;
+                    break;
+                default:
+                    document.getElementById("filter_favorite").checked = true;
+                    document.getElementById("filter_unfavorite").checked = true;
+                    break;
+            }
+
+            var tempMainType = "'mail','approval','board','info_share','rule_manage','schedule'";
+            //'mail','approval','board','info_share','rule_manage','schedule','resource','question','collaboration','notification'
+            if (tempMainType === "" || tempMainType.indexOf("'mail'") > -1) {
+                document.getElementById("filter_mail").checked = true;
+            }
+            else {
+                document.getElementById("filter_mail").checked = false;
+            }
+            
+            if (tempMainType === "" || tempMainType.indexOf("'approval'") > -1) {
+                document.getElementById("filter_approval").checked = true;
+            }
+            else {
+                document.getElementById("filter_approval").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'board'") > -1) {
+                document.getElementById("filter_board").checked = true;
+            }
+            else {
+                document.getElementById("filter_board").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'info_share'") > -1) {
+                document.getElementById("filter_infoshare").checked = true;
+            }
+            else {
+                document.getElementById("filter_infoshare").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'rule_manage'") > -1) {
+                document.getElementById("filter_rulemanage").checked = true;
+            }
+            else {
+                document.getElementById("filter_rulemanage").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'schedule'") > -1) {
+                document.getElementById("filter_schedule").checked = true;
+            }
+            else {
+                document.getElementById("filter_schedule").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'resource'") > -1) {
+                document.getElementById("filter_resource").checked = true;
+            }
+            else {
+                document.getElementById("filter_resource").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'question'") > -1) {
+                document.getElementById("filter_question").checked = true;
+            }
+            else {
+                document.getElementById("filter_question").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'collaboration'") > -1) {
+                document.getElementById("filter_collaboration").checked = true;
+            }
+            else {
+                document.getElementById("filter_collaboration").checked = false;
+            }
+
+            if (tempMainType === "" || tempMainType.indexOf("'notification'") > -1) {
+                document.getElementById("filter_notification").checked = true;
+            }
+            else {
+                document.getElementById("filter_notification").checked = false;
+            }
+            
+            if ((tempMainType === "") || (tempMainType !== "" && ("0" === "" || "0" === "1"))) {
+                document.getElementById("filter_othersystem").checked = true;
+            }
+            else {
+                document.getElementById("filter_othersystem").checked = false;
+            }
+
+            if (document.getElementById("filter_mail").checked &&
+                document.getElementById("filter_approval").checked &&
+                document.getElementById("filter_board").checked &&
+                document.getElementById("filter_infoshare").checked &&
+                document.getElementById("filter_rulemanage").checked &&
+                document.getElementById("filter_schedule").checked &&
+                document.getElementById("filter_resource").checked &&
+                document.getElementById("filter_question").checked &&
+                document.getElementById("filter_collaboration").checked &&
+                document.getElementById("filter_notification").checked &&
+                document.getElementById("filter_othersystem").checked) {
+                document.getElementById("filter_totalcheck").checked = true;
+            }
+            else {
+                document.getElementById("filter_totalcheck").checked = false;
+            }
+
+            filterCheckDisplay();
+        }
+
+        function NotifilterData_check() {
+            NotiFilterData.read.length = 0;
+            NotiFilterData.favorite.length = 0;
+            NotiFilterData.maintype.length = 0;
+            NotiFilterData.othersystem.length = 0;
+            NotiFilterData.othersystem_exmaintype.length = 0;
+            NotiFilterData.allfilter = false;
+
+            var othersystem_checked = false;
+            // 현재 설정된 NotiFilter를 입력한다.
+            var filtercheckElements = document.getElementsByName("filtercheck");
+            var objectData = null;
+            var allChecked = true;
+
+            for (var i = 0; i < filtercheckElements.length; i++) {
+                objectData = null;
+
+                if (filtercheckElements[i].getAttribute("_maintype") != null) {
+                    if (filtercheckElements[i].id !== "filter_totalcheck") {
+                        objectData = new Object();
+                        objectData.value = filtercheckElements[i].value;
+                        objectData.contentname = filtercheckElements[i].parentNode.textContent;
+
+                        if (filtercheckElements[i].getAttribute("_maintype") === "n") {
+                            // read, unread, favorite, unfavorite
+                            if (filtercheckElements[i].checked) {
+                                switch (filtercheckElements[i].value) {
+                                    case "unread":
+                                    case "read":
+                                        NotiFilterData.read.push(objectData);
+                                        break;
+                                    case "favorite":
+                                    case "unfavorite":
+                                        NotiFilterData.favorite.push(objectData);
+                                        break;
+                                }
+                            }
+                        }
+                        else {
+                            if (filtercheckElements[i].checked) {
+                                if (filtercheckElements[i].value !== "othersystem") {
+                                    NotiFilterData.maintype.push(objectData);
+                                }
+                                else {
+                                    NotiFilterData.othersystem.push(objectData);
+                                    othersystem_checked = true;
+                                }
+                            }
+
+                            if (filtercheckElements[i].value !== "othersystem") {
+                                NotiFilterData.othersystem_exmaintype.push(filtercheckElements[i].value);
+                            }
+                        }
+
+                        // 전체항목 선택인지 체크
+                        if (allChecked && !filtercheckElements[i].checked) {
+                            allChecked = false;
+                        }
+                    }
+                }
+            }
+
+            // 전체항목 선택인지 체크
+            NotiFilterData.allfilter = allChecked;
+
+            if (!othersystem_checked) {
+                NotiFilterData.othersystem_exmaintype.length = 0;
+            }
+
+            // validation check
+            if (NotiFilterData.read.length === 0) {
+                Alert_Message("읽음, 읽지않음 중 하나 이상 선택해야 합니다.", null, "");
+                return false;
+            }
+
+            if (NotiFilterData.favorite.length === 0) {
+                Alert_Message("중요, 중요아님 중 하나 이상 선택해야 합니다.", null, "");
+                return false;
+            }
+
+            if (NotiFilterData.maintype.length === 0 && NotiFilterData.othersystem.length === 0) {
+                Alert_Message("항목 중 하나 이상 선택해야 합니다.", null, "");
+                return false;
+            }
+
+            return true;
+        }
+
+        function filterApply_onclick() {
+            if (NotifilterData_check()) {
+                var searchFilterClassElements = document.getElementsByClassName("contentlist_search_filter");
+                if (searchFilterClassElements.length > 0) {
+                    searchFilterClassElements[0].style.display = "none";
+                }
+
+                var title = "", childNodeContent = "", pcontent = "";
+                if (NotiFilterData.allfilter) {
+                    pcontent = "전체";
+                    title += (title === "" ? pcontent : "," + pcontent)
+                    childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                }
+                else {
+                    if (NotiFilterData.read.length > 0) {
+                        for (var i = 0; i < NotiFilterData.read.length; i++) {
+                            pcontent = NotiFilterData.read[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+
+                    if (NotiFilterData.favorite.length > 0) {
+                        for (var i = 0; i < NotiFilterData.favorite.length; i++) {
+                            pcontent = NotiFilterData.favorite[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+
+                    if (NotiFilterData.maintype.length > 0) {
+                        for (var i = 0; i < NotiFilterData.maintype.length; i++) {
+                            pcontent = NotiFilterData.maintype[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+
+                    if (NotiFilterData.othersystem.length > 0) {
+                        for (var i = 0; i < NotiFilterData.othersystem.length; i++) {
+                            pcontent = NotiFilterData.othersystem[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+                }
+
+                // filterContent > attribute : title , child : span
+                var filterContentElement = document.getElementById("filterContent");
+                if (filterContentElement != null) {
+                    filterContentElement.setAttribute("title", title);
+                    filterContentElement.innerHTML = "";
+                    filterContentElement.innerHTML = childNodeContent;
+                }
+
+                document.getElementById("notiCurrentPage").innerText = "1";
+                MakeNotiList();
+            }
+        }
+
+        function filterCheckDisplay() {
+            if (NotifilterData_check()) {
+                var searchFilterClassElements = document.getElementsByClassName("contentlist_search_filter");
+                if (searchFilterClassElements.length > 0) {
+                    searchFilterClassElements[0].style.display = "none";
+                }
+
+                var title = "", childNodeContent = "", pcontent = "";
+                if (NotiFilterData.allfilter) {
+                    pcontent = "전체";
+                    title += (title === "" ? pcontent : "," + pcontent)
+                    childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                }
+                else {
+                    if (NotiFilterData.read.length > 0) {
+                        for (var i = 0; i < NotiFilterData.read.length; i++) {
+                            pcontent = NotiFilterData.read[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+
+                    if (NotiFilterData.favorite.length > 0) {
+                        for (var i = 0; i < NotiFilterData.favorite.length; i++) {
+                            pcontent = NotiFilterData.favorite[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+
+                    if (NotiFilterData.maintype.length > 0) {
+                        for (var i = 0; i < NotiFilterData.maintype.length; i++) {
+                            pcontent = NotiFilterData.maintype[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+
+                    if (NotiFilterData.othersystem.length > 0) {
+                        for (var i = 0; i < NotiFilterData.othersystem.length; i++) {
+                            pcontent = NotiFilterData.othersystem[i].contentname;
+                            title += (title === "" ? pcontent : "," + pcontent)
+                            childNodeContent += "<span>" + pcontent + "</span>\r\n";
+                        }
+                    }
+                }
+
+                // filterContent > attribute : title , child : span
+                var filterContentElement = document.getElementById("filterContent");
+                if (filterContentElement != null) {
+                    filterContentElement.setAttribute("title", title);
+                    filterContentElement.innerHTML = "";
+                    filterContentElement.innerHTML = childNodeContent;
+                }
+            }
+        }
+
+        var xmlHttp_NotiList = new createXMLHttpRequest();
+        function MakeNotiList(isSettimeout) {
+            // 빈값이면 모두다, 읽은것만이면 y, 안읽은 것만이면 n
+            var readNUnreadType = "";
+            if (!NotiFilterData.allfilter) {
+                if (NotiFilterData.read.length === 1) {
+                    if (NotiFilterData.read[0].value === "read") {
+                        readNUnreadType = "y";
+                    }
+                    else if (NotiFilterData.read[0].value === "unread") {
+                        readNUnreadType = "n";
+                    }
+                }
+            }
+
+            // 빈값이면 모두다, 중요만이면 y, 중요아님만이면 n
+            var favoriteNUnfavoriteType = "";
+            if (!NotiFilterData.allfilter) {
+                if (NotiFilterData.favorite.length === 1) {
+                    if (NotiFilterData.favorite[0].value === "favorite") {
+                        favoriteNUnfavoriteType = "y";
+                    }
+                    else if (NotiFilterData.favorite[0].value === "unfavorite") {
+                        favoriteNUnfavoriteType = "n";
+                    }
+                }
+            }
+
+            var pMainType = "";            
+            if (!NotiFilterData.allfilter) {
+                if (NotiFilterData.maintype.length > 0) {
+                    for (var i = 0; i < NotiFilterData.maintype.length; i++) {
+                        pMainType = pMainType + (pMainType === "" ? "'" + NotiFilterData.maintype[i].value + "'" : ",'" + NotiFilterData.maintype[i].value + "'");
+                    }
+                }
+            }
+
+            var pOthersystem_ExMaintype = "";            
+            if (!NotiFilterData.allfilter) {
+                if (NotiFilterData.othersystem_exmaintype.length > 0) {
+                    for (var i = 0; i < NotiFilterData.othersystem_exmaintype.length; i++) {
+                        pOthersystem_ExMaintype = pOthersystem_ExMaintype + (pOthersystem_ExMaintype === "" ? "'" + NotiFilterData.othersystem_exmaintype[i] + "'" : ",'" + NotiFilterData.othersystem_exmaintype[i] + "'");
+                    }
+                }
+            }
+
+            var jsonNotiFilterData = {
+                "CURRENTPAGE": document.getElementById("notiCurrentPage").innerText,
+                "READ&UNREAD": readNUnreadType,
+                "FAVORITE": favoriteNUnfavoriteType,
+                "MAINTYPE": pMainType,
+                "OTHERSYSTEM": (NotiFilterData.allfilter || NotiFilterData.othersystem.length === 0 ? false : true),
+                "OTHERSYSTEM_EXMAINTYPE": pOthersystem_ExMaintype,
+                "SEARCHCONTENT": NotiFilterData.content,
+                "ISMOBILE": "n"
+            };
+
+            if (MakeNotiList_Interval != null) {
+                clearTimeout(MakeNotiList_Interval);
+                MakeNotiList_Interval = null;
+            }
+            else {
+                if (isSettimeout) {
+                    return;
+                }
+            }
+
+            document.getElementById("notiListProgress").style.display = "";
+            var jsonInfo = JSON.stringify(jsonNotiFilterData);
+
+            xmlHttp_NotiList.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/GetNotificationList.aspx", true);
+            xmlHttp_NotiList.onreadystatechange = MakeNotiList_after;
+            xmlHttp_NotiList.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttp_NotiList.send(jsonInfo);
+        }
+
+        function MakeNotiList_after() {
+            if (xmlHttp_NotiList != null && xmlHttp_NotiList.readyState == 4) {
+                if ((xmlHttp_NotiList.statusText == "OK" || xmlHttp_NotiList.status == 200) && xmlHttp_NotiList.responseText != "") {
+                    var jsonNotiListData = JSON.parse(xmlHttp_NotiList.responseText);
+
+                    var notiTotalCountElement = document.getElementById("notiTotalCount");
+                    var TotalCount = jsonNotiListData.TOTALCOUNT;
+                    notiTotalCountElement.innerText = TotalCount;
+
+                    var notiUnreadCountElement = document.getElementById("notiUnreadCount");
+                    var UnreadCount = jsonNotiListData.UNREADCOUNT;
+                    notiUnreadCountElement.innerText = UnreadCount;
+
+                    var notiCurrentPageElement = document.getElementById("notiCurrentPage");
+                    notiCurrentPageElement.innerText = jsonNotiListData.CURRENTPAGE;
+                    
+                    var notiTotalPageElement = document.getElementById("notiTotalPage");
+                    notiTotalPageElement.innerText = jsonNotiListData.LASTPAGE;
+
+                    var notiListElement = document.getElementById("notiList");
+                    notiListElement.innerHTML = "";
+
+                    if (jsonNotiListData.NOTILIST.length > 0) {
+                        for (var i = 0; i < jsonNotiListData.NOTILIST.length; i++) {
+                            var LiElement = document.createElement("LI");
+
+                            var UlElement = document.createElement("UL");
+                            UlElement.classList.add("contentlayout");
+                            if (jsonNotiListData.NOTILIST[i].isRead !== 'y') {
+                                UlElement.classList.add("unread");
+                            }
+                            UlElement.setAttribute("_notiSeq", jsonNotiListData.NOTILIST[i].notiSeq);
+                            UlElement.setAttribute("_viewType", jsonNotiListData.NOTILIST[i].viewType);
+                            UlElement.setAttribute("_viewWidth", jsonNotiListData.NOTILIST[i].viewWidth);
+                            UlElement.setAttribute("_viewHeight", jsonNotiListData.NOTILIST[i].viewHeight);
+
+                            if (jsonNotiListData.NOTILIST[i].mainType.toString().toLowerCase() === "notification") {
+                                if (trim(jsonNotiListData.NOTILIST[i].linkUrl) !== "") {
+                                    UlElement.setAttribute("_linkURL", jsonNotiListData.NOTILIST[i].linkUrl + "&notiseq=" + jsonNotiListData.NOTILIST[i].notiSeq);
+                                }
+                                else {
+                                    UlElement.setAttribute("_linkURL", jsonNotiListData.NOTILIST[i].linkUrl);
+                                }
+                            }
+                            else {
+                                UlElement.setAttribute("_linkURL", jsonNotiListData.NOTILIST[i].linkUrl);
+                            }
+
+                            UlElement.setAttribute("_isRead", jsonNotiListData.NOTILIST[i].isRead);
+
+                            var Li2Element = document.createElement("LI");
+                            Li2Element.classList.add("contentlayout_left");
+
+                            //<span class="icon_notification notification_mail"><span class="icon_menu top_icon_mail"></span></span>
+                            //<!--안읽음 메일, 결재, 게시판, 일정, 자원, 소통, 타시스템 컬러 원형 -- >
+                            //<!-- <span class="notification_mail" ></span > 메일-- >
+                            //<!-- <span class="notification_approval" ></span > 결재-- >
+                            //<!-- <span class="notification_board" ></span > 게시판-- >
+                            //<!-- <span class="notification_schedule" ></span > 일정-- >
+                            //<!-- <span class="notification_resource" ></span > 자원-- >
+                            //<!-- <span class="notification_collaboration" ></span > 소통-- >
+                            //<!-- <span class="notification_othersystem" ></span > 타시스템-- >
+                            var SpanElement = document.createElement("SPAN");
+                            SpanElement.classList.add("icon_notification");
+                            if (jsonNotiListData.NOTILIST[i].isRead != 'y') {
+                                var iconNotificationClass = "notification_mail";
+                                switch (jsonNotiListData.NOTILIST[i].mainType.toString().toLowerCase()) {
+                                    case "notification":
+                                        iconNotificationClass = "notification_notice";
+                                        break;
+                                    case "mail":
+                                        iconNotificationClass = "notification_mail";
+                                        break;
+                                    case "approval":
+                                    case "approvalg":
+                                        iconNotificationClass = "notification_approval";
+                                        break;
+                                    case "board":
+                                        iconNotificationClass = "notification_board";
+                                        break;
+                                    case "schedule":
+                                        iconNotificationClass = "notification_schedule";
+                                        break;
+                                    case "resource":
+                                        iconNotificationClass = "notification_resource";
+                                        break;
+                                    case "collaboration":
+                                        iconNotificationClass = "notification_collaboration";
+                                        break;
+                                    case "info_share":  // 내부정보 공유
+                                        iconNotificationClass = "notification_infoshare";
+                                        break;
+                                    case "rule_manage": // 규정관리
+                                        iconNotificationClass = "notification_regulation";
+                                        break;
+                                    case "question":    // 설문
+                                        iconNotificationClass = "notification_survey";
+                                        break;
+                                    case "other1":
+                                    case "other2":
+                                    case "other3":
+                                    case "othersystem":
+                                    default:
+                                        iconNotificationClass = "notification_othersystem";
+                                        break;
+                                }
+                                SpanElement.classList.add(iconNotificationClass);
+                            }
+
+                            //<!--icon 메일, 결재, 게시판, 일정, 자원, 소통, 타시스템-- >
+                            //<!-- <span class="icon_menu top_icon_mail" ></span > 메일-- >
+                            //<!-- <span class="icon_menu top_icon_approval" ></span > 결재-- >
+                            //<!-- <span class="icon_menu top_icon_board" ></span > 게시판-- >
+                            //<!-- <span class="icon_menu top_icon_schedule" ></span > 일정-- >
+                            //<!-- <span class="icon_menu top_icon_resource" ></span > 자원-- >
+                            //<!-- <span class="icon_menu top_icon_collaboration" ></span > 소통-- >
+                            //<!-- <span class="icon_menu top_icon_othersystem" ></span > 타시스템-- >
+                            var Span2Element = document.createElement("SPAN");
+                            Span2Element.classList.add("icon_menu");
+                            var iconMenuClass = "top_icon_mail";
+                            switch (jsonNotiListData.NOTILIST[i].mainType.toString().toLowerCase()) {
+                                case "notification":
+                                    iconMenuClass = "top_icon_notice";
+                                    break;
+                                case "mail":
+                                    iconMenuClass = "top_icon_mail";
+                                    break;
+                                case "approval":
+                                case "approvalg":
+                                    iconMenuClass = "top_icon_approval";
+                                    break;
+                                case "board":
+                                    iconMenuClass = "top_icon_board";
+                                    break;
+                                case "schedule":
+                                    iconMenuClass = "top_icon_schedule";
+                                    break;
+                                case "resource":
+                                    iconMenuClass = "top_icon_resource";
+                                    break;
+                                case "collaboration":
+                                    iconMenuClass = "top_icon_collaboration";
+                                    break;
+                                case "info_share":  // 내부정보 공유
+                                    iconMenuClass = "top_icon_infoshare";
+                                    break;
+                                case "rule_manage": // 규정관리
+                                    iconMenuClass = "top_icon_regulation";
+                                    break;
+                                case "question":    // 설문
+                                    iconMenuClass = "top_icon_survey";
+                                    break;
+                                case "other1":
+                                case "other2":
+                                case "other3":
+                                case "othersystem":
+                                default:
+                                    iconMenuClass = "top_icon_othersystem";
+                                    break;
+                            }
+                            Span2Element.classList.add(iconMenuClass);
+
+                            SpanElement.appendChild(Span2Element);
+                            Li2Element.appendChild(SpanElement);
+                            UlElement.appendChild(Li2Element);
+
+                            var Li3Element = document.createElement("LI");
+                            Li3Element.classList.add("contentlayout_right");
+
+                            var Span3Element = document.createElement("SPAN");
+                            Span3Element.classList.add("icon16");
+                            Span3Element.classList.add("backhistory_mini");
+
+                            Span3Element.addEventListener("click", function () {
+                                DeleteNotiItem(this);
+                            })
+
+                            Li3Element.appendChild(Span3Element);
+                            UlElement.appendChild(Li3Element);
+
+                            var Li4Element = document.createElement("LI");
+                            Li4Element.classList.add("contentlayout_right");
+
+                            var Span4Element = document.createElement("SPAN");
+                            Span4Element.classList.add("icon16_listview");
+
+                            if (jsonNotiListData.NOTILIST[i].isFavorite != 'y') {
+                                Span4Element.classList.add("view_flag");
+                            } else {
+                                Span4Element.classList.add("icon_flag");
+                            }
+
+                            Span4Element.addEventListener("click", function () {
+                                CheckFavorite(this);
+                            })
+
+                            Li4Element.appendChild(Span4Element);
+                            UlElement.appendChild(Li4Element);
+
+
+                            var Li5Element = document.createElement("LI");
+                            Li5Element.classList.add("contentlayout_none");
+
+                            Li5Element.addEventListener("click", function () {
+                                NotiContentRead(this);
+                            })
+
+                            var Span5Element = document.createElement("SPAN");
+                            Span5Element.classList.add("notification_list_title");
+                            Span5Element.innerText = jsonNotiListData.NOTILIST[i].notiContent;
+
+                            var Span6Element = document.createElement("SPAN");
+                            Span6Element.classList.add("notification_list_name");
+                            Span6Element.innerText = jsonNotiListData.NOTILIST[i].senderName + "  " + jsonNotiListData.NOTILIST[i].regDate;
+                            
+                            Li5Element.appendChild(Span5Element);
+                            Li5Element.appendChild(Span6Element);
+                            UlElement.appendChild(Li5Element);
+                            LiElement.appendChild(UlElement);
+
+                            notiListElement.appendChild(LiElement);
+                        }
+                    }
+                    else {
+                        var DivNodataElement = document.createElement("DIV");
+                        DivNodataElement.style.textAlign = "center";
+                        DivNodataElement.innerText = "알림이 없습니다.";
+                        notiListElement.appendChild(DivNodataElement);
+                    }
+
+                    document.getElementById("notiListProgress").style.display = "none";
+                }
+                else {
+                    //console.log("오류가 발생했습니다. (GUID : " + jsonNotiListData.debug_guid + ", " + _debug_guid + ", statusText:" + xmlHttp_NotiList.statusText.toString() + ",  responseText:" + xmlHttp_NotiList.responseText + ")");
+                }
+
+                g_xmlHTTP = null;
+            }
+        }
+
+        function sendEmergencyNoti() {
+            if (trim(document.getElementById('txtEmergencyNotiTitle').value) === "") {
+                Alert_Message("제목을 입력해주세요.", null, "");
+                return;
+            }
+
+            if (trim(document.getElementById('txtaEmergencyNotiContent').value) === "") {
+                Alert_Message("내용을 작성해주세요", null, "");
+                return;
+            }
+
+            var receiverArray = new Array();
+            var receiverListElement = document.getElementById("receiverList");
+            if (receiverListElement != null) {
+                if (receiverListElement.childElementCount > 0) {
+                    for (var i = 0; i < receiverListElement.childElementCount; i++) {
+                        var receiverInfo = new Object();
+                        receiverInfo.USERID = receiverListElement.children[i].getAttribute("_userid");
+                        receiverArray.push(receiverInfo);
+                    }
+                }
+                else {
+                    Alert_Message("수신자가 없습니다.", null, "");
+                    return;
+                }
+            }
+
+            Confirm_Alert_Message("발송하시겠습니까?", function (rtnVal) {
+                if (!rtnVal) return;
+
+                Confirm_Alert_Message_Complete();
+
+                var xmlHttp = new createXMLHttpRequest();
+                var jsonEmergencyNotiData = {
+                    "MAINTYPE": "notification",
+                    "SUBTYPE": "emergency",
+                    "WRITERID": "c001",
+                    "TITLE": document.getElementById('txtEmergencyNotiTitle').value,
+                    "NOTICONTENT": document.getElementById("txtaEmergencyNotiContent").value,
+                    "ONLYCONNECTED": document.getElementById("chkOnlyConnected").checked
+                };
+
+                jsonEmergencyNotiData.RECEIVERS = receiverArray;
+
+                var jsonInfo = JSON.stringify(jsonEmergencyNotiData);
+
+                xmlHttp.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/InsertEmergencyNoti.aspx", false);
+                xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlHttp.send(jsonInfo);
+
+                if (xmlHttp.responseText == "OK") {
+                    Alert_Message("발송했습니다.", null, "");
+                    document.getElementById('txtEmergencyNotiTitle').value = "";
+                    document.getElementById("txtaEmergencyNotiContent").value = "";
+
+                    document.getElementById("receiverList").innerHTML = "";
+                    document.getElementById("chkOnlyConnected").checked = false;
+
+                    notiCloseWrite_onclick();
+                }
+            }, "");
+        }
+
+        function DeleteNotiItem(thisObj) {
+            var xmlHttp = new createXMLHttpRequest();
+            var _notiSeq = "";
+            var _isread = "";
+            var parentULElement = getParent_selector(thisObj, "UL");
+            if (parentULElement.length > 0) {
+                _notiSeq = parentULElement[0].getAttribute("_notiSeq");
+                _isread = parentULElement[0].getAttribute("_isread");
+            }
+
+            if (_notiSeq !== "") {
+                Confirm_Alert_Message("삭제하시겠습니까?", function (rtnVal) {
+                    if (!rtnVal) return;
+
+                    Confirm_Alert_Message_Complete();
+
+                    var jsonData = {
+                        "NOTISEQ": _notiSeq
+                    };
+
+                    var jsonInfo = JSON.stringify(jsonData);
+                    xmlHttp.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/DeleteNotiItem.aspx", true);
+                    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xmlHttp.onreadystatechange = function () {
+                        if (xmlHttp != null && xmlHttp.readyState == 4) {
+                            if (xmlHttp.statusText == "OK" || xmlHttp.status == 200) {
+                                if (xmlHttp.responseText !== "") {
+                                    var responseJson = JSON.parse(xmlHttp.responseText);
+                                    if (responseJson.length > 0) {
+                                        if (responseJson[0].RESULT === "OK") {
+                                            // sqldependency에 의해 구동되지 않을 경우 대비
+                                            MakeNotiList_Interval = setTimeout("MakeNotiList(true)", 1000);
+                                        }
+                                        else {
+                                            Alert_Message(xmlHttp.responseText, null, "");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    xmlHttp.send(jsonInfo);
+
+                }, "");
+            }
+            else {
+                // GUID확인 불가로 처리 불가.
+            }
+        }
+
+        function readAllCheck() {
+            Confirm_Alert_Message("모두 읽음처리하시겠습니까?", function (rtnVal) {
+                if (!rtnVal) return;
+                Confirm_Alert_Message_Complete();
+
+                document.getElementById("notiListProgress").style.display = "";
+
+                var xmlHttp = new createXMLHttpRequest();
+
+                xmlHttp.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/ReadAllCheck.aspx", true);
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp != null && xmlHttp.readyState == 4) {
+                        if ((xmlHttp.statusText == "OK" || xmlHttp.status == 200) && xmlHttp.responseText === "OK") {
+                            // sqldependency에 의해 구동되지 않을 경우 대비
+                            MakeNotiList_Interval = setTimeout("MakeNotiList(true)", 1000);
+                        }
+                        else {
+                            Alert_Message(xmlHttp.responseText, null, "");
+                        }
+                    }
+                };
+                xmlHttp.send();
+
+            }, "");
+        }
+
+        function deleteAll() {
+            Confirm_Alert_Message("모두삭제하시겠습니까?", function (rtnVal) {
+                if (!rtnVal) return;
+                Confirm_Alert_Message_Complete();
+
+                document.getElementById("notiListProgress").style.display = "";
+
+                var xmlHttp = new createXMLHttpRequest();
+
+                xmlHttp.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/deleteAll.aspx", true);
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp != null && xmlHttp.readyState == 4) {
+                        if ((xmlHttp.statusText == "OK" || xmlHttp.status == 200) && xmlHttp.responseText === "OK") {
+                            // sqldependency에 의해 구동되지 않을 경우 대비
+                            MakeNotiList_Interval = setTimeout("MakeNotiList(true)", 1000);
+                        }
+                        else {
+                            Alert_Message(xmlHttp.responseText, null, "");
+                        }
+                    }
+                };
+                xmlHttp.send();
+            }, "");
+        }
+
+        function moveNotiPage(pType) {
+            var iCurrentPage = parseInt(document.getElementById("notiCurrentPage").innerText);
+            var iTotalPage = parseInt(document.getElementById("notiTotalPage").innerText);
+
+            switch (pType) {
+                case "up":
+                    if (iCurrentPage < iTotalPage) {
+                        document.getElementById("notiCurrentPage").innerText = iCurrentPage + 1;
+                        MakeNotiList();
+                        window.focus();
+                    }
+                    else if (iTotalPage === 0) {
+                        Alert_Message("데이터가 없습니다", null, "");
+                    }
+                    else if (iCurrentPage === iTotalPage) {
+                        Alert_Message("마지막 페이지 입니다.", null, "");
+                    }
+                    break;
+                case "down":
+                    if (1 < iCurrentPage) {
+                        document.getElementById("notiCurrentPage").innerText = iCurrentPage - 1;
+                        MakeNotiList();
+                        window.focus();
+                    }
+                    else if (iCurrentPage === 1) {
+                        Alert_Message("첫번째 페이지 입니다.", null, "");
+                    }
+                    else if (iCurrentPage === 0) {
+                        Alert_Message("데이터가 없습니다", null, "");
+                    }
+                    break;
+            }
+        }
+
+        function searchNoti_onclick() {
+            // 검색시 필터 설정은 닫아준다.
+            var searchFilterClassElements = document.getElementsByClassName("contentlist_search_filter");
+            if (searchFilterClassElements.length > 0) {
+                if (searchFilterClassElements[0].style.display === "") {
+                    searchFilterClassElements[0].style.display = "none";
+                }
+            }
+
+            if (trim(document.getElementById("searchNotiContent").value) !== "") {
+                NotiFilterData.content = document.getElementById("searchNotiContent").value;
+                document.getElementById("notiCurrentPage").innerText = "1";
+                MakeNotiList();
+            }
+            else {
+                if (trim(NotiFilterData.content) !== "") {
+                    Confirm_Alert_Message("검색을 취소하시겠습니까?", function (rtnVal) {
+                        if (!rtnVal) return;
+
+                        Confirm_Alert_Message_Complete();
+
+                        NotiFilterData.content = "";
+                        document.getElementById("notiCurrentPage").innerText = "1";
+                        MakeNotiList();
+
+                    }, "");
+                }
+                else {
+                    Alert_Message("검색어를 입력해 주세요.", null, "");
+                }
+            }
+        }
+
+        function NotiContentRead(thisObj) {
+            var xmlHttp = new createXMLHttpRequest();
+            var _notiSeq = "";
+            var _viewType = "";
+            var _viewWidth = 0;
+            var _viewHeight = 0;
+            var _isRead = "";
+            var _linkUrl = "";
+            var parentULElement = getParent_selector(thisObj, "UL");
+            if (parentULElement.length > 0) {
+                _notiSeq = parentULElement[0].getAttribute("_notiSeq");
+                _viewType = parentULElement[0].getAttribute("_viewType");
+                _viewWidth = filterInt(parentULElement[0].getAttribute("_viewWidth"));
+                _viewHeight = filterInt(parentULElement[0].getAttribute("_viewHeight"));
+                _isRead = parentULElement[0].getAttribute("_isRead");
+                _linkUrl = parentULElement[0].getAttribute("_linkUrl");
+            }
+
+            // 팝업 표시
+            if (trim(_linkUrl) !== "") {                
+                if (_viewType != null && _viewType === "layer") {
+                    if (typeof parent.DivPopUpShow === "function") {
+                        parent.DivPopUpShow(_viewWidth, _viewHeight, _linkUrl);
+                    } else if (typeof opener.DivPopUpShow === "function") {
+                        opener.DivPopUpShow(_viewWidth, _viewHeight, _linkUrl);
+                    }
+                }
+                else if (_viewType != null && _viewType === "embed") {
+                    if (parent != null && typeof parent.GoToApplicationUrl === "function") {
+                        parent.GoToApplicationUrl(_linkUrl, "", false);
+                    } else if (opener != null && typeof opener.GoToApplicationUrl === "function") {
+                        opener.GoToApplicationUrl(_linkUrl, "", false);
+                    }
+                }
+                else if (_viewType != null && _viewType === "popup") {
+                    GetOpenWindow(_linkUrl, "ReadEmail", _viewWidth, _viewHeight, "YES");
+                }
+                else {
+                    // _viewType 이 none일 경우
+                }
+            }
+
+            if (_isRead !== "y" && _notiSeq !== "") {
+                var jsonData = {
+                    "NOTISEQ": _notiSeq
+                };
+
+                var jsonInfo = JSON.stringify(jsonData);
+                xmlHttp.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/NotiItemRead.aspx", false);
+                xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlHttp.send(jsonInfo);
+
+                if (xmlHttp.statusText == "OK" || xmlHttp.status == 200) {
+                    if (xmlHttp.responseText !== "y") {
+                        alert("오류가 발생했습니다.");
+                    }
+                    else {
+                        // sqldependency에 의해 구동되지 않을 경우 대비
+                        MakeNotiList_Interval = setTimeout("MakeNotiList(true)", 200);
+                    }
+                }
+            }
+            else {
+                // GUID확인 불가로 처리 불가.
+            }
+        }
+
+        var receiverChoose_dialogArguments = new Array();
+        function receiverChoose_onClick() {
+            receiverChoose_dialogArguments[0] = "iframeNoti";
+            receiverChoose_dialogArguments[1] = receiverChoose_callback;
+            var _linkUrl = "/myoffice/ezPersonal/Notification_Realtime/Notification_SelectUser.aspx";
+            var _viewWidth = 900;
+            var _viewHeight = 600;
+
+            if (typeof parent.DivPopUpShow === "function") {
+                receiverChoose_dialogArguments[2] = "parent";
+                parent.DivPopUpShow(_viewWidth, _viewHeight, _linkUrl);
+            } else if (typeof opener.DivPopUpShow === "function") {
+                receiverChoose_dialogArguments[2] = "opener";
+                opener.DivPopUpShow(_viewWidth, _viewHeight, _linkUrl);
+            }
+        }
+
+        function receiverChoose_callback(result) {
+            var jsonData = JSON.parse(result);
+            var receiverListElement = document.getElementById("receiverList");
+
+            for (var i = 0; i < jsonData.length; i++) {
+                if (receiverListElement.querySelectorAll("[_userid='" + jsonData[i].UserID + "']").length < 1) {
+                    var LiElement = document.createElement("LI");
+                    LiElement.setAttribute("_userid", jsonData[i].UserID);
+                    LiElement.setAttribute("_jickweId", jsonData[i].jickweId);
+                    LiElement.setAttribute("_DeptCode", jsonData[i].DeptCode);
+                    LiElement.setAttribute("_companyCode", jsonData[i].companyCode);
+
+                    var UlElement = document.createElement("UL");
+                    UlElement.classList.add("contentlayout");
+
+                    var LiSub1Element = document.createElement("LI");
+                    LiSub1Element.classList.add("contentlayout_right");
+                    LiSub1Element.addEventListener("click", function () {
+                        delectReceiver_onclick(this);
+                    });
+
+                    var SpanElement = document.createElement("SPAN");
+                    SpanElement.classList.add("icon16");
+                    SpanElement.classList.add("backhistory_mini");
+                    SpanElement.title = "삭제";
+
+                    var LiSub2Element = document.createElement("LI");
+                    LiSub2Element.classList.add("contentlayout_none");
+                    LiSub2Element.innerText = jsonData[i].UserName + " [" + jsonData[i].jickwe + " " + jsonData[i].DeptNM + " " + jsonData[i].companyName + "]";
+
+                    LiSub1Element.appendChild(SpanElement);
+                    UlElement.appendChild(LiSub1Element);
+                    UlElement.appendChild(LiSub2Element);
+                    LiElement.appendChild(UlElement);
+
+                    receiverListElement.appendChild(LiElement);
+                }
+            }
+        }
+
+        function delectReceiver_onclick(thisObj) {
+            Confirm_Alert_Message("삭제하시겠습니까?", function (rtnVal) {
+                if (!rtnVal) return;
+
+                Confirm_Alert_Message_Complete();
+
+                var parentLIElement = getParent_selector(thisObj, "LI");
+                parentLIElement[0].parentElement.removeChild(parentLIElement[0]);
+            }, "");
+        }
+
+        function notiConfig_onclick() {
+            GoToApplication("97", "", false, "");
+        }
+    </script>
+
+</body></html>

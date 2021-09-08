@@ -1,0 +1,105 @@
+@charset "utff-8";
+.ToggleMenu{display:none;}
+
+.contentlayout_left{width:300px; line-height:55px;}
+.contentlayout_left img{border:0 none; vertical-align:middle; margin-left:19px;}
+
+.contentlayout_none .navUL li .nav_icon_01{background:url(../images/nav_icon_01.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_02{background:url(../images/nav_icon_02.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_03{background:url(../images/nav_icon_03.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_04{background:url(../images/nav_icon_04.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_05{background:url(../images/nav_icon_05.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_06{background:url(../images/nav_icon_06.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_07{background:url(../images/nav_icon_07.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_08{background:url(../images/nav_icon_08.png) no-repeat center center;}
+.contentlayout_none .navUL li .nav_icon_09{background:url(../images/nav_icon_09.png) no-repeat center center;}
+
+.power{float:right; margin:0; padding:0;}
+.power .power_btn{display:inline-block; width:23px; height:23px; background:url(../images/power_btn.png) no-repeat 0 0; margin-right:30px; margin-top:16px;}
+.top_Notification{background:url(../images/alarm.png) no-repeat 0 0; display: inline-block; width: 18px; height: 18px; line-height: 0px; margin: 18px 0px 0px 0px; padding: 0px;}
+.top_searchBtn{display:inline-block; width:16px; height:16px; background:url(../images/search_icon.png) no-repeat 0 0;}
+
+.bg_area{width:300px; height:510px; position:relative;}
+
+.calendar_mini tbody tr:first-child{height:24px; line-height:24px; background-color:#999;}
+.calendar_mini tbody tr:first-child th{color:#fff !important;}
+
+.video_area{width:279px; height:69px; border:1px solid #dad9d9; box-sizing:border-box; border-radius:4px;}
+.video_area p{margin:0; padding:0;}
+.video_area .video_left{float:left; width:151px; background-color:#e3f5f8; height:100%; font-size:14px; padding:15px 20px; box-sizing:border-box;}
+.video_area .video_left span{color:#018aa0;}
+
+.video_area .video_right{float:right; cursor:pointer; width:126px; height:100%; background:url(../images/video_right.png) no-repeat 50% 50%;}
+
+.resource_listBox .tabpart_portlet_list{border-top:none !important; padding-right:10px !important; height:113px;}
+.hospital_schedule{width:100%; height:44px; padding:0 12px; margin:0; box-sizing:border-box; background-color:#e3ecf8;}
+.hospital_schedule table, .hospital_schedule tbody, .hospital_schedule tr, .hospital_schedule td{margin:0; padding:0;}
+.hospital_schedule table{width:100%; height:44px;}
+.hospital_schedule table td{text-align:center; font-size:14px; color:#000; cursor:pointer;}
+.hospital_schedule table td.today{background:url(../images/today_bg.png) no-repeat center center; color:#fff;}
+.hospital_schedule table td.sun{background:url(../images/sun_bg.png) no-repeat center bottom 7px;}
+
+.hope{margin:0; padding:15px 0 0 18px; width:100%; height:82px; border:1px solid #d9d9d9; box-sizing:border-box; background:url(../images/hope_bg.png) no-repeat right 16px bottom; background-color:#e3f5f8; margin-bottom:3px;}
+.hope p{margin:0; padding:0; font-size:12px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.hope p:nth-child(1){font-size:14px; color:#018aa0; margin-bottom:3px}
+
+.hope_list{margin:0; padding:0; width:100%; height:115px; border:1px solid #d9d9d9; box-sizing:border-box; overflow:hidden;}
+.hope_list dl{margin:0; padding:0; float:left; width:33.333%; text-align:center; padding-top:10px; cursor:pointer;}
+.hope_list dl dt{margin:0; padding:0; width:100%; height:59px; margin-bottom:5px;}
+.hope_list dl.hope_list_DL1 dt{background:url(../images/hope_list_01.png) no-repeat 50% 0;}
+.hope_list dl.hope_list_DL2 dt{background:url(../images/hope_list_02.png) no-repeat 50% 0;}
+.hope_list dl.hope_list_DL3 dt{background:url(../images/hope_list_03.png) no-repeat 50% 0;}
+.hope_list dl dd{margin:0; padding:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+
+.notice_area .tabpart_portletTitle li{border-right:none; padding:0 12px 0 22px;}
+.notice_area .tabpart_portletTitle li span{font-size:18px; color:#333;}
+.notice_area .tabpart_portletTitle li.oth{padding:0 0 0 5px ;}
+.notice_area .tabpart_portletTitle li.oth:hover{border-bottom:1px solid #d9d9d9;}
+.notice_area .tabpart_portletTitle li.oth span{padding:5px 12px; font-size:13px; color:#2dafc2; background-color:#fff; border-radius:14px;}
+.notice_area .tabpart_portletTitle li.oth.on{background-color:transparent; border-bottom:none;}
+.notice_area .tabpart_portletTitle li.oth.on span
+,.notice_area .tabpart_portletTitle li.oth:hover span{background-color:#c9e3e9;}
+
+.notice .tabpart_portlet_list{padding-top:10px;}
+
+.banner_area{margin:0; padding:0; width:100%; height:200px; box-sizing:border-box; text-align:center;}
+.banner_area span{margin:0; padding:0; display:inline-block; font-size:22px; margin-top:50px; font-weight:bold}
+.banner_area.smile{background:url(../images/smile_bg.png) no-repeat 0 0 / 100% 100%;}
+.banner_area.diet{background:url(../images/diet_bg.png) no-repeat 0 0 / 100% 100%;}
+
+.plus_icon{display:inline-block; width:24px; height:22px; background:url(../images/resource_plus.png) no-repeat 0 0; cursor:pointer; line-height:22px; vertical-align:middle; margin-bottom:4px;}
+
+.nav_2{display:none;}
+@media all and (max-width:1620px) {
+    .DatePicker_class{display:none;}
+    .ui-datepicker-trigger{display:none !important;}
+    .plus_icon{display:none;}
+
+}
+
+@media all and (max-width:1550px) {
+    .contentlayout_none .navUL li .top_text{display:none;}
+}
+
+@media all and (max-width:1470px) {
+    .resource_listBoxUL .resource_listBoxDL dd > .resource_list_item{width:33%; font-size:10px; padding:0;text-align:center;}
+}
+
+@media all and (max-width:1360px) {
+    .main_icon_tabprev,.main_icon_tabnext{display:none;}
+    .hope_list dl dd{font-size:10px;}
+}
+
+@media all and (max-width:1120px) {
+    .contentlayout_none{text-align:left !important;}
+    .contentlayout_none .navUL{display:none;}
+    .ToggleMenu{display:block;}
+}
+
+@media all and (max-width:880px) {
+    .my_search{display:none !important;}
+}
+
+@media all and (max-width:680px) {
+    .my_Notification{display:none !important;}
+}

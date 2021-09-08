@@ -1,0 +1,1552 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+//import * as List from "linqts";
+var linq = __webpack_require__(1);
+var MultiView;
+(function (MultiView) {
+    var Page = (function () {
+        function Page(title, url, path) {
+            this.Title = title;
+            this.Url = url;
+            this.Path = path;
+        }
+        Page.prototype.test = function () {
+            var a = new linq.List();
+            var b = a.Where(function (d) { return d > 0; });
+        };
+        return Page;
+    }());
+    MultiView.Page = Page;
+    //var IsDebug = true;
+    var Pages = (function () {
+        function Pages() {
+            this.Pages = new linq.List();
+        }
+        Pages.prototype.Add = function (page) {
+            if (this.IsSingleOrEmpty == false) {
+                var last = this.Last;
+                if (last.Control) {
+                    //last.Control.empty();
+                    //$(this.PageContainer).remove("#"+last.Control.attr("id"));
+                    last.Control.remove();
+                }
+                this.Pages.Remove(last);
+            }
+            this.Pages.Add(page);
+            //this.Group = page.Group = (this.Group ? this.Group : page.Group);
+            this.Title = page.Name = (this.Title ? this.Title : page.Name);
+            if (!this.Path)
+                this.Path = page.Path;
+            if (!page.Path)
+                page.Path = this.Path + " / " + this.Title;
+            return page;
+        };
+        Object.defineProperty(Pages.prototype, "IsSingleOrEmpty", {
+            get: function () {
+                return this.Pages.Count() <= 1;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Pages.prototype, "IsSingle", {
+            get: function () {
+                return this.Pages.Count() == 1;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Pages.prototype, "Last", {
+            get: function () {
+                return this.Pages.LastOrDefault();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Pages.prototype, "First", {
+            get: function () {
+                return this.Pages.FirstOrDefault();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Pages.prototype, "MainPageName", {
+            get: function () {
+                var page = this.First;
+                return page ? page.Name : "";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Pages.prototype.MainVisible = function (visible, isRefresh) {
+            if (isRefresh === void 0) { isRefresh = false; }
+            if (this.Pages.Count() == 0)
+                return;
+            // 윈도우용 크롬만 구분
+            var bChromeWin = false;
+            var strUserAgent = navigator.userAgent.toLowerCase();
+            if (strUserAgent.indexOf("chrome") >= 0 && strUserAgent.indexOf("windows") >= 0) {
+                bChromeWin = true;
+            }
+            var control = this.First.Control;
+            if (control) {
+                if (visible) {
+                    if (bChromeWin == true) {
+                        // 윈도우용 크롬 예외 처리
+                        $(control).css({ "visibility": "visible", "height": "100%" });
+                    }
+                    else {
+                        $(control).show();
+                    }
+                    $(control).focus();
+                    if (isRefresh) {
+                        var frame = $("iframe", control)[0];
+                        if (frame && frame.contentWindow) {
+                            // reload 함수가 IE 에서 반응성이 안좋음.
+                            frame.contentWindow.location.href = frame.contentWindow.location.href;
+                            //frame.contentWindow.location.reload(true);
+                        }
+                    }
+                }
+                else {
+                    if (bChromeWin == true) {
+                        // 윈도우용 크롬 예외 처리
+                        // hide 또는 display none으로 처리하는 경우 크롬에서는 숨김 처리된 컨트롤의 scroll position 정보가 사라지고, 
+                        // 다시 show 되었을 때 휠마우스로 이동해 보면 top으로 스크롤이 이동하는 증상이 있어 예외 처리
+                        $(control).css({ "visibility": "hidden", "height": "0" });
+                    }
+                    else {
+                        $(control).hide();
+                    }
+                }
+            }
+        };
+        Pages.prototype.Visible = function (visible) {
+            if (this.PageContainer) {
+                if (visible)
+                    $(this.PageContainer).show();
+                else
+                    $(this.PageContainer).hide();
+            }
+        };
+        /**
+         * windowName에 해당하는 페이지를 찾아서 삭제한다.
+         * 만일 메인페이지라면 PageContainer 자체체를 삭제해 버린다.
+         *
+         */
+        Pages.prototype.Delete = function (windowName, isRefresh) {
+            if (isRefresh === void 0) { isRefresh = false; }
+            var updateTaskbar = false;
+            if (this.MainPageName == windowName) {
+                this.PageContainer.remove();
+                this.Pages.RemoveAll();
+                updateTaskbar = true;
+            }
+            else {
+                var page = this.Pages.FirstOrDefault(function (page) { return page.Name == windowName; });
+                page.Control.remove();
+                this.Pages.Remove(page);
+                this.MainVisible(true, isRefresh);
+            }
+            return updateTaskbar;
+        };
+        return Pages;
+    }());
+    MultiView.Pages = Pages;
+    var PageManager = (function () {
+        function PageManager() {
+            this.Dragging = false;
+            this._FrameIdPostfix = "_frame";
+            this._TitleId = "Title";
+            this._ContentId = "Content";
+            this._TaskbarId = "Taskbar";
+            this._ViewId = "View";
+        }
+        Object.defineProperty(PageManager.prototype, "TaskCount", {
+            get: function () {
+                return this.TaskbarPages.Count();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        PageManager.prototype.NewName = function (prefix) {
+            if (!prefix)
+                prefix = "__MultiViewPage_";
+            PageManager._MaxId++;
+            return prefix + PageManager._MaxId;
+        };
+        PageManager.prototype.DeletePageButtonHtml = function (page) {
+            var button = page.IsMain ? "" : "<input type=\"button\" onclick=\"_WindowTop.MultiView_Manager.ClosePage('" + page.Name + "'); event.preventDefault(); event.stopPropagation();\" value=\"x\"/>";
+            return button;
+        };
+        PageManager.prototype.DeleteTaskButtonHtml = function (pages) {
+            var button = pages.First.IsMain ? "" : "<input type=\"button\" onclick=\"_WindowTop.MultiView_Manager.ClosePage('" + pages.Name + "');  event.preventDefault(); event.stopPropagation();\" value=\"x\" />";
+            return button;
+            //return  `<input type="button" onclick="_WindowTop.MultiView_Manager.ClosePage('${pages.Name}')" value="delete" style="float:right;" />`;
+        };
+        PageManager.prototype.AddTaskbar = function (pages) {
+            var button = this.DeleteTaskButtonHtml(pages);
+            var title = pages.Title;
+            var attrTitle = pages.Title;
+            if (pages.Path && pages.Path.trim() != "" && pages.Path.trim() != "undefined") {
+                attrTitle = pages.Path + " / " + pages.Title;
+            }
+            var li = "<li class=\"Task\" title=\"" + attrTitle + "\" onclick=\"_WindowTop.MultiView_Manager.TaskSwap('" + pages.Name + "')\"><span id=\"" + pages.Name + "\" class=\"TaskSpan draggable ui-draggable ui-draggable-handle\" style=\"position: relative; \">" + title + "</span><span class=\"debug\">" + ("(" + pages.Name + ")") + "</span>" + button + "</li>";
+            var ul = $("ul", this.TaskbarContainer);
+            ul.append(li);
+            //_WindowTop.TaskDraggable(ul);
+            _WindowTop.TaskDraggable(this.Container);
+            return ul.children().last();
+        };
+        PageManager.prototype.SetMainWidth = function (isFull) {
+            //let width = isFull ? "full" : "half";
+            //$("iframe", this.LeftPages.PageContainer).width(width);
+            // let iframe = $("iframe.multiview", this.LeftPages.PageContainer);
+            // iframe.toggleClass("full", isFull == true);
+            // iframe.toggleClass("half", isFull == false);
+            // let div = $("div.multiview", this.LeftPages.PageContainer);
+            // div.toggleClass("full", isFull == true);
+            // div.toggleClass("half", isFull == false);
+            this.LeftPages.Pages.ForEach(function (page) {
+                page.Control.toggleClass("full", isFull == true);
+                page.Control.toggleClass("half", isFull == false);
+                page.Control.width("");
+            });
+        };
+        PageManager.prototype.AddPageContainer = function (pages) {
+            this.ViewContainer.append("<div id=\"" + pages.Name + "\" class=\"droppable Pages\" style=\"position:relative;\"><span class=\"debug\">" + pages.Name + "</span></div>");
+            pages.PageContainer = this.ViewContainer.children().last();
+            _WindowTop.TaskDroppable(this.ViewContainer);
+            return pages.PageContainer;
+        };
+        PageManager.prototype.GetBreadcrumbItems = function (page) {
+            var button = this.DeletePageButtonHtml(page);
+            var paths = (page.Path ? page.Path : "").split("/");
+            var li = "";
+            for (var i in paths) {
+                var item = paths[i].trim();
+                if (item != "" && item != "undefined")
+                    li += "<li class=\"completed\">" + item + "</li>";
+            }
+            li += "<li class=\"active\">" + page.Title + "</li>";
+            var ul = "\n                " + li + "\n                <li class=\"right\">\n                    <span class=\"debug\"> (" + page.Name + ")</span>\n                    " + button + "\n                </li>\n            ";
+            return ul;
+        };
+        PageManager.prototype.AddPageControl = function (pageContainer, page, isSingle) {
+            if (isSingle === void 0) { isSingle = false; }
+            var name = this.NewName() + "_Page__";
+            page.Name = name;
+            //let pageWidth : string = isSingle ? "width:80vw;" : "width:40vw;";
+            var width = isSingle ? "full" : "half";
+            var main = $(".Page", pageContainer).length == 0 ? "main" : "sub";
+            var li = this.GetBreadcrumbItems(page);
+            var html = "\n<div name=\"" + name + "\" id=\"" + name + "\" class=\"Page " + main + "\">\n    <div class=\"breadcrumbContainer\">\n        <ul class=\"breadcrumb\">\n        " + li + "\n        </ul>\n    </div>\n    <iframe name=\"" + (name + this._FrameIdPostfix) + "\" id=\"" + (name + this._FrameIdPostfix) + "\" src=\"" + page.Url + "\" \n    style = \"display:block; \" class=\"multiview " + width + "\" frameborder=0 border=0/>\n</div>";
+            $(pageContainer).append(html);
+            return page.Control = pageContainer.children().last();
+        };
+        PageManager.prototype.NewPage = function (title, url, path) {
+            var page = new Page(title, url, path);
+            var pageContainer;
+            var pages;
+            var name = this.NewName();
+            //page.Group = group;
+            /* ===== 자리배치 방식 =====
+             * 1. 왼쪽 페이지가 비어있으면 그곳에 Add
+             * 2. 오른쪽 페이지가 비어 있으면 그곳에 Add
+             * 3. 양쪽 페이지가 꽉 차 있으면
+             *  - Left를 TaskbarPages 로 이동하고 Right를 Left 이동 후 Right에 Add
+             */
+            var isSingle = false;
+            // let leftWidth = this.LeftPages ? this.LeftPages.PageContainer.width() : null;
+            // let rightWidth = this.RightPages ? this.RightPages.PageContainer.width() : null;
+            pages = new Pages();
+            pages.Add(page);
+            pages.Title = title;
+            pages.Name = name;
+            pages.Path = path;
+            var width = (this.LeftPages && this.RightPages) ? this.GetWidth(this.LeftPages.PageContainer) : "";
+            //pageContainer.html(page.Url);
+            if (pages.PageContainer == null) {
+                pageContainer = this.AddPageContainer(pages);
+            }
+            else {
+                pageContainer = pages.PageContainer;
+            }
+            if (this.LeftPages && this.RightPages) {
+                this.LeftPages.Visible(false);
+                this.TaskbarPages.Add(this.LeftPages);
+                this.LeftPages = this.RightPages;
+                this.RightPages = pages;
+            }
+            else {
+                if (this.LeftPages == null) {
+                    this.LeftPages = pages;
+                    //pages.PageContainer.width("100%")
+                    page.IsMain = true;
+                    isSingle = true;
+                }
+                else if (this.RightPages == null) {
+                    this.RightPages = pages;
+                    pageContainer = pages.PageContainer;
+                    this.SetMainWidth(false);
+                    if (this.LeftPages.IsSingleOrEmpty == false)
+                        this.LeftPages.MainVisible(false);
+                }
+            }
+            this.AddPageControl(pageContainer, page, isSingle);
+            if (this.LeftPages)
+                this.LeftPages.PageContainer.css({ width: "50%" });
+            this.UpdateContents();
+        };
+        PageManager.prototype.NewSub = function (windowName, title, url, path) {
+            //alert(url);
+            var pages = null;
+            var pageName = windowName.replace(this._FrameIdPostfix, "");
+            if (this.LeftPages && this.LeftPages.IsSingleOrEmpty) {
+                //$("iframe", this.LeftPages.PageContainer).width("40vw");
+                this.SetMainWidth(false);
+            }
+            if (this.LeftPages && this.LeftPages.Pages.Any(function (page) { return page.Name === pageName; })) {
+                pages = this.LeftPages;
+            }
+            else if (this.RightPages && this.RightPages.Pages.Any(function (page) { return page.Name === pageName; })) {
+                // this.RightPages.Add(page);
+                // pageContainer = this.RightPages.PageContainer;
+                pages = this.RightPages;
+            }
+            else {
+                this.Error(windowName + " 을 찾을 수 없습니다.");
+                return;
+            }
+            //isSingle = this.LeftPages && this.LeftPages.IsSingleOrEmpty;
+            var isSingle = pages && pages.IsSingleOrEmpty;
+            if (isSingle) {
+                var page = new Page(title, url, path);
+                pages.Add(page);
+                if ((pages == this.RightPages) || (this.RightPages)) {
+                    pages.MainVisible(false);
+                }
+                this.AddPageControl(pages.PageContainer, page);
+                this.SetSplit();
+            }
+            else {
+                var last = pages.Last;
+                //last.Name = name;
+                last.Url = url;
+                last.Title = title;
+                last.Path = path ? path : last.Path;
+                var li = this.GetBreadcrumbItems(last);
+                $("iframe", last.Control).attr("src", last.Url);
+                $("ul", last.Control).html(li);
+            }
+            this.UpdateContents();
+        };
+        PageManager.prototype.ClosePage = function (windowName, isRefresh) {
+            //console.log("ClosePage : " + windowName);
+            var pages = null;
+            /* Close Page 로직
+             * 1. Taskbar 에 포함되어 있으면 삭제
+             * 2. RightPages 에 포함되어 있으면
+             * 2.1. Main일 경우 Right를 Left로 대체하고, 3.1번 로직 수행
+             * 2.2. Sub일 경우 Sub만 삭제
+             * 3. LeftPages에 포함되어 있으면
+             * 3.1. Main일 경우 Taskbar 마지막을 뽑아서 Left를 대체
+             * 3.2. Sub일 경우 Sub만 삭제
+             * 4. Taskbar 에 변경내역이 있으면 갱신
+             */
+            var width = this.LeftPages ? this.GetWidth(this.LeftPages.PageContainer) : "";
+            var pageName = windowName.replace(this._FrameIdPostfix, "");
+            if (this.TaskbarPages && this.TaskbarPages.Any(function (pages) { return pages.Name == pageName || pages.MainPageName == pageName; })) {
+                this.TaskbarPages.RemoveAll(function (pages) { return pages.Name == pageName || pages.MainPageName == pageName; });
+                //this.TaskbarPages.RemoveAll(pages => true);
+            }
+            else if (this.RightPages && this.RightPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                var pages_1 = this.RightPages;
+                if (pages_1.MainPageName == pageName) {
+                    var task = this.TaskbarPages.LastOrDefault();
+                    if (task) {
+                        this.TaskbarPages.Remove(task);
+                        this.RightPages = this.LeftPages;
+                        this.LeftPages = task;
+                        task.Visible(true);
+                    }
+                    else {
+                        this.RightPages = null;
+                    }
+                }
+                pages_1.Delete(pageName, isRefresh);
+            }
+            else if (this.LeftPages && this.LeftPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                var pages_2 = this.LeftPages;
+                if (pages_2.MainPageName == pageName) {
+                    var task = this.TaskbarPages.LastOrDefault();
+                    if (task) {
+                        this.TaskbarPages.Remove(task);
+                        this.LeftPages = task;
+                        task.Visible(true);
+                    }
+                    else {
+                        this.LeftPages = this.RightPages;
+                        this.RightPages = null;
+                    }
+                }
+                pages_2.Delete(pageName, isRefresh);
+            }
+            else {
+                this.Error(windowName + " 을 찾을 수 없습니다.");
+                return;
+            }
+            if (this.RightPages == null) {
+                this.LeftPages.PageContainer.width("");
+                if (this.LeftPages.IsSingleOrEmpty) {
+                    //$("iframe", this.LeftPages.PageContainer).width("80vw");
+                    this.SetMainWidth(true);
+                    this.LeftPages.First.Control.width("");
+                }
+                else {
+                    this.LeftPages.MainVisible(true);
+                }
+            }
+            //if (this.LeftPages && this.RightPages) {
+            //    this.LeftPages.PageContainer.width(width);
+            //}
+            this.UpdateContents();
+        };
+        PageManager.prototype.UpdateContents = function () {
+            var _this = this;
+            $("ul", this.TaskbarContainer).empty();
+            this.TaskbarPages.ForEach(function (pages) {
+                if (pages)
+                    _this.AddTaskbar(pages);
+            });
+            var taskbarVisible = this.TaskbarPages.Count() > 0;
+            if (taskbarVisible) {
+                //$(this.TaskbarContainer).show();  // 아래 taskbar_show 스타일로 조정되므로 주석 처리
+                $(this.TaskbarContainer).css({ "visibility": "visible", "height": "100vh" });
+            }
+            else {
+                // Taskbar가 표시되었다가 사라지는 경우 jQuery hide() 또는 display none으로 처리할 때 split bar에 설정된 resize 이벤트가 사라지는 증상이 있음
+                //$(this.TaskbarContainer).hide();
+                $(this.TaskbarContainer).css({ "visibility": "hidden", "height": "0" });
+                // Taskbar 영역이 사라질 때 leftPanel이 켜진 상태라면 leftPanel 사이즈를 100%로 보정하기 위해 ShowDropPanel를 다시 실행
+                var leftPanel = $("#iframe_left_panel", this.ViewContainer);
+                if (leftPanel && leftPanel.is(":visible") == true) {
+                    _windowTop_MultiView_Manager.ShowDropPanel();
+                }
+            }
+            $(this.ViewContainer).toggleClass("taskbar_show", taskbarVisible == true);
+            $(this.ViewContainer).toggleClass("taskbar_hide", taskbarVisible == false);
+            if (this.RightPages) {
+                this.RightPages.PageContainer.toggleClass("right", true);
+                this.RightPages.PageContainer.toggleClass("left", false);
+            }
+            if (this.LeftPages) {
+                this.LeftPages.PageContainer.toggleClass("right", false);
+                this.LeftPages.PageContainer.toggleClass("left", true);
+            }
+            if (this.LeftPages && this.RightPages) {
+                this.LeftPages.Pages.ForEach(function (page) {
+                    page.Control.toggleClass("full", true);
+                    page.Control.toggleClass("half", false);
+                });
+                this.RightPages.Pages.ForEach(function (page) {
+                    page.Control.toggleClass("full", true);
+                    page.Control.toggleClass("half", false);
+                });
+            }
+            if (this.LeftPages) {
+                if (!this.RightPages) {
+                    // RightPages가 없는 경우 LeftPages의 resizable 이벤트가 등록되어 있는 경우 제거
+                    if (this.LeftPages.PageContainer.is('.ui-resizable')) {
+                        this.LeftPages.PageContainer.resizable("destroy");
+                    }
+                    this.LeftPages.PageContainer.toggleClass("full", true);
+                    this.LeftPages.PageContainer.toggleClass("half", false);
+                    var main = this.LeftPages.First.Control;
+                    if (this.LeftPages.IsSingle) {
+                        //main.toggleClass("main", false);    
+                        main.toggleClass("full", true);
+                        // 단일뷰로 전환된 경우 컨트롤에 resizable 이벤트가 등록되어 있는 경우 제거
+                        if (main.is('.ui-resizable')) {
+                            main.resizable("destroy");
+                        }
+                    }
+                    else {
+                        //main.toggleClass("main", true);    
+                        main.toggleClass("half", true);
+                        var sub = this.LeftPages.Last.Control;
+                        //sub.toggleClass("sub", true);                
+                        sub.toggleClass("half", true);
+                        // 메인과 서브가 split 되도록 처리
+                        this.SetSplit();
+                    }
+                }
+                else {
+                    this.LeftPages.PageContainer.toggleClass("full", false);
+                    this.LeftPages.PageContainer.toggleClass("half", true);
+                    this.RightPages.PageContainer.toggleClass("full", false);
+                    this.RightPages.PageContainer.toggleClass("half", true);
+                    if (this.LeftPages.IsSingle) {
+                        this.LeftPages.First.Control.toggleClass("half", false);
+                        this.LeftPages.First.Control.toggleClass("full", true);
+                    }
+                    // this.LeftPages.First.Control.toggleClass("main", false);          
+                    // this.LeftPages.Last.Control.toggleClass("sub", false);
+                }
+            }
+            if (this.LeftPages && this.RightPages) {
+                // RightPages가 있는 경우 뷰를 swap하여 RightPages resizable 이벤트가 등록되어 있는 경우 제거
+                if (this.RightPages.PageContainer.is('.ui-resizable')) {
+                    this.RightPages.PageContainer.resizable("destroy");
+                }
+                this.SetRightWidth(this.LeftPages.PageContainer, this.RightPages.PageContainer);
+                this.SetSplit();
+                //this.SetRightWidth(this.LeftPages.PageContainer, this.RightPages.PageContainer);
+                //this.SetRightWidth(this.LeftPages.First.Control, this.LeftPages.Last.Control);
+            }
+            else if (this.LeftPages)
+                this.LeftPages.PageContainer.width("");
+            try {
+                // _LayoutMain 에 선언
+                // 멀티뷰 업데이트 시 처리해야 할 작업을 정의 -> 수정이 자주 일어날 수 있으므로 별도 js에 처리
+                if (_WindowTop && _WindowTop.ResponsiveLeftRightView)
+                    _WindowTop.ResponsiveLeftRightView();
+            }
+            catch (e) { }
+        };
+        PageManager.prototype.SetSplit = function () {
+            // 협업은 멀티뷰 외부에 왼쪽 메뉴가 존재한다.
+            // 멀티뷰 외부에 width 영역이 있는 경우 각 App에서 LeftMenuWidth() 함수를 추가하여 width를 숫자로 반환
+            var leftmenuwidth = 0;
+            if (_WindowTop && _WindowTop.LeftMenuWidth) {
+                leftmenuwidth = _WindowTop.LeftMenuWidth();
+            }
+            // Taskbar 영역의 width
+            var taskbarwidth = 0;
+            var taskbarVisible = this.TaskbarPages.Count() > 0;
+            if (taskbarVisible) {
+                taskbarwidth = $("#MultiView_Container #Taskbar").width();
+            }
+            if (this.RightPages) {
+                this.LeftPages.PageContainer.resizable({
+                    autoHide: true,
+                    handles: 'e',
+                    minWidth: 30,
+                    start: function () {
+                        _windowTop_MultiView_Manager.ShowDropPanel();
+                    },
+                    resize: function (e, ui) {
+                        ui.element.resizable('option', 'maxWidth', document.documentElement.clientWidth - leftmenuwidth - taskbarwidth - 30);
+                        _windowTop_MultiView_Manager.SetRightWidth(_windowTop_MultiView_Manager.LeftPages.PageContainer, _windowTop_MultiView_Manager.RightPages.PageContainer);
+                    },
+                    stop: function (e, ui) {
+                        _windowTop_MultiView_Manager.HideDropPanel();
+                        var parent = ui.element.parent();
+                        ui.element.css({
+                            width: ui.element.width() / parent.width() * 100 + "%",
+                        });
+                    },
+                    create: function (event, ui) {
+                        //console.log("resize create");
+                        if (_windowTop_MultiView_Manager.RightPages)
+                            _windowTop_MultiView_Manager.SetRightWidth(_windowTop_MultiView_Manager.LeftPages.PageContainer, _windowTop_MultiView_Manager.RightPages.PageContainer);
+                    }
+                });
+            }
+            else {
+                this.LeftPages.First.Control.resizable({
+                    autoHide: true,
+                    handles: 'e',
+                    minWidth: 30,
+                    start: function () {
+                        _windowTop_MultiView_Manager.ShowDropPanel();
+                    },
+                    resize: function (e, ui) {
+                        ui.element.resizable('option', 'maxWidth', document.documentElement.clientWidth - leftmenuwidth - taskbarwidth - 30);
+                        _windowTop_MultiView_Manager.SetRightWidth(_windowTop_MultiView_Manager.LeftPages.First.Control, _windowTop_MultiView_Manager.LeftPages.Last.Control);
+                    },
+                    stop: function (e, ui) {
+                        _windowTop_MultiView_Manager.HideDropPanel();
+                        var parent = ui.element.parent();
+                        ui.element.css({
+                            width: ui.element.width() / parent.width() * 100 + "%",
+                        });
+                    },
+                    create: function (event, ui) {
+                        //console.log("resize create");
+                        if (_windowTop_MultiView_Manager.LeftPages.Pages.Count() >= 2)
+                            _windowTop_MultiView_Manager.SetRightWidth(_windowTop_MultiView_Manager.LeftPages.First.Control, _windowTop_MultiView_Manager.LeftPages.Last.Control);
+                    }
+                });
+            }
+        };
+        PageManager.prototype.SetRightWidth = function (left, right) {
+            var parent = left.parent();
+            //alert(parent.attr('class'));
+            var remainingSpace = parent.width() - left.outerWidth();
+            if (right) {
+                //let divTwoWidth = (remainingSpace - (right.outerWidth() - right.width())) / parent.width() * 100;
+                var divTwoWidth = remainingSpace / parent.width() * 100;
+                var divOneWidth = 100 - divTwoWidth;
+                // right.width(divTwoWidth + "%");
+                // left.width(divOneWidth + "%");
+                // right.width() 함수는 % 로 지정해도 px 로 변환되어 저장됨.
+                right.css({
+                    width: divTwoWidth + "%",
+                });
+                left.css({
+                    width: divOneWidth + "%",
+                });
+            }
+        };
+        PageManager.prototype.GetWidth = function (container) {
+            var parent = container.parent();
+            //alert(parent.attr('class'));
+            //let remainingSpace = parent.width() - container.outerWidth();
+            var divTwoWidth = (container.width() / parent.width()) * 100 + "%";
+            return divTwoWidth;
+        };
+        PageManager.prototype.Test = function () {
+            alert("MultiView.Manager.Test()");
+        };
+        PageManager.prototype.Swap = function (sourceName, targetName) {
+            //alert("source = " + sourceName + ", target = " + targetName);
+            //left.PageContainer.before(right.PageContainer);
+            var task = this.TaskbarPages.FirstOrDefault(function (pages) { return pages.Name == sourceName; });
+            if (!task) {
+                this.Error("source = " + sourceName + " : 페이지를 찾을 수 없습니다.");
+                return;
+            }
+            // let leftPosition = this.LeftPages.PageContainer.offset();
+            // let rightPosition = this.RightPages.PageContainer.offset();
+            var pages = null;
+            if (this.LeftPages.Name == targetName || this.LeftPages.Pages.Any(function (page) { return page.Name == targetName; })) {
+                pages = this.LeftPages;
+                this.LeftPages = task;
+            }
+            else if (this.RightPages.Name == targetName || this.RightPages.Pages.Any(function (page) { return page.Name == targetName; })) {
+                pages = this.RightPages;
+                this.RightPages = task;
+            }
+            else {
+                this.Error("target = " + targetName + " : 페이지를 찾을 수 없습니다.");
+                return;
+            }
+            //task.PageContainer.width(pages.PageContainer.width());
+            //console.log(pages.PageContainer.css("width"));
+            var leftWidth = this.LeftPages.PageContainer.width();
+            var rightWidth = this.RightPages.PageContainer.width();
+            var leftPercent = leftWidth / (leftWidth + rightWidth) * 100;
+            leftPercent = 50;
+            //console.log(leftPercent);
+            task.PageContainer.css({
+                width: leftPercent + "%",
+            });
+            pages.Visible(false);
+            task.Visible(true);
+            this.TaskbarPages.Insert(this.TaskbarPages.IndexOf(task), pages);
+            this.TaskbarPages.Remove(task);
+            this.UpdateContents();
+            //this.MoveTo(this.RightPages.Name, this.LeftPages.Name, rightPosition);
+            //this.MoveTo(this.LeftPages.Name, this.RightPages.Name, leftPosition);
+        };
+        PageManager.prototype.TaskSwap = function (pageName) {
+            this.HideDropPanel();
+            var leftPage = this.LeftPages ? this.LeftPages.Last : null;
+            if (leftPage) {
+                // var options = { to: "#"+leftPage.Name };
+                // $( "#"+pageName ).effect( "transfer", options, 500, function() {
+                //     _windowTop_MultiView_Manager.Swap(pageName, leftPage.Name);
+                // } );
+                this.Swap(pageName, leftPage.Name);
+            }
+        };
+        /*
+         * 메인 페이지의 Title, Path 속성과 breadCrumb text 업데이트
+         * (서브페이지는 고려하지 않는다.)
+         */
+        PageManager.prototype.UpdateMainPageTitle = function (windowName, newTitle, newPath) {
+            var pages = null;
+            var pageName = windowName.replace(this._FrameIdPostfix, "");
+            var bUpdate = false;
+            if (this.RightPages && this.RightPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                if (newTitle) {
+                    this.RightPages.Title = newTitle;
+                    this.RightPages.Pages.First().Title = newTitle;
+                    bUpdate = true;
+                }
+                if (newPath) {
+                    this.RightPages.Path = newPath;
+                    this.RightPages.Pages.First().Path = newPath;
+                    bUpdate = true;
+                }
+                if (bUpdate == true) {
+                    pages = this.RightPages;
+                }
+            }
+            else if (this.LeftPages && this.LeftPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                if (newTitle) {
+                    this.LeftPages.Title = newTitle;
+                    this.LeftPages.Pages.First().Title = newTitle;
+                    bUpdate = true;
+                }
+                if (newPath) {
+                    this.LeftPages.Path = newPath;
+                    this.LeftPages.Pages.First().Path = newPath;
+                    bUpdate = true;
+                }
+                if (bUpdate == true) {
+                    pages = this.LeftPages;
+                }
+            }
+            else {
+                this.Error("UpdatePageTitle Error: " + windowName + " 을 찾을 수 없습니다.");
+                return;
+            }
+            if (bUpdate == true) {
+                if (pages && pages.First) {
+                    var first = pages.First;
+                    var li = this.GetBreadcrumbItems(first);
+                    $("ul", first.Control).html(li);
+                }
+            }
+        };
+        // private _Left : string = "Left";
+        // private _Right : string = "Right";
+        PageManager.prototype.Init = function (containerName) {
+            this.Container = $(containerName);
+            this.Container.empty();
+            this.Container.html("\n<div id=\"" + this._TitleId + "\"><span class=\"debug\">title</span></div>\n<div id=\"" + this._ContentId + "\" style=\"width:100%\"><span class=\"debug\">Content</span>\n    <div id=\"" + this._TaskbarId + "\"><span class=\"debug\">Taskbar</span>\n        <ul></ul>\n    </div>\n    <div id=\"" + this._ViewId + "\" ><span class=\"debug\">View</span>\n        <div id=\"iframe_left_panel\" class=\"iframe_left_panel\"><span class=\"debug\">iframe_left_panel</span></div>\n        <div id=\"iframe_right_panel\" class=\"iframe_right_panel\"><span class=\"debug\">iframe_right_panel</span></div>\n    </div>\n</div>");
+            this.ViewContainer = $("#" + this._ViewId, this.Container);
+            this.TaskbarContainer = $("#" + this._TaskbarId, this.Container);
+            this.LeftPages = null;
+            this.RightPages = null;
+            this.TaskbarPages = new linq.List();
+        };
+        PageManager.prototype.ShowDropPanel = function () {
+            // iframe_left_panel, iframe_right_panel 찾아서 해당 프레임 위에 올려놓기.
+            var leftPage = this.LeftPages ? (this.RightPages ? this.LeftPages.Last : this.LeftPages.First) : null;
+            var rightPage = this.RightPages ? this.RightPages.Last : (this.LeftPages.Last);
+            var leftPanel = $("#iframe_left_panel", this.ViewContainer);
+            if (leftPage && leftPanel) {
+                //$(leftPanel).width(leftPage.Control.width());
+                //$(leftPanel).height(leftPage.Control.height());
+                leftPanel.width("100%");
+                leftPanel.height("100%");
+                leftPanel.show();
+                this.MoveTo("iframe_left_panel", leftPage.Name);
+                //leftPanel.effect("fade", {}, 1000);
+            }
+            // 멀티뷰 화면을 덮을 목적이므로 leftPanel 한개로 처리하기 위해 주석 처리
+            // var rightPanel = $("#iframe_right_panel", this.ViewContainer);
+            // if (rightPage && rightPanel) {
+            //     //$(rightPanel).width(rightPage.Control.width());
+            //     //$(rightPanel).height(rightPage.Control.height());
+            //     rightPanel.width("100%");
+            //     rightPanel.height("100%");
+            //     rightPanel.show();
+            //     this.MoveTo("iframe_right_panel", rightPage.Name);
+            //     //rightPanel.effect("fade", {}, 1000);
+            // }
+        };
+        PageManager.prototype.HideDropPanel = function () {
+            // iframe_left_panel, iframe_right_panel 찾아서 hide;
+            $("#iframe_left_panel", this.ViewContainer).hide();
+            $("#iframe_right_panel", this.ViewContainer).hide();
+        };
+        PageManager.prototype.MoveTo = function (sourceId, targetId, targetPosition) {
+            //alert(options);
+            var options = {
+                //target: targetId,
+                speed: 0,
+                opacity: "1",
+                callback: function () { }
+            };
+            var source = $("#" + sourceId);
+            var target = $("#" + targetId);
+            if (targetId != "") {
+                // set primary and secondary elements to relative if not already specified a positon CSS attribute
+                var currentSourcePos = source.css("position");
+                var currentTargetPos = target.css("position");
+                if (currentSourcePos != "relative" && currentSourcePos != "absolute") {
+                    source.css("position", "relative");
+                }
+                if (currentTargetPos != "relative" && currentTargetPos != "absolute") {
+                    target.css("position", "relative");
+                }
+                // calculate y-axis movement
+                var currentSourcePosition = source.offset();
+                var currentSourceTop = currentSourcePosition.top;
+                var currentTargetPosition = targetPosition ? targetPosition : target.offset();
+                var currentTargetTop = currentTargetPosition.top;
+                var directionSourceY = '-';
+                var directionTargetY = '-';
+                var total_x = 0;
+                var total_y = 0;
+                if (currentSourceTop <= currentTargetTop) {
+                    directionSourceY = '+';
+                    total_y = currentTargetTop - currentSourceTop;
+                }
+                else {
+                    total_y = currentSourceTop - currentTargetTop;
+                }
+                //if (directionSourceY == '-') { directionTargetY = '+'; }else{ directionTargetY = '-'; }
+                directionTargetY = (directionSourceY == '-') ? '+' : '-';
+                // calculate x-axis movement
+                //let currentSourcePosition = source.offset();
+                var currentSourceLeft = currentSourcePosition.left;
+                //let currentTargetPosition = target.offset();
+                var currentTargetLeft = currentTargetPosition.left;
+                var directionSourceX = '-';
+                var directionTargetX = '-';
+                if (currentSourceLeft <= currentTargetLeft) {
+                    directionSourceX = '+';
+                    total_x = currentTargetLeft - currentSourceLeft;
+                }
+                else {
+                    total_x = currentSourceLeft - currentTargetLeft;
+                }
+                //if (directionSourceX=='-') { directionTargetX='+'; } else{ directionTargetX='-'; }
+                directionTargetX = (directionSourceX == '-') ? '+' : '-';
+                // do swapping
+                source.animate({
+                    top: directionSourceY + "=" + (total_y) + "px",
+                    left: directionSourceX + "=" + (total_x) + "px"
+                }, options.speed);
+                // obj.animate({
+                //     opacity: options.opacity
+                // }, 100, function() {
+                //     obj.animate({
+                //         top: directionSourceY + "=" + (total_y)+"px",
+                //         left: directionSourceX + "=" +(total_x)+"px"
+                //     }, options.speed, function() {
+                //         obj.animate({
+                //             opacity: "1"
+                //         }, 100);
+                //     });
+                // });
+                // $("#"+options.target).animate({
+                //     opacity: options.opacity
+                // }, 100, function() {
+                //     $("#"+options.target).animate({
+                //         top: direction_secondary_y+"="+(total_y)+"px",
+                //         left: direction_secondary_x+"="+(total_x)+"px"
+                //     }, options.speed, function() {
+                //         $("#"+options.target).animate({
+                //             opacity: "1"
+                //         }, 100, function() { 
+                //             swapping = false; // call the callback and apply the scope:
+                //                 options.callback.call(this);
+                //         });
+                //     });
+                // });
+            }
+        };
+        PageManager.prototype.MainWindow = function (windowName, callback) {
+            var pageName = windowName.replace(this._FrameIdPostfix, "");
+            var mainPageName = "";
+            if (this.LeftPages && this.LeftPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                mainPageName = this.LeftPages.MainPageName;
+            }
+            else if (this.RightPages && this.RightPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                mainPageName = this.RightPages.MainPageName;
+            }
+            else if (this.TaskbarPages && this.TaskbarPages.Any(function (pages) { return pages.Name == pageName || pages.MainPageName == pageName; })) {
+                mainPageName = this.TaskbarPages.FirstOrDefault(function (pages) { return pages.Name == pageName || pages.MainPageName == pageName; }).MainPageName;
+            }
+            else {
+                this.Log(windowName + " 을 찾을 수 없습니다.");
+                return null;
+            }
+            var mainWindowName = mainPageName + this._FrameIdPostfix;
+            var frame = $("#" + mainWindowName, this.ViewContainer)[0];
+            var mainWindow = frame.contentWindow;
+            if (callback) {
+                callback(mainWindow);
+            }
+            return mainWindow;
+        };
+        PageManager.prototype.SubWindow = function (windowName, callback) {
+            var pageName = windowName.replace(this._FrameIdPostfix, "");
+            var subPageName = "";
+            if (this.LeftPages && !this.LeftPages.IsSingleOrEmpty && this.LeftPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                subPageName = this.LeftPages.Last.Name;
+            }
+            else if (this.RightPages && !this.RightPages.IsSingleOrEmpty && this.RightPages.Pages.Any(function (page) { return page.Name == pageName; })) {
+                subPageName = this.RightPages.Last.Name;
+            }
+            else if (this.TaskbarPages && this.TaskbarPages.Any(function (pages) { return pages.Name == pageName || pages.MainPageName == pageName; })) {
+                subPageName = this.TaskbarPages.FirstOrDefault(function (pages) { return pages.Name == pageName || pages.MainPageName == pageName; }).Last.Name;
+            }
+            else {
+                this.Log(windowName + " 의 서브를 찾을 수 없습니다.");
+                return null;
+            }
+            var subWindowName = subPageName + this._FrameIdPostfix;
+            var frame = $("#" + subWindowName, this.ViewContainer)[0];
+            var subWindow = frame.contentWindow;
+            if (callback) {
+                callback(subWindow);
+            }
+            return subWindow;
+        };
+        PageManager.prototype.Log = function (msg) {
+            // if (console && console.log)
+            //     console.log(msg);
+        };
+        PageManager.prototype.Error = function (msg) {
+            if (console && console.error)
+                console.error(msg);
+        };
+        return PageManager;
+    }());
+    PageManager._MaxId = 0;
+    MultiView.PageManager = PageManager;
+})(MultiView = exports.MultiView || (exports.MultiView = {}));
+if (!_WindowTop) {
+    var _WindowTop = window;
+}
+var _windowTop_MultiView_Manager;
+// Load the application once the DOM is ready, using `jQuery.ready`:
+$(function () {
+    var containerName = "#MultiView_Container";
+    // Finally, we kick things off by creating the **App**.
+    _windowTop_MultiView_Manager = new MultiView.PageManager();
+    _windowTop_MultiView_Manager.Init(containerName);
+    //_windowTop_MultiView_Manager.NewPage("Log List", "http://localhost/ezWorkspace/Admin/Log/Index");
+    //_windowTop_MultiView_Manager.NewPage(PageList[0].Title, PageList[0].Url);
+    //man.NewPage(MultiView.Groups.NewsFeed, "", "http://localhost/ezWorkspace/Admin/Log/Summary");
+    _WindowTop.MultiView_Manager = _windowTop_MultiView_Manager;
+});
+_WindowTop.TaskDraggable = function (container) {
+    //$(".draggable", container).draggable({
+    $(".draggable", _windowTop_MultiView_Manager.Container).draggable({
+        cursor: 'move',
+        containment: 'document',
+        stack: '#MultiView_Container .Pages',
+        //revert: true,
+        helper: function (event) {
+            //var html = event.target.outerHTML;
+            var target = $(event.target);
+            var id = target.attr('id');
+            var text = target.text();
+            var width = 50;
+            var height = 140;
+            //let li = `<span id="${id}" class="TaskSpan draggable ui-draggable ui-draggable-handle" style="position: relative; ">${text}</span>`;
+            var li = "<span id=\"" + id + "\" class=\"TaskSpan draggable ui-draggable ui-draggable-handle\" style=\"position: relative; border: 3px solid #0071bc; background:#fff; width:60px; height:initial; padding-bottom:40px;\" >" + text + "</span>";
+            return li;
+            //return '<div id="draggableHelper">I am a helper - drag me!</div>';
+        },
+        start: function (event, ui) {
+            //$(this).css( "cursor","move" );
+            //$(this).effect("highlight", {}, 1000);
+            if (_windowTop_MultiView_Manager) {
+                _windowTop_MultiView_Manager.ShowDropPanel();
+                _windowTop_MultiView_Manager.Dragging = true;
+            }
+            //$(this).css("z-index", a++); 
+        },
+        stop: function () {
+            //$(this).css("cursor","default");
+            if (_windowTop_MultiView_Manager) {
+                _windowTop_MultiView_Manager.HideDropPanel();
+                _windowTop_MultiView_Manager.Dragging = false;
+            }
+            //$(this).css("cursor","default");
+            //$(".stack").css('z-index', '500');
+        }
+    });
+};
+_WindowTop.TaskDroppable = function (container) {
+    $(".droppable", _windowTop_MultiView_Manager.Container).droppable({
+        accept: 'span.TaskSpan',
+        hoverClass: 'task-drag-hovered',
+        drop: function (event, ui) {
+            if (_windowTop_MultiView_Manager && _windowTop_MultiView_Manager.Dragging) {
+                _windowTop_MultiView_Manager.HideDropPanel();
+                var draggable = ui.draggable;
+                var droppable = this;
+                var options = { to: "#" + $(droppable).attr('id') };
+                $("#" + $(draggable).attr('id')).effect("transfer", options, 500);
+                _windowTop_MultiView_Manager.Swap($(draggable).attr('id'), $(droppable).attr('id'));
+            }
+            return true;
+            // alert($(draggable).attr('id'));
+            // alert($(droppable).attr('id'));
+        }
+    });
+};
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * LinQ to TypeScript
+ *
+ * Documentation from LinQ .NET specification (https://msdn.microsoft.com/en-us/library/system.linq.enumerable.aspx)
+ *
+ * Created by Flavio Corpa (@kutyel)
+ * Copyright © 2016 Flavio Corpa. All rights reserved.
+ *
+ */
+var List = (function () {
+    /**
+     * Defaults the elements of the list
+     */
+    function List(elements) {
+        if (elements === void 0) { elements = []; }
+        this._elements = elements;
+    }
+    /**
+     * Adds an object to the end of the List<T>.
+     */
+    List.prototype.Add = function (element) {
+        this._elements.push(element);
+    };
+    /**
+     * Adds the elements of the specified collection to the end of the List<T>.
+     */
+    List.prototype.AddRange = function (elements) {
+        (_a = this._elements).push.apply(_a, elements);
+        var _a;
+    };
+    /**
+     * Applies an accumulator function over a sequence.
+     */
+    List.prototype.Aggregate = function (accumulator, initialValue) {
+        return this._elements.reduce(accumulator, initialValue);
+    };
+    /**
+     * Determines whether all elements of a sequence satisfy a condition.
+     */
+    List.prototype.All = function (predicate) {
+        return this._elements.every(predicate);
+    };
+    List.prototype.Any = function (predicate) {
+        return predicate ? this._elements.some(predicate) : this._elements.length > 0;
+    };
+    List.prototype.Average = function (transform) {
+        return this.Sum(transform) / this.Count(transform);
+    };
+    /**
+     * Concatenates two sequences.
+     */
+    List.prototype.Concat = function (list) {
+        return new List(this._elements.concat(list.ToArray()));
+    };
+    /**
+     * Determines whether an element is in the List<T>.
+     */
+    List.prototype.Contains = function (element) {
+        return this._elements.some(function (x) { return x === element; });
+    };
+    List.prototype.Count = function (predicate) {
+        return predicate ? this.Where(predicate).Count() : this._elements.length;
+    };
+    /**
+     * Returns the elements of the specified sequence or the type parameter's default value
+     * in a singleton collection if the sequence is empty.
+     */
+    List.prototype.DefaultIfEmpty = function (defaultValue) {
+        return this.Count() ? this : new List([defaultValue]);
+    };
+    /**
+     * Returns distinct elements from a sequence by using the default equality comparer to compare values.
+     */
+    List.prototype.Distinct = function () {
+        return this.Where(function (value, index, iter) { return iter.indexOf(value) === index; });
+    };
+    /**
+     * Returns distinct elements from a sequence according to specified key selector.
+     */
+    List.prototype.DistinctBy = function (keySelector) {
+        var groups = this.GroupBy(keySelector, function (obj) { return obj; });
+        var results = new List();
+        for (var index in groups) {
+            if (groups.hasOwnProperty(index)) {
+                results.Add(groups[index][0]);
+            }
+        }
+        return results;
+    };
+    /**
+     * Returns the element at a specified index in a sequence.
+     */
+    List.prototype.ElementAt = function (index) {
+        if (index < this.Count()) {
+            return this._elements[index];
+        }
+        else {
+            var MSG = 'ArgumentOutOfRangeException: index is less than 0 or greater than or equal to the number of elements in source.';
+            throw new Error(MSG);
+        }
+    };
+    /**
+     * Returns the element at a specified index in a sequence or a default value if the index is out of range.
+     */
+    List.prototype.ElementAtOrDefault = function (index) {
+        return this.ElementAt(index) || undefined;
+    };
+    /**
+     * Produces the set difference of two sequences by using the default equality comparer to compare values.
+     */
+    List.prototype.Except = function (source) {
+        return this.Where(function (x) { return !source.Contains(x); });
+    };
+    List.prototype.First = function (predicate) {
+        if (this.Count()) {
+            return predicate ? this.Where(predicate).First() : this._elements[0];
+        }
+        else {
+            throw new Error('InvalidOperationException: The source sequence is empty.');
+        }
+    };
+    List.prototype.FirstOrDefault = function (predicate) {
+        return this.Count(predicate) ? this.First(predicate) : undefined;
+    };
+    /**
+     * Performs the specified action on each element of the List<T>.
+     */
+    List.prototype.ForEach = function (action) {
+        return this._elements.forEach(action);
+    };
+    /**
+     * Groups the elements of a sequence according to a specified key selector function.
+     */
+    List.prototype.GroupBy = function (grouper, mapper) {
+        return this.Aggregate(function (ac, v) { return (ac[grouper(v)] ? ac[grouper(v)].push(mapper(v)) : ac[grouper(v)] = [mapper(v)], ac); }, {});
+    };
+    /**
+     * Correlates the elements of two sequences based on equality of keys and groups the results.
+     * The default equality comparer is used to compare keys.
+     */
+    List.prototype.GroupJoin = function (list, key1, key2, result) {
+        return this.Select(function (x, y) { return result(x, list.Where(function (z) { return key1(x) === key2(z); })); });
+    };
+    /**
+     * Returns the index of the first occurence of an element in the List.
+     */
+    List.prototype.IndexOf = function (element) {
+        return this._elements.indexOf(element);
+    };
+    /**
+     * Inserts an element into the List<T> at the specified index.
+     */
+    List.prototype.Insert = function (index, element) {
+        if (index < 0 || index > this._elements.length) {
+            throw new Error('Index is out of range.');
+        }
+        this._elements.splice(index, 0, element);
+    };
+    /**
+     * Produces the set intersection of two sequences by using the default equality comparer to compare values.
+     */
+    List.prototype.Intersect = function (source) {
+        return this.Where(function (x) { return source.Contains(x); });
+    };
+    /**
+     * Correlates the elements of two sequences based on matching keys. The default equality comparer is used to compare keys.
+     */
+    List.prototype.Join = function (list, key1, key2, result) {
+        return this.SelectMany(function (x) { return list.Where(function (y) { return key2(y) === key1(x); }).Select(function (z) { return result(x, z); }); });
+    };
+    List.prototype.Last = function (predicate) {
+        if (this.Count()) {
+            return predicate ? this.Where(predicate).Last() : this._elements[this.Count() - 1];
+        }
+        else {
+            throw Error('InvalidOperationException: The source sequence is empty.');
+        }
+    };
+    List.prototype.LastOrDefault = function (predicate) {
+        return this.Count(predicate) ? this.Last(predicate) : undefined;
+    };
+    /**
+     * Returns the maximum value in a generic sequence.
+     */
+    List.prototype.Max = function () {
+        return this.Aggregate(function (x, y) { return x > y ? x : y; });
+    };
+    /**
+     * Returns the minimum value in a generic sequence.
+     */
+    List.prototype.Min = function () {
+        return this.Aggregate(function (x, y) { return x < y ? x : y; });
+    };
+    /**
+     * Sorts the elements of a sequence in ascending order according to a key.
+     */
+    List.prototype.OrderBy = function (keySelector) {
+        return new OrderedList(this._elements, ComparerHelper.ComparerForKey(keySelector, false));
+    };
+    /**
+     * Sorts the elements of a sequence in descending order according to a key.
+     */
+    List.prototype.OrderByDescending = function (keySelector) {
+        return new OrderedList(this._elements, ComparerHelper.ComparerForKey(keySelector, true));
+    };
+    /**
+     * Performs a subsequent ordering of the elements in a sequence in ascending order according to a key.
+     */
+    List.prototype.ThenBy = function (keySelector) {
+        return this.OrderBy(keySelector);
+    };
+    /**
+     * Performs a subsequent ordering of the elements in a sequence in descending order, according to a key.
+     */
+    List.prototype.ThenByDescending = function (keySelector) {
+        return this.OrderByDescending(keySelector);
+    };
+    /**
+     * Removes the first occurrence of a specific object from the List<T>.
+     */
+    List.prototype.Remove = function (element) {
+        return this.IndexOf(element) !== -1 ? (this.RemoveAt(this.IndexOf(element)), true) : false;
+    };
+    /**
+     * Removes all the elements that match the conditions defined by the specified predicate.
+     * (bugfix : 단순히 조건에 해당하는 리스트만 리턴 -> 조건에 해당하는 리스트 삭제처리)
+     */
+    List.prototype.RemoveAll = function (predicate) {
+        if (predicate) {
+            var list = this.Where(this._negate(predicate));
+            this._elements = list._elements;
+            return list;
+        }
+        else {
+            var list = this.ToList();
+            this._elements = new Array();
+        }
+    };
+    /**
+     * Removes the element at the specified index of the List<T>.
+     */
+    List.prototype.RemoveAt = function (index) {
+        this._elements.splice(index, 1);
+    };
+    /**
+     * Reverses the order of the elements in the entire List<T>.
+     */
+    List.prototype.Reverse = function () {
+        return new List(this._elements.reverse());
+    };
+    /**
+     * Projects each element of a sequence into a new form.
+     */
+    List.prototype.Select = function (mapper) {
+        return new List(this._elements.map(mapper));
+    };
+    /**
+     * Projects each element of a sequence to a List<any> and flattens the resulting sequences into one sequence.
+     */
+    List.prototype.SelectMany = function (mapper) {
+        var _this = this;
+        return this.Aggregate(function (ac, v, i) { return (ac.AddRange(_this.Select(mapper).ElementAt(i).ToArray()), ac); }, new List());
+    };
+    /**
+     * Determines whether two sequences are equal by comparing the elements by using the default equality comparer for their type.
+     */
+    List.prototype.SequenceEqual = function (list) {
+        return !!this._elements.reduce(function (x, y, z) { return list._elements[z] === y ? x : undefined; });
+    };
+    /**
+     * Returns the only element of a sequence, and throws an exception if there is not exactly one element in the sequence.
+     */
+    List.prototype.Single = function () {
+        if (this.Count() !== 1) {
+            throw new Error('The collection does not contain exactly one element.');
+        }
+        else {
+            return this.First();
+        }
+    };
+    /**
+     * Returns the only element of a sequence, or a default value if the sequence is empty;
+     * this method throws an exception if there is more than one element in the sequence.
+     */
+    List.prototype.SingleOrDefault = function () {
+        return this.Count() ? this.Single() : undefined;
+    };
+    /**
+     * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+     */
+    List.prototype.Skip = function (amount) {
+        return new List(this._elements.slice(Math.max(0, amount)));
+    };
+    /**
+     * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+     */
+    List.prototype.SkipWhile = function (predicate) {
+        var _this = this;
+        return this.Skip(this.Aggregate(function (ac, val) { return predicate(_this.ElementAt(ac)) ? ++ac : ac; }, 0));
+    };
+    List.prototype.Sum = function (transform) {
+        return transform ? this.Select(transform).Sum() : this.Aggregate(function (ac, v) { return ac += (+v); }, 0);
+    };
+    /**
+     * Returns a specified number of contiguous elements from the start of a sequence.
+     */
+    List.prototype.Take = function (amount) {
+        return new List(this._elements.slice(0, Math.max(0, amount)));
+    };
+    /**
+     * Returns elements from a sequence as long as a specified condition is true.
+     */
+    List.prototype.TakeWhile = function (predicate) {
+        var _this = this;
+        return this.Take(this.Aggregate(function (ac, val) { return predicate(_this.ElementAt(ac)) ? ++ac : ac; }, 0));
+    };
+    /**
+     * Copies the elements of the List<T> to a new array.
+     */
+    List.prototype.ToArray = function () {
+        return this._elements;
+    };
+    /**
+     * Creates a Dictionary<TKey, TValue> from a List<T> according to a specified key selector function.
+     */
+    List.prototype.ToDictionary = function (key, value) {
+        var _this = this;
+        return this.Aggregate(function (o, v, i) { return (o[_this.Select(key).ElementAt(i).toString()] = value ? _this.Select(value).ElementAt(i) : v, o); }, {});
+    };
+    /**
+     * Creates a List<T> from an Enumerable.List<T>.
+     */
+    List.prototype.ToList = function () {
+        return this;
+    };
+    /**
+     * Creates a Lookup<TKey, TElement> from an IEnumerable<T> according to specified key selector and element selector functions.
+     */
+    List.prototype.ToLookup = function (keySelector, elementSelector) {
+        return this.GroupBy(keySelector, elementSelector);
+    };
+    /**
+     * Produces the set union of two sequences by using the default equality comparer.
+     */
+    List.prototype.Union = function (list) {
+        return this.Concat(list).Distinct();
+    };
+    /**
+     * Filters a sequence of values based on a predicate.
+     */
+    List.prototype.Where = function (predicate) {
+        return new List(this._elements.filter(predicate));
+    };
+    /**
+     * Applies a specified function to the corresponding elements of two sequences, producing a sequence of the results.
+     */
+    List.prototype.Zip = function (list, result) {
+        var _this = this;
+        return list.Count() < this.Count() ? list.Select(function (x, y) { return result(_this.ElementAt(y), x); }) :
+            this.Select(function (x, y) { return result(x, list.ElementAt(y)); });
+    };
+    /**
+     * Creates a function that negates the result of the predicate
+     */
+    List.prototype._negate = function (predicate) {
+        return function () {
+            return !predicate.apply(this, arguments);
+        };
+    };
+    return List;
+}());
+exports.List = List;
+var ComparerHelper = (function () {
+    function ComparerHelper() {
+    }
+    ComparerHelper.ComparerForKey = function (_keySelector, descending) {
+        return function (a, b) {
+            return ComparerHelper.Compare(a, b, _keySelector, descending);
+        };
+    };
+    ComparerHelper.Compare = function (a, b, _keySelector, descending) {
+        var sortKeyA = _keySelector(a);
+        var sortKeyB = _keySelector(b);
+        if (sortKeyA > sortKeyB) {
+            if (!descending) {
+                return 1;
+            }
+            else {
+                return -1;
+            }
+        }
+        else if (sortKeyA < sortKeyB) {
+            if (!descending) {
+                return -1;
+            }
+            else {
+                return 1;
+            }
+        }
+        else {
+            return 0;
+        }
+    };
+    ComparerHelper.ComposeComparers = function (previousComparer, currentComparer) {
+        return function (a, b) {
+            var resultOfPreviousComparer = previousComparer(a, b);
+            if (!resultOfPreviousComparer) {
+                return currentComparer(a, b);
+            }
+            else {
+                return resultOfPreviousComparer;
+            }
+        };
+    };
+    return ComparerHelper;
+}());
+/**
+ * Represents a sorted sequence. The methods of this class are implemented by using deferred execution.
+ * The immediate return value is an object that stores all the information that is required to perform the action.
+ * The query represented by this method is not executed until the object is enumerated either by
+ * calling its ToDictionary, ToLookup, ToList or ToArray methods
+ */
+var OrderedList = (function (_super) {
+    __extends(OrderedList, _super);
+    function OrderedList(elements, _comparer) {
+        var _this = _super.call(this, elements) || this;
+        _this._comparer = _comparer;
+        _this._elements.sort(_this._comparer);
+        return _this;
+    }
+    /**
+     * Performs a subsequent ordering of the elements in a sequence in ascending order according to a key.
+     * @override
+     */
+    OrderedList.prototype.ThenBy = function (keySelector) {
+        return new OrderedList(this._elements, ComparerHelper.ComposeComparers(this._comparer, ComparerHelper.ComparerForKey(keySelector, false)));
+    };
+    /**
+     * Performs a subsequent ordering of the elements in a sequence in descending order, according to a key.
+     * @override
+     */
+    OrderedList.prototype.ThenByDescending = function (keySelector) {
+        return new OrderedList(this._elements, ComparerHelper.ComposeComparers(this._comparer, ComparerHelper.ComparerForKey(keySelector, true)));
+    };
+    return OrderedList;
+}(List));
+var Enumerable = (function () {
+    function Enumerable() {
+    }
+    /**
+     * Generates a sequence of integral numbers within a specified range.
+     */
+    Enumerable.Range = function (start, count) {
+        var result = new List();
+        while (count--) {
+            result.Add(start++);
+        }
+        return result;
+    };
+    /**
+     * Generates a sequence that contains one repeated value.
+     */
+    Enumerable.Repeat = function (element, count) {
+        var result = new List();
+        while (count--) {
+            result.Add(element);
+        }
+        return result;
+    };
+    return Enumerable;
+}());
+exports.Enumerable = Enumerable;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(0);
+
+
+/***/ })
+/******/ ]);

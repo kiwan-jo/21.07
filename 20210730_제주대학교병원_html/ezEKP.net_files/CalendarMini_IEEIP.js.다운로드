@@ -1,0 +1,646 @@
+﻿var sStartDate, sEndDate;
+var DefaultView = 0;
+var sDate = new Date();
+var oBeforeDate, oThisDate;
+var oThisMonth;
+var g_selDivID = null;
+var g_selTRID = null;
+var g_selTDID = null;
+var dayOfWeeks;
+var typeCal = 2;
+
+
+var idtype = "P";
+var idlist = "";
+var firstYN = false;
+var groupid = "";
+var nowDate = new Date();
+var nowDay = nowDate.getFullYear() + "-" + leadingZeros(nowDate.getMonth() + 1, 2) + "-" + leadingZeros(nowDate.getDate(), 2);
+
+function CalendarMiniView(pTagetID) {
+    document.getElementById(pTagetID).innerHTML = "";
+
+    var objElm = document.getElementById(pTagetID);
+    if (objElm) {
+        var mTable = document.createElement("TABLE");
+        mTable.className = "calendar_mini_title";
+        mTable.setAttribute("id", "MiniCalendar")
+        mTable.setAttribute("cellpadding", "0");
+        mTable.setAttribute("cellspacing", "0");
+        mTable.setAttribute("border", "0");
+        var mTr = document.createElement("TR");
+
+        var mTd = document.createElement("TD");
+        mTd.className = "btn_prev"
+        var mSpan = document.createElement("SPAN");
+        mSpan.className = "main_img main_icon_arrow_left";
+        mSpan.setAttribute("onclick", "preMonth()");
+        mTd.appendChild(mSpan);
+        mTr.appendChild(mTd);
+
+        var mTd = document.createElement("TD");
+        mTd.className = "calendar_mini_day"
+        mTd.style.cursor = "pointer";
+        mTd.onclick = new Function("calSelect()");
+
+        var mYear = document.createElement("SPAN");        
+        mYear.setAttribute("name", "iYear");
+        mYear.setAttribute("id", "iYear");
+        mYear.innerText = sDate.getFullYear();
+        mTd.appendChild(mYear);
+
+        var mPoint = document.createElement("SPAN");        
+        mPoint.innerText = ".";
+        mTd.appendChild(mPoint);
+
+        var mMon = document.createElement("SPAN");
+        mMon.setAttribute("name", "iMon");
+        mMon.setAttribute("id", "iMon");
+        mMon.innerText = leadingZeros((sDate.getMonth() + 1), 2);
+        mTd.appendChild(mMon);        
+
+        mTr.appendChild(mTd);
+
+        var mTd = document.createElement("TD");
+        mTd.className = "btn_next"
+        var mSpan = document.createElement("SPAN");
+        mSpan.className = "main_img main_icon_arrow_right";
+        mSpan.setAttribute("onclick", "nextMonth()");
+        mTd.appendChild(mSpan);
+        mTr.appendChild(mTd);
+
+        mTable.appendChild(mTr);
+        objElm.appendChild(mTable);
+
+        var oTable = document.createElement("TABLE");
+        oTable.setAttribute("id", "");
+        oTable.setAttribute("cellpadding", "0");
+        oTable.setAttribute("cellspacing", "0");
+        oTable.setAttribute("border", "0");
+        oTable.setAttribute("width", "100%");
+        oTable.className = "calendar_mini";
+
+        var oTBody = GetTableMiniBodyObj();
+        oTable.appendChild(oTBody);
+        objElm.appendChild(oTable);
+    }
+}
+
+function GetTableMiniBodyObj() {
+    var year = document.getElementById("iYear").innerHTML;
+    var month = document.getElementById("iMon").innerHTML;
+
+    if (DefaultView == 0)
+        dayOfWeeks = strLang5_1; 
+    else if (DefaultView == 1)
+        dayOfWeeks = strLang6_1; 
+
+    oBeforeDate = new Date(year, month - 1, 0);
+    oThisDate = new Date(year, month - 1, 1); 
+
+    var oBeforeMaxDay = oBeforeDate.getDate();
+    var startThisDay = oThisDate.getDay();
+    oThisMonth = oThisDate.getMonth();
+
+    if (oThisMonth == 12) {
+        oThisMonth = 0;
+    }
+
+    oBeforeDate.setDate(oBeforeMaxDay - startThisDay + 1 + DefaultView); 
+
+    var oTbody = document.createElement("TBODY");
+    var objTr = document.createElement("TR");
+
+    
+    for (var j = 0; j < 7; j++) {
+        var objTD = document.createElement("TH");
+        objTD.setAttribute("scope", "col");
+
+        if (DefaultView == 0 && j == 0)
+            objTD.className = "sun";
+        else if (DefaultView == 0 && j == 6)
+            objTD.className = "sat";
+
+        if (DefaultView == 1 && j == 6)
+            objTD.className = "sun";
+        else if (DefaultView == 1 && j == 5)
+            objTD.className = "sat";
+
+        var oText = document.createTextNode(dayOfWeeks.split(";")[j]);
+        objTD.appendChild(oText);
+        objTr.appendChild(objTD);
+        objTD = null;
+    }
+    oTbody.appendChild(objTr);
+    
+    if (oBeforeMaxDay != 0) {
+        oThisDate = oBeforeDate;
+    }
+    sStartDate = oThisDate.getFullYear() + "-" + (oThisDate.getMonth() + 1) + "-" + oThisDate.getDate();
+
+    
+    for (var i = 0; i < 6; i++) {
+        var objTr = document.createElement("TR");
+        objTr.setAttribute("id", "TR_" + oThisMonth + "_" + i);
+
+        for (var j = 0; j < 7; j++) {
+            var objTD = MonthMiniData(oThisDate);
+            objTr.appendChild(objTD);
+            objTD = null;
+        }
+        oTbody.appendChild(objTr);
+    }
+    
+    oThisDate.setDate(oThisDate.getDate() - 1);
+    sEndDate = oThisDate.getFullYear() + "-" + (oThisDate.getMonth() + 1) + "-" + oThisDate.getDate();
+    objTr = null;
+
+    return oTbody;
+}
+
+
+function MonthMiniData(oThisDate) {
+
+    var objTd = document.createElement("TD");
+
+    var divID = (oThisDate.getFullYear()) + "-" + leadingZeros((oThisDate.getMonth() + 1), 2) + "-" + leadingZeros(oThisDate.getDate(), 2);
+    
+    var className = "";
+    if (divID == nowDay) {
+        className = "today";  
+    }
+
+    var oDiv = document.createElement("DIV");
+    oDiv.setAttribute("onclick", "DayOnMouseClick(this);");
+    //oDiv.setAttribute("ondblclick", "MonthMiniDbClick()");
+
+    var pDateData = oThisDate.getDate();
+
+    
+    if (oThisMonth != oThisDate.getMonth()) 
+    {
+        objTd.className = "gray";
+        className = " gray";
+    }
+    else if (oThisDate.getDay() == 0)  
+        className = " sun";
+    else if (oThisDate.getDay() == 6)  
+        className = " sat";
+
+    objTd.className = className;
+
+    var oText = document.createTextNode(pDateData);
+    oDiv.appendChild(oText);
+    
+    oDiv.setAttribute("id", "TDMINI_" + divID + "_Day");
+    oDiv.setAttribute("dispDate", divID);
+    objTd.appendChild(oDiv);
+    oThisDate.setDate(oThisDate.getDate() + 1);
+    return objTd;
+}
+
+
+function DayOnMouseClick(event) {
+    if (!event) event = window.event;
+
+    if (document.getElementById(g_selTDID)) {
+        document.getElementById(g_selTDID).style.backgroundColor = "";
+        document.getElementById(g_selTDID).style.color = "";
+    }
+    if (document.getElementById(g_selTRID))
+        document.getElementById(g_selTRID).style.backgroundColor = "";
+  
+        document.getElementById(GetAttribute(event, "id")).style.backgroundColor = "#ffd3d3";
+        document.getElementById(GetAttribute(event, "id")).style.borderRadius = "20px";
+        document.getElementById(GetAttribute(event, "id")).style.padding = "0px 5px";
+        g_selTRID = GetAttribute(event.parentNode.parentNode, "id");
+        g_selTDID = GetAttribute(event, "id");
+
+        var sDate = GetAttribute(event, "id").substring(7, 17);
+        date = sDate;
+
+        if (document.getElementById(g_selTDID).parentNode.className == "today")
+            document.getElementById(g_selTDID).style.color = "#cc0001";
+        
+        getScheduleList(date, pMode);
+        
+}
+
+var MiniHttp;
+function CalendarMiniDataSource() {
+    if (!document.getElementById("MiniCalendar"))
+        return;
+    MiniHttp = createXMLHttpRequest();
+    var xmlpara = createXmlDom();
+    var objNode;
+    createNodeInsert(xmlpara, objNode, "DATA");
+    createNodeAndInsertText(xmlpara, objNode, "STARTDATE", sStartDate);
+    createNodeAndInsertText(xmlpara, objNode, "ENDDATE", sEndDate);
+    createNodeAndInsertText(xmlpara, objNode, "APP", "0");
+    createNodeAndInsertText(xmlpara, objNode, "GROUPID", groupid);
+    //createNodeAndInsertText(xmlpara, objNode, "IDLIST", (idlist == "") ? idtype : idlist);
+    createNodeAndInsertText(xmlpara, objNode, "IDLIST", "ALL_PORTLET");
+    MiniHttp.open("POST", "/myoffice/ezSchedule/remote/schedule_get_list.aspx", true);
+    MiniHttp.onreadystatechange = getCalendarMiniDataSource_after;
+    MiniHttp.send(xmlpara);
+    
+    //협업일정 연동
+    if (typeof (collaborationSchView) != "undefined") {
+        if (collaborationSchView == "Y") {
+            if (typeof (GetMiniCalendarData) === "function") {
+                GetMiniCalendarData(sStartDate, sEndDate);
+            }
+        }
+    }
+}
+
+function sTempData() {
+}
+
+
+
+function getCalendarMiniDataSource_after(){
+    var tempData = new Array();
+    if (MiniHttp == null || MiniHttp.readyState != 4) return;
+
+    try {
+
+        if (MiniHttp.responseText == "") return;
+        var listNode = loadXMLString(MiniHttp.responseText);
+        var nlength = SelectNodes(listNode, "DATA/ROW").length;
+        var k = 0;
+        for (var i = 0; i < nlength; i++) {
+            var objNodes = SelectNodes(listNode, "DATA/ROW")[i];
+
+            var _Dtstart = SelectSingleNodeValue(objNodes, "STARTDATE");
+            var _Dtend = SelectSingleNodeValue(objNodes, "ENDDATE");
+            var DataSDT = new Date(_Dtstart.substring(0, 4), parseInt(_Dtstart.substring(5, 7), 10) - 1, parseInt(_Dtstart.substring(8, 10), 10), parseInt(_Dtstart.substring(11, 13), 10), parseInt(_Dtstart.substring(14, 16), 10));
+            var DataEDT = new Date(_Dtend.substring(0, 4), parseInt(_Dtend.substring(5, 7), 10) - 1, parseInt(_Dtend.substring(8, 10), 10), parseInt(_Dtend.substring(11, 13), 10), parseInt(_Dtend.substring(14, 16), 10));
+
+            if (_Dtstart.substring(0, 10) != _Dtend.substring(0, 10)) { 
+
+                var betweenDay = new Date(_Dtend.substring(0, 10)) - new Date(_Dtstart.substring(0, 10));
+                var day = 1000 * 60 * 60 * 24;
+                betweenDay = parseInt(betweenDay / day, 10);
+
+                for (var j = 0; j <= betweenDay; j++) {
+
+                    var trID = DataSDT.getFullYear() + "-" + leadingZeros(parseInt(DataSDT.getMonth() + 1), 2, 10) + "-" + leadingZeros(DataSDT.getDate(), 2);
+                    tempData[k] = new sTempData();
+                    tempData[k].trID = trID;
+
+                    MiniDataBind(tempData[k]);
+                    DataSDT.setDate(DataSDT.getDate() + 1);
+                    k += 1;
+                }
+            } else {
+                var trID = DataSDT.getFullYear() + "-" + leadingZeros(parseInt(DataSDT.getMonth() + 1), 2, 10) + "-" + leadingZeros(DataSDT.getDate(), 2);
+                tempData[k] = new sTempData();
+                tempData[k].trID = trID;
+
+                MiniDataBind(tempData[k]);
+                k += 1;
+            }
+            DataSDT = null;
+            DataEDT = null;
+        }
+
+        xmlhttp = null;
+        tempData = null;
+    }
+    catch (e) {
+        alert("getCalendarMiniDataSource_after : " + e.description);
+    }
+}
+
+function MiniDataBind(oAppointment) {
+
+    var objElm = document.getElementById("TDMINI_" + oAppointment.trID + "_Day");
+    if (objElm) {
+        //objElm.style.fontWeight = "bold"
+        objElm.style.textDecoration = "underline"
+    }
+}
+
+
+function mfGetUTFIsoDate(iYr, iMon, iDate, iHr, iMin) {
+    var oDate = new Date();
+    oDate.setFullYear(iYr, iMon, iDate);
+    oDate.setHours(iHr, iMin, 0);
+
+    var iYear = oDate.getFullYear();
+    var szMonth = oDate.getMonth() + 1; 
+    var szDate = oDate.getDate();
+    var szHours = oDate.getHours();
+    var szMinutes = oDate.getMinutes();
+
+    if (szMonth < 10) {
+        szMonth = "0" + szMonth;
+    }
+
+    if (szDate < 10) {
+        szDate = "0" + szDate;
+    }
+
+    if (szHours < 10) {
+        szHours = "0" + szHours;
+    }
+
+    if (szMinutes < 10) {
+        szMinutes = "0" + szMinutes;
+    }
+
+    return (String(iYear + "-" + szMonth + "-" + szDate + "T" + szHours + ":" + szMinutes + ":00.000Z"));
+}
+
+function leadingZeros(n, digits) {
+    var zero = '';
+    n = n.toString();
+
+    if (n.length < digits) {
+        for (var i = 0; i < digits - n.length; i++)
+            zero = '0' + zero;
+    }
+    return zero + n;
+}
+
+mfFormatTime.szFormat = (null == this.timeFormat) ? "[tt] [h]:[mm]" : this.timeFormat;
+function mfFormatTime(iMin) {
+    var iHr = Math.floor(iMin / 60);
+    var iMn = iMin % 60;
+    var L_AM_Text = strLang1;
+    var L_PM_Text = strLang2;
+    var szRet = mfFormatTime.szFormat;
+    if (-1 < szRet.search(/\[t/g)) 
+    {
+        szRet = szRet.replace(/\[tt\]/g, (iHr > 11 && iHr < 24) ? L_PM_Text : L_AM_Text);
+        szRet = szRet.replace(/\[t\]/g, (iHr > 11 && iHr < 24) ? L_PM_Text : L_AM_Text);
+    }
+    if (-1 < szRet.search(/\[h/g)) 
+    {
+        if (iHr > 12) iHr -= 12;
+        if (iHr == 0) iHr = 12;
+        szRet = szRet.replace(/\[hh\]/g, iHr > 9 ? iHr : "0" + iHr);
+        szRet = szRet.replace(/\[h\]/g, iHr);
+    }
+    if (-1 < szRet.search(/\[H/g)) 
+    {
+        szRet = szRet.replace(/\[HH\]/g, iHr > 9 ? iHr : "0" + iHr);
+        szRet = szRet.replace(/\[H\]/g, iHr);
+    }
+    if (-1 < szRet.search(/\[m/g)) {
+        szRet = szRet.replace(/\[mm\]/g, iMn > 9 ? iMn : "0" + iMn);
+        szRet = szRet.replace(/\[m\]/g, iMn);
+    }
+    return (szRet);
+}
+
+
+
+
+function preMonth() {
+    //var iMonth = parseInt(document.getElementById("iMon").value, 10) - 1;
+    //var iYear = document.getElementById("iYear").value;
+    var iMonth = parseInt(document.getElementById("iMon").innerHTML) - 1;
+    var iYear = document.getElementById("iYear").innerHTML;
+
+    if (iMonth < 1) {
+        iYear--;
+        iMonth = 12;
+    }
+    else if (iMonth > 12) {
+        iYear++;
+        iMonth = 1;
+    }
+
+    //document.getElementById("iYear").value = iYear;
+    //document.getElementById("iMon").value = iMonth;
+    document.getElementById("iYear").innerHTML = iYear;
+    document.getElementById("iMon").innerHTML = leadingZeros(iMonth, 2);
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+        
+
+    CalendarMiniView("CalendarMini");
+    CalendarMiniDataSource();
+
+   
+}
+
+
+function nextMonth() {
+    //var iMonth = parseInt(document.getElementById("iMon").value, 10) + 1;
+    //var iYear = document.getElementById("iYear").value;
+    var iMonth = parseInt(document.getElementById("iMon").innerHTML) + 1;
+    var iYear = document.getElementById("iYear").innerHTML;
+
+    if (iMonth < 1) {
+        iYear--;
+        iMonth = 12;
+    }
+    else if (iMonth > 12) {
+        iYear++;
+        iMonth = 1;
+    }
+
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+    //document.getElementById("iYear").value = iYear;
+    //document.getElementById("iMon").value = iMonth;
+    document.getElementById("iYear").innerHTML = iYear;
+    document.getElementById("iMon").innerHTML = iMonth;
+
+   
+    CalendarMiniView("CalendarMini");
+    CalendarMiniDataSource();
+
+   
+}
+
+
+function preYear() {
+    //var iMonth = document.getElementById("iMon").value;
+    //var iYear = document.getElementById("iYear").value;
+    var iMonth = document.getElementById("iMon").innerHTML;
+    var iYear = document.getElementById("iYear").innerHTML;
+
+    iYear--;
+    //document.getElementById("iYear").value = iYear;
+    //document.getElementById("iMon").value = iMonth;
+    document.getElementById("iYear").innerHTML = iYear;
+    document.getElementById("iMon").innerHTML = iMonth;
+
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+
+    CalendarMiniView("CalendarMini");
+
+   
+}
+
+
+function nextYear() {
+    //var iMonth = document.getElementById("iMon").value;
+    //var iYear = document.getElementById("iYear").value;
+    var iMonth = document.getElementById("iMon").innerHTML;
+    var iYear = document.getElementById("iYear").innerHTML;
+
+    iYear++;
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+    //document.getElementById("iYear").value = iYear;
+    //document.getElementById("iMon").value = iMonth;
+    document.getElementById("iYear").innerHTML = iYear;
+    document.getElementById("iMon").innerHTML = iMonth;
+
+  
+    CalendarMiniView("CalendarMini");
+
+    
+}
+
+
+
+function changeYear() {
+    var iMonth = document.getElementById("iMon").value;
+    var iYear = document.getElementById("iYear").value;
+
+    
+    document.getElementById("iYear").value = iYear;
+    document.getElementById("iMon").value = iMonth;
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+
+   
+    CalendarMiniView("CalendarMini");
+    CalendarMiniDataSource();
+
+   
+}
+
+
+function changeMonth() {
+    var iMonth = document.getElementById("iMon").value;
+    var iYear = document.getElementById("iYear").value;
+
+    document.getElementById("iYear").value = iYear;
+    document.getElementById("iMon").value = iMonth;
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+
+   
+    CalendarMiniView("CalendarMini");
+    CalendarMiniDataSource();
+
+    
+}
+
+function preWeek() {
+    sDate.setDate(sDate.getDate() - 7);
+
+    var itemID = "TDMINI_" + sDate.getFullYear() + "-" + leadingZeros(sDate.getMonth() + 1, 2) + "-" + leadingZeros(sDate.getDate(), 2) + "_Day";
+    var DayItem = document.getElementById(itemID);
+    if (DayItem)
+        DayItem.click();
+    else {
+        preWeekMonth();
+        var DayItem = document.getElementById(itemID);
+        if (DayItem) {
+            DayItem.click();
+            CalendarMiniDataSource();
+        }
+    }
+}
+
+function nextWeek() {
+
+    sDate.setDate(sDate.getDate() + 7);
+
+    var itemID = "TDMINI_" + sDate.getFullYear() + "-" + leadingZeros(sDate.getMonth() + 1, 2) + "-" + leadingZeros(sDate.getDate(), 2) + "_Day";
+    var DayItem = document.getElementById(itemID);
+    if (DayItem)
+        DayItem.click();
+    else {
+        nextWeekMonth();
+
+        var DayItem = document.getElementById(itemID);
+        if (DayItem) {
+            DayItem.click();
+            CalendarMiniDataSource();
+        }
+    }
+}
+
+
+function preDay() {
+    sDate.setDate(sDate.getDate() - 1);
+
+    var itemID = "TDMINI_" + sDate.getFullYear() + "-" + leadingZeros(sDate.getMonth() + 1, 2) + "-" + leadingZeros(sDate.getDate(), 2) + "_Day";
+    var DayItem = document.getElementById(itemID);
+    if (DayItem)
+        DayItem.click();
+    else {
+        preWeekMonth();
+        var DayItem = document.getElementById(itemID);
+        if (DayItem) {
+            DayItem.click();
+            CalendarMiniDataSource();
+        }
+    }
+}
+
+function nextDay() {
+
+    sDate.setDate(sDate.getDate() + 1);
+
+    var itemID = "TDMINI_" + sDate.getFullYear() + "-" + leadingZeros(sDate.getMonth() + 1, 2) + "-" + leadingZeros(sDate.getDate(), 2) + "_Day";
+    var DayItem = document.getElementById(itemID);
+    if (DayItem)
+        DayItem.click();
+    else {
+        nextWeekMonth();
+
+        var DayItem = document.getElementById(itemID);
+        if (DayItem) {
+            DayItem.click();
+            CalendarMiniDataSource();
+        }
+    }
+}
+
+
+
+
+function preWeekMonth() {
+    var iMonth = parseInt(document.getElementById("iMon").value, 10) - 1;
+    var iYear = document.getElementById("iYear").value;
+
+    if (iMonth < 1) {
+        iYear--;
+        iMonth = 12;
+    }
+    else if (iMonth > 12) {
+        iYear++;
+        iMonth = 1;
+    }
+
+    document.getElementById("iYear").value = iYear;
+    document.getElementById("iMon").value = iMonth;
+
+    CalendarMiniView("CalendarMini");
+}
+
+
+function nextWeekMonth() {
+    var iMonth = parseInt(document.getElementById("iMon").value, 10) + 1;
+    var iYear = document.getElementById("iYear").value;
+
+    if (iMonth < 1) {
+        iYear--;
+        iMonth = 12;
+    }
+    else if (iMonth > 12) {
+        iYear++;
+        iMonth = 1;
+    }
+
+    sDate.setFullYear(iYear, iMonth - 1, 14);
+    document.getElementById("iYear").value = iYear;
+    document.getElementById("iMon").value = iMonth;
+
+    CalendarMiniView("CalendarMini");
+}

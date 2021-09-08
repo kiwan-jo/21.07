@@ -1,0 +1,218 @@
+﻿// 검색 필터(검색어 포함) Json 데이터
+var NotiFilterData = {
+    "content": "",
+    "read": [],
+    "favorite": [],
+    "maintype": [],
+    "othersystem": [],
+    "othersystem_exmaintype": [],
+    "allfilter": false
+}
+
+function contains(a, key, obj) {
+    var i = a.length;
+    while (i--) {
+        if (key != null && key !== "") {
+            if (a[i][key] === obj) {
+                return true;
+            }
+        }
+        else {
+            if (a[i] === obj) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function notiWrite_onclick() {
+    if (document.getElementById("content_notification_write") != null) {
+        document.getElementById("content_notification_write").style.display = "";
+    }
+
+    if (document.getElementById("content_notification_list") != null) {
+        document.getElementById("content_notification_list").style.display = "none";
+    }
+}
+
+function notiCloseWrite_onclick() {
+    if (document.getElementById("content_notification_write") != null) {
+        document.getElementById("content_notification_write").style.display = "none";
+    }
+
+    if (document.getElementById("content_notification_list") != null) {
+        document.getElementById("content_notification_list").style.display = "";
+    }
+}
+
+function notiRefresh_onclick() {
+    MakeNotiList();
+}
+
+function searchNotiFilter() {
+    var searchFilterClassElements = document.getElementsByClassName("contentlist_search_filter");
+    if (searchFilterClassElements.length > 0) {
+        if (searchFilterClassElements[0].style.display === "") {
+            searchFilterClassElements[0].style.display = "none";
+        }
+        else {
+            searchFilterClassElements[0].style.display = "";
+        }
+    }
+}
+
+function filterCancel_onclick() {
+    var searchFilterClassElements = document.getElementsByClassName("contentlist_search_filter");
+    if (searchFilterClassElements.length > 0) {
+        searchFilterClassElements[0].style.display = "none";
+    }
+}
+
+function CheckFavorite(thisObj) {
+    var xmlHttp = new createXMLHttpRequest();
+    var _notiSeq = "";
+    var parentULElement = getParent_selector(thisObj, "UL");
+    if (parentULElement.length > 0) {
+        _notiSeq = parentULElement[0].getAttribute("_notiSeq");
+    }
+
+    var jsonData = {
+        "NOTISEQ": _notiSeq,
+        "FAVORITE": (thisObj.classList.contains("view_flag") ? "n" : "y")   // 현재 설정 보내기
+    };
+
+    var jsonInfo = JSON.stringify(jsonData);
+    xmlHttp.open("POST", "/myoffice/ezpersonal/notification_realtime/aspx/CheckFavorite.aspx", false);
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send(jsonInfo);
+
+    if (xmlHttp.statusText == "OK" || xmlHttp.status == 200) {
+        if (xmlHttp.responseText !== "") {
+            var responseJson = JSON.parse(xmlHttp.responseText);
+            if (responseJson.length > 0) {
+                if (responseJson[0].ResultContent === "NOTMINE") {
+                    // 내것이 아니라 변경이 불가.
+                }
+                else {
+                    if (responseJson[0].isFavorite === 'y') {
+                        if (thisObj.classList.contains("view_flag")) {
+                            thisObj.classList.remove("view_flag");
+                        }
+
+                        if (!thisObj.classList.contains("icon_flag")) {
+                            thisObj.classList.add("icon_flag");
+                        }
+                    }
+                    else {
+                        if (!thisObj.classList.contains("view_flag")) {
+                            thisObj.classList.add("view_flag");
+                        }
+
+                        if (thisObj.classList.contains("icon_flag")) {
+                            thisObj.classList.remove("icon_flag");
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+function searchNotiInput_onkeyup(e) {
+    if (window.event) {
+        if (window.event.keyCode == 13) {
+            searchNoti_onclick();
+            (event.stopPropagation) ? event.stopPropagation() : event.cancelBubble = true;
+        }
+    }
+    else {
+        if (e.which == 13) {
+            searchNoti_onclick();
+            e.stopPropagation();
+        }
+    }
+}
+
+function keyword_Clear() {
+}
+
+function notiClose_onclick() {
+    if (typeof InitDropdownMenu === "function") {
+        InitDropdownMenu();
+    }
+    else if (typeof parent.InitDropdownMenu === "function") {
+        parent.InitDropdownMenu();
+    }
+    else if (typeof opener.InitDropdownMenu === "function") {
+        opener.InitDropdownMenu();
+    }
+}
+
+function filterAllSelect_onclick() {
+    var filtercheckElements = document.getElementsByName("filtercheck");
+    for (var i = 0; i < filtercheckElements.length; i++) {
+        filtercheckElements[i].checked = true;
+    }
+}
+
+function filterAllUnselect_onclick() {
+    var filtercheckElements = document.getElementsByName("filtercheck");
+    for (var i = 0; i < filtercheckElements.length; i++) {
+        filtercheckElements[i].checked = false;
+    }
+}
+
+function totalfilterCheck(thisObj) {
+    var filtercheckElements = document.getElementsByName("filtercheck");
+    if (thisObj.id === "filter_totalcheck") {
+        // 전체 선택시 선택/해제
+        if (document.getElementById("filter_totalcheck").checked) {
+            for (var i = 0; i < filtercheckElements.length; i++) {
+                if (filtercheckElements[i].id !== "filter_totalcheck") {
+                    if (filtercheckElements[i].getAttribute("_maintype") != null) {
+                        if (filtercheckElements[i].getAttribute("_maintype") === "y") {
+                            filtercheckElements[i].checked = true;
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (var i = 0; i < filtercheckElements.length; i++) {
+                if (filtercheckElements[i].id !== "filter_totalcheck") {
+                    if (filtercheckElements[i].getAttribute("_maintype") != null) {
+                        if (filtercheckElements[i].getAttribute("_maintype") === "y") {
+                            filtercheckElements[i].checked = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else {
+        // 항목중 선택시 전체에 대한 선택/해제
+        var pAllCheck = true;
+        for (var i = 0; i < filtercheckElements.length; i++) {
+            if (filtercheckElements[i].id !== "filter_totalcheck") {
+                if (filtercheckElements[i].getAttribute("_maintype") != null) {
+                    if (filtercheckElements[i].getAttribute("_maintype") === "y") {
+                        if (!filtercheckElements[i].checked) {
+                            pAllCheck = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (pAllCheck) {
+            // 항목이 모두 체크된 경우 전체에도 체크
+            document.getElementById("filter_totalcheck").checked = true;
+        }
+        else {
+            // 항목이 하나라도 체크안된 경우 전체에도 체크해제
+            document.getElementById("filter_totalcheck").checked = false;
+        }
+    }
+}
